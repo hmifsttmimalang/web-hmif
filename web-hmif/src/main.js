@@ -9,7 +9,6 @@ import "./assets/vendor/aos/aos.css";
 import "./assets/vendor/glightbox/css/glightbox.min.css";
 import "./assets/vendor/swiper/swiper-bundle.min.css";
 
-
 // Importing JS files for functionality
 // import './assets/js/main.js';
 import "./assets/vendor/bootstrap/js/bootstrap.bundle.min.js"
