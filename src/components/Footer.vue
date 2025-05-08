@@ -29,11 +29,11 @@
         <div class="col-lg-2 col-6 footer-links">
           <h4>Navigasi</h4>
           <ul>
-            <li><a href="#">Beranda</a></li>
-            <li><a href="#">Tentang Kami</a></li>
-            <li><a href="#">Program Kerja</a></li>
-            <li><a href="#">Portfolio</a></li>
-            <li><a href="#">Team</a></li>
+            <li><a href="#hero">Beranda</a></li>
+            <li><a href="#about">Tentang Kami</a></li>
+            <li><a href="#services">Program Kerja</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#team">Tim</a></li>
           </ul>
         </div>
 
