@@ -81,4 +81,4 @@ Ini adalah proyek **Landing Page Resmi HMIF SMI Malang**, dibangun menggunakan *
 
 ## 📄 Lisensi
 
-Proyek ini menggunakan lisensi [MIT](LICENSE).
+Proyek ini menggunakan lisensi [Apache-2.0](LICENSE).
