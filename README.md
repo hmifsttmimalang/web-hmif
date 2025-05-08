@@ -48,8 +48,8 @@ Ini adalah proyek **Landing Page Resmi HMIF SMI Malang**, dibangun menggunakan *
 1. **Clone repositori ini:**
 
    ```bash
-   git clone https://github.com/username/hmif-smimalang-landingpage.git
-   cd hmif-smimalang-landingpage
+   git clone https://github.com/hmifsttmimalang/web-hmif.git
+   cd web-hmif
    ```
 
 2. **Install dependencies:**
