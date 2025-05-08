@@ -8,23 +8,42 @@
         <span class="fw-bold text-dark">HMIF SMI MALANG</span>
       </a>
 
-      <nav id="navmenu" class="navmenu">
+      <nav
+        id="navmenu"
+        class="navmenu"
+        :class="{ 'navmenu-active': isMobileNavActive }"
+      >
         <ul>
-          <li><a href="#hero" class="active">Beranda</a></li>
-          <li><a href="#about">Tentang Kami</a></li>
-          <li><a href="#services">Program Kerja</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#team">Tim</a></li>
-          <!-- <li><a href="#contact">Contact</a></li> -->
+          <li>
+            <a href="#hero" class="active" @click="closeMobileNav">Beranda</a>
+          </li>
+          <li><a href="#about" @click="closeMobileNav">Tentang Kami</a></li>
+          <li><a href="#services" @click="closeMobileNav">Program Kerja</a></li>
+          <li><a href="#portfolio" @click="closeMobileNav">Portfolio</a></li>
+          <li><a href="#team" @click="closeMobileNav">Tim</a></li>
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        <i
+          class="mobile-nav-toggle d-xl-none bi"
+          :class="isMobileNavActive ? 'bi-x' : 'bi-list'"
+          @click="toggleMobileNav"
+        ></i>
       </nav>
     </div>
   </header>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+const isMobileNavActive = ref(false);
+
+function toggleMobileNav() {
+  isMobileNavActive.value = !isMobileNavActive.value;
+}
+
+function closeMobileNav() {
+  isMobileNavActive.value = false;
+}
 
 onMounted(() => {
   const sections = document.querySelectorAll("section");
@@ -50,6 +69,11 @@ onMounted(() => {
   }
 
   window.addEventListener("scroll", onScroll);
+  onScroll();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", onScroll);
 });
 </script>
 
@@ -61,5 +85,43 @@ onMounted(() => {
 a {
   text-decoration: none;
   color: #000;
+}
+
+@media (max-width: 768px) {
+  .navmenu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: white;
+    padding: 1rem;
+    border-radius: 5px;
+    z-index: 999;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navmenu.navmenu-active {
+    display: flex !important;
+  }
+
+  .navmenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .navmenu ul li {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .navmenu ul li a {
+    color: #000;
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+  }
 }
 </style>
