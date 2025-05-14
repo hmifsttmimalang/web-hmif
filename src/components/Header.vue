@@ -54,6 +54,9 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const isMobileNavActive = ref(false);
+let sections;
+let navLinks;
+let mobileNavLinks;
 
 function toggleMobileNav() {
   isMobileNavActive.value = !isMobileNavActive.value;
@@ -64,9 +67,6 @@ function closeMobileNav() {
 }
 
 function onScroll() {
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll("#navmenu a");
-  const mobileNavLinks = document.querySelectorAll("#mobile-navmenu a");
   const scrollY = window.pageYOffset;
 
   sections.forEach((section) => {
@@ -92,6 +92,9 @@ function onScroll() {
 }
 
 onMounted(() => {
+  sections = document.querySelectorAll("section");
+  navLinks = document.querySelectorAll("#navmenu a");
+  mobileNavLinks = document.querySelectorAll("#mobile-navmenu a");
   window.addEventListener("scroll", onScroll);
   onScroll();
 });
