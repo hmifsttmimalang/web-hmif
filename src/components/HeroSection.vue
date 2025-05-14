@@ -11,7 +11,7 @@
         v-for="(item, index) in carouselItems"
         :key="index"
       >
-        <img :src="item.imgSrc" alt="" />
+        <img :src="item.imgSrc" :alt="item.altText" />
         <div class="carousel-container">
           <h2 class="text-center">{{ item.title }}</h2>
           <p class="text-center">{{ item.description }}</p>
@@ -52,25 +52,28 @@ export default {
         {
           imgSrc: new URL("@/assets/img/kegiatan/IMG_1056.JPG", import.meta.url)
             .href,
-          title: "We Are\nHMIF SMI MALANG",
+          altText: "Kegiatan HMIF SMI MALANG 1",
+          title: "Selamat Datang di HMIF!",
           description:
-            "Selamat datang di website resmi HMIF SMI MALANG! Kami adalah Himpunan Mahasiswa Informatika Sekolah Tinggi Teknik Multimedia Internasional Malang.",
+            "Bergabunglah dengan komunitas mahasiswa informatika yang aktif dan inovatif.",
         },
         {
           imgSrc: new URL(
             "@/assets/img/kegiatan/Futsal (2).jpg",
             import.meta.url
           ).href,
-          title: "We Are\nHMIF SMI MALANG",
+          altText: "Kegiatan Futsal HMIF SMI MALANG",
+          title: "Semangat Kebersamaan dalam Futsal",
           description:
-            "Selamat datang di website resmi HMIF SMI MALANG! Kami adalah Himpunan Mahasiswa Informatika Sekolah Tinggi Teknik Multimedia Internasional Malang.",
+            "Kegiatan futsal rutin untuk menjaga kebugaran dan solidaritas.",
         },
         {
           imgSrc: new URL("@/assets/img/kegiatan/IMG_1036.JPG", import.meta.url)
             .href,
-          title: "We Are\nHMIF SMI MALANG",
+          altText: "Kegiatan HMIF SMI MALANG 2",
+          title: "Berkolaborasi dalam Proyek Kreatif",
           description:
-            "Selamat datang di website resmi HMIF SMI MALANG! Kami adalah Himpunan Mahasiswa Informatika Sekolah Tinggi Teknik Multimedia Internasional Malang.",
+            "Mengembangkan skill dan pengetahuan melalui proyek-proyek informatika yang menarik.",
         },
       ],
     };
