@@ -12,7 +12,7 @@
           <div class="card">
             <img :src="item.image" class="img-fluid" :alt="item.title" />
             <h3 v-html="item.title"></h3>
-            <p style="text-align: justify">{{ item.description }}</p>
+            <p class="justify-text">{{ item.description }}</p>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ const moreServices = ref([
     image: new URL("@/assets/img/kegiatan/IMG_1018.JPG", import.meta.url).href,
     title: "Serah Terima Pergantian <br>Ketua Himpunan",
     description:
-      "Pada hari 18 Mei 2024, Himpunan Mahasiswa Informatika SMI Malang (HMIF) sukses menggelar acara Serah Terima Jabatan [Sertijab] Ketua Himpunan yang bertempat di Sekolah Multimedia Internasional Malang. Acara ini menandai berakhirnya masa kepemimpinan Anggi Maretha dan dimulainya masa bakti kepemimpinan baru oleh Aventus Akong untuk periode Tahun 2024 - 2025.",
+      "Pada tanggal 18 Mei 2024, Himpunan Mahasiswa Informatika SMI Malang (HMIF) sukses menggelar acara Serah Terima Jabatan Ketua Himpunan yang bertempat di Sekolah Multimedia Internasional Malang. Acara ini menandai berakhirnya masa kepemimpinan Anggi Maretha dan dimulainya masa bakti kepemimpinan baru oleh Aventus Akong untuk periode Tahun 2024-2025.",
   },
 ]);
 </script>
@@ -66,5 +66,9 @@ const moreServices = ref([
 .more-services h3 {
   font-size: 24px;
   margin-bottom: 15px;
+}
+
+.justify-text {
+  text-align: justify;
 }
 </style>
