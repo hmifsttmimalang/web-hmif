@@ -10,14 +10,14 @@
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          <h3>WE ARE VISION</h3>
+          <h3>VISION</h3>
           <p class="fst-italic">
             Menjadi wadah bagi mahasiswa informatika SMI Malang untuk
             mengembangkan potensi diri secara maksimal, menciptakan inovasi,
             membangun komunitas yang solid, serta unggul dalam mengembangkan
             teknologi teknik informasi dan komunikasi.
           </p>
-          <h3>WE ARE MISION</h3>
+          <h3>MISSION</h3>
           <ul>
             <li>
               <i class="bi bi-check-circle"></i> Mewujudkan kolaborasi riset dan
