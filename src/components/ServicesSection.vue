@@ -6,8 +6,8 @@
       <p>
         Himpunan Mahasiswa Informatika (HIMATIKA) SMI Malang memiliki berbagai
         program kerja yang dirancang <br />
-        untuk mendukung pengembangan akademik, soft skill, dan karier mahasiswa,
-        serta mempererat hubungan antaranggota.
+        untuk mendukung pengembangan akademik, soft skill, dan karir mahasiswa,
+        serta mempererat hubungan antar anggota.
       </p>
     </div>
     <!-- End Section Title -->
@@ -42,7 +42,7 @@
             <h4><a href="" class="stretched-link">HMIF Sport</a></h4>
             <p>
               Program kerja berkelanjutan atau jangka panjang yang dimana disini
-              HMIF akan mempasilitasi seluruh anggota yang berminat dalam bidang
+              HMIF akan memfasilitasi seluruh anggota yang berminat dalam bidang
               olahraga.
             </p>
           </div>
@@ -58,7 +58,7 @@
             <div class="icon"><i class="bi bi-people-fill"></i></div>
             <h4><a href="" class="stretched-link">HMIF Peduli</a></h4>
             <p>
-              Kegiatan berbagi takjil untuk masyarakat sekitar menjelang waktu
+              Kegiatan berbagi takjil pada bulan Ramadan untuk masyarakat sekitar menjelang waktu
               berbuka puasa dan kunjungan dan kegiatan sosial di panti asuhan
               untuk memberikan bantuan dan dukungan.
             </p>

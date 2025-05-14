@@ -62,7 +62,7 @@
             <li>
               <i class="bi bi-check-circle"></i> Bekerja sama dengan institusi
               pendidikan, perusahaan teknologi, dan komunitas IT guna membuka
-              peluang magang dan pengembangan karier.
+              peluang magang dan pengembangan karir.
             </li>
           </ul>
         </div>
