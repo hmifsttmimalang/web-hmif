@@ -21,7 +21,7 @@
         >
           <div class="service-item position-relative">
             <div class="icon"><i class="bi bi-code-slash"></i></div>
-            <h4><a href="" class="stretched-link">Programming Class</a></h4>
+            <h4>Programming Class</h4>
             <p>
               Pelatihan programming bagi seluruh anggota HMIF serta siapa saja
               yang berminat belajar programming. Beberapa bidang yang dipelajari
@@ -39,7 +39,7 @@
         >
           <div class="service-item position-relative">
             <div class="icon"><i class="bi bi-globe"></i></div>
-            <h4><a href="" class="stretched-link">HMIF Sport</a></h4>
+            <h4>HMIF Sport</h4>
             <p>
               Program kerja berkelanjutan atau jangka panjang yang dimana disini
               HMIF akan memfasilitasi seluruh anggota yang berminat dalam bidang
@@ -56,7 +56,7 @@
         >
           <div class="service-item position-relative">
             <div class="icon"><i class="bi bi-people-fill"></i></div>
-            <h4><a href="" class="stretched-link">HMIF Peduli</a></h4>
+            <h4>HMIF Peduli</h4>
             <p>
               Kegiatan berbagi takjil pada bulan Ramadan untuk masyarakat
               sekitar menjelang waktu berbuka puasa dan kunjungan dan kegiatan
@@ -73,7 +73,7 @@
         >
           <div class="service-item position-relative">
             <div class="icon"><i class="bi bi-activity"></i></div>
-            <h4><a href="" class="stretched-link">Seminar On Campus</a></h4>
+            <h4>Seminar on Campus</h4>
             <p>
               Seminar dengan tema tertentu yang relevan dengan teknologi
               informasi dan organisasi.
