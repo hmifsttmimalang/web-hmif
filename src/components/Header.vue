@@ -1,5 +1,8 @@
 <template>
-  <header id="header" class="header d-flex align-items-center fixed-top">
+  <header
+    id="header"
+    class="header d-flex align-items-center fixed-top bg-white shadow-sm"
+  >
     <div
       class="container-fluid container-xl d-flex align-items-center justify-content-between position-relative"
     >
@@ -9,10 +12,21 @@
         <span class="fw-bold text-dark ms-2">HMIF SMI MALANG</span>
       </a>
 
-      <!-- Navigation -->
+      <!-- Desktop Nav -->
+      <nav id="navmenu" class="navmenu d-none d-xl-flex">
+        <ul>
+          <li><a href="#hero" class="active">Beranda</a></li>
+          <li><a href="#about">Tentang Kami</a></li>
+          <li><a href="#services">Program Kerja</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#team">Tim</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile Nav -->
       <nav
-        id="navmenu"
-        class="navmenu"
+        id="mobile-navmenu"
+        class="navmenu-mobile d-xl-none"
         :class="{ 'navmenu-active': isMobileNavActive }"
       >
         <ul>
@@ -24,14 +38,14 @@
           <li><a href="#portfolio" @click="closeMobileNav">Portfolio</a></li>
           <li><a href="#team" @click="closeMobileNav">Tim</a></li>
         </ul>
-
-        <!-- Toggle Button (mobile only) -->
-        <i
-          class="mobile-nav-toggle d-xl-none bi"
-          :class="isMobileNavActive ? 'bi-x' : 'bi-list'"
-          @click="toggleMobileNav"
-        ></i>
       </nav>
+
+      <!-- Mobile Nav Toggle Button -->
+      <i
+        class="mobile-nav-toggle d-xl-none bi"
+        :class="isMobileNavActive ? 'bi-x' : 'bi-list'"
+        @click="toggleMobileNav"
+      ></i>
     </div>
   </header>
 </template>
@@ -52,6 +66,7 @@ function closeMobileNav() {
 function onScroll() {
   const sections = document.querySelectorAll("section");
   const navLinks = document.querySelectorAll("#navmenu a");
+  const mobileNavLinks = document.querySelectorAll("#mobile-navmenu a");
   const scrollY = window.pageYOffset;
 
   sections.forEach((section) => {
@@ -61,6 +76,12 @@ function onScroll() {
 
     if (scrollY >= offsetTop && scrollY < offsetBottom) {
       navLinks.forEach((link) => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${id}`) {
+          link.classList.add("active");
+        }
+      });
+      mobileNavLinks.forEach((link) => {
         link.classList.remove("active");
         if (link.getAttribute("href") === `#${id}`) {
           link.classList.add("active");
@@ -90,55 +111,73 @@ a {
   color: #000;
 }
 
-/* Mobile Navigation Styles */
-@media (max-width: 768px) {
-  .navmenu {
-    display: none;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    background-color: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 999;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 200px;
-  }
+.navmenu ul {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  .navmenu.navmenu-active {
-    display: flex !important;
-  }
+.navmenu ul li a {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
 
-  .navmenu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-  }
+.navmenu ul li a.active,
+.navmenu ul li a:hover {
+  background-color: #1bbca1;
+  color: #fff;
+}
 
-  .navmenu ul li {
-    margin-bottom: 0.5rem;
-    width: 100%;
-  }
+/* Mobile Nav Base: hidden by default */
+.navmenu-mobile {
+  display: none;
+}
 
-  .navmenu ul li a {
-    color: #000;
-    display: block;
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 4px;
-  }
+/* Mobile Nav Active State */
+.navmenu-mobile.navmenu-active {
+  display: flex;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: #fff;
+  width: 200px;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  z-index: 999;
+}
 
-  .navmenu ul li a:hover {
-    background-color: #f0f0f0;
-  }
+/* Mobile Nav Items */
+.navmenu-mobile ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 
-  .mobile-nav-toggle {
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin-top: 0.5rem;
-  }
+.navmenu-mobile ul li a {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  color: #000;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.navmenu-mobile ul li a:hover,
+.navmenu-mobile ul li a.active {
+  background-color: #1bbca1;
+  color: #fff;
+}
+
+.mobile-nav-toggle {
+  font-size: 1.8rem;
+  cursor: pointer;
+  z-index: 1000;
 }
 </style>
