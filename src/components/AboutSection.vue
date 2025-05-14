@@ -42,7 +42,7 @@
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          <h3>An SMI Malang Informatics Student Association</h3>
+          <h3>The SMI Malang Informatics Student Association</h3>
           <p class="fst-italic">
             Sebuah organisasi yang mewadahi dan beranggotakan mahasiswa/i
             Informatika ataupun jurusan lain dari prodi di SMI Malang, dengan
