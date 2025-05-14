@@ -58,9 +58,9 @@
             <div class="icon"><i class="bi bi-people-fill"></i></div>
             <h4><a href="" class="stretched-link">HMIF Peduli</a></h4>
             <p>
-              Kegiatan berbagi takjil pada bulan Ramadan untuk masyarakat sekitar menjelang waktu
-              berbuka puasa dan kunjungan dan kegiatan sosial di panti asuhan
-              untuk memberikan bantuan dan dukungan.
+              Kegiatan berbagi takjil pada bulan Ramadan untuk masyarakat
+              sekitar menjelang waktu berbuka puasa dan kunjungan dan kegiatan
+              sosial di panti asuhan untuk memberikan bantuan dan dukungan.
             </p>
           </div>
         </div>
@@ -93,35 +93,53 @@ export default {
 </script>
 
 <style scoped>
-  .services {
-    padding: 60px 0;
-  }
-  .services .section-title {
-    text-align: center;
-    margin-bottom: 40px;
-  }
+.services {
+  padding: 60px 0;
+}
+.services .section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.services .section-title h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+.services .section-title p {
+  font-size: 18px;
+  color: #555;
+}
+.service-item {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+.service-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+.services a {
+  text-decoration: none;
+  color: #333;
+}
+
+@media (max-width: 768px) {
   .services .section-title h2 {
-    font-size: 36px;
-    margin-bottom: 20px;
+    font-size: 28px;
   }
   .services .section-title p {
-    font-size: 18px;
-    color: #555;
+    font-size: 16px;
   }
   .service-item {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
+    padding: 20px;
   }
-  .service-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  .service-item h4 {
+    font-size: 18px;
   }
-  .services a {
-    text-decoration: none;
-    color: #333;
+  .service-item p {
+    font-size: 14px;
   }
+}
 </style>
