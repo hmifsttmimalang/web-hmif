@@ -29,7 +29,7 @@ const moreServices = ref([
       .href,
     title: "HMIF X FORMASI",
     description:
-      "Himpunan Mahasiswa Informatika SMI Malang sukses menyelenggarakan acara HMIF SPORT X FORMASI dengan olahraga Futsal pada tanggal 16 Juni 2024. Kegiatan ini bertujuan untuk mempererat hubungan antaranggota dan Himpunan Lain sekaligus menjaga kesehatan fisik melalui olahraga futsal yang kompetitif dan penuh semangat.",
+      "Himpunan Mahasiswa Informatika SMI Malang sukses menyelenggarakan acara HMIF SPORT X FORMASI dengan olahraga Futsal pada tanggal 16 Juni 2024. Kegiatan ini bertujuan untuk mempererat hubungan antar anggota dan Himpunan Lain sekaligus menjaga kesehatan fisik melalui olahraga futsal yang kompetitif dan penuh semangat.",
   },
   {
     image: new URL("@/assets/img/kegiatan/IMG_1018.JPG", import.meta.url).href,
