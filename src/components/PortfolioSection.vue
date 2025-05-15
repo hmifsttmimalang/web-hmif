@@ -29,7 +29,7 @@
           data-aos-delay="200"
         >
           <div
-            v-for="(project, index) in filteredProjects"
+            v-for="(project, index) in projects"
             :key="index"
             class="col-lg-4 col-md-6 portfolio-item isotope-item"
             :class="project.filterClass"
@@ -41,17 +41,19 @@
                 <p>{{ project.description }}</p>
                 <a
                   :href="project.imgSrc"
-                  title="App 1"
+                  title="Preview"
                   data-gallery="portfolio-gallery-app"
                   class="glightbox preview-link"
-                  ><i class="bi bi-zoom-in"></i
-                ></a>
+                >
+                  <i class="bi bi-zoom-in"></i>
+                </a>
                 <a
                   href="portfolio-details.html"
                   title="More Details"
                   class="details-link"
-                  ><i class="bi bi-link-45deg"></i
-                ></a>
+                >
+                  <i class="bi bi-link-45deg"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -62,54 +64,74 @@
 </template>
 
 <script>
+import Isotope from "isotope-layout";
+import GLightbox from "glightbox";
+import "glightbox/dist/css/glightbox.css";
+
 export default {
   name: "PortfolioSection",
   data() {
     return {
       activeFilter: "*",
+      iso: null,
       filters: [
         { label: "All", value: "*" },
-        { label: "Game", value: "filter-app" },
-        { label: "App", value: "filter-product" },
+        { label: "Game", value: "filter-game" },
+        { label: "App", value: "filter-app" },
         { label: "Website", value: "filter-branding" },
       ],
       projects: [
         {
           title: "Game 1",
-          description: "Game interaktif yang menantang keterampilan pemain dengan grafis menarik dan gameplay seru.",
+          description:
+            "Game interaktif yang menantang keterampilan pemain dengan grafis menarik dan gameplay seru.",
           imgSrc: new URL("@/assets/img/project/Game1.PNG", import.meta.url)
             .href,
-          filterClass: "filter-app",
+          filterClass: "filter-game",
         },
         {
           title: "SIPPEKA APP WEB",
-          description: "Aplikasi web untuk pengelolaan data pelatihan kerja dengan antarmuka pengguna yang mudah digunakan.",
+          description:
+            "Aplikasi web untuk pengelolaan data pelatihan kerja dengan antarmuka pengguna yang mudah digunakan.",
           imgSrc: new URL("@/assets/img/SIPPEKA.png", import.meta.url).href,
-          filterClass: "filter-product",
+          filterClass: "filter-app",
         },
         {
           title: "Website HMIF",
-          description: "Website resmi HMIF SMI Malang, menyediakan informasi kegiatan dan program kerja dengan desain responsif.",
+          description:
+            "Website resmi HMIF SMI Malang, menyediakan informasi kegiatan dan program kerja dengan desain responsif.",
           imgSrc: new URL("@/assets/img/web_hmif.png", import.meta.url).href,
           filterClass: "filter-branding",
         },
       ],
     };
   },
-  computed: {
-    filteredProjects() {
-      if (this.activeFilter === "*") {
-        return this.projects;
-      }
-      return this.projects.filter((project) =>
-        project.filterClass.includes(this.activeFilter)
-      );
-    },
-  },
   methods: {
     changeFilter(filterValue) {
       this.activeFilter = filterValue;
+      if (this.iso) {
+        this.iso.arrange({
+          filter: filterValue === "*" ? "*" : `.${filterValue}`,
+        });
+      }
     },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.iso = new Isotope(".isotope-container", {
+        itemSelector: ".isotope-item",
+        layoutMode: "masonry",
+      });
+
+      GLightbox({
+        selector: ".glightbox",
+      });
+    });
+  },
+  beforeUnmount() {
+    if (this.iso) {
+      this.iso.destroy();
+    }
   },
 };
 </script>
@@ -118,5 +140,9 @@ export default {
 .filter-active {
   font-weight: bold;
   color: #007bff;
+  cursor: pointer;
+}
+.portfolio-item {
+  transition: transform 0.3s ease;
 }
 </style>
