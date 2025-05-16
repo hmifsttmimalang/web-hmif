@@ -20,6 +20,7 @@
           <li><a href="#services">Program Kerja</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
           <li><a href="#team">Tim</a></li>
+          <li><router-link to="/post">Blog</router-link></li>
         </ul>
       </nav>
 

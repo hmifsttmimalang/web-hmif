@@ -8,9 +8,13 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import PureCounter from "@srexi/purecounterjs";
 import App from "./App.vue";
+import router from "./router";
 
 // Inisialisasi library eksternal
 AOS.init();
 new PureCounter();
 
-createApp(App).mount("#app");
+const app = createApp(App);
+app.use(router);
+app.mount("#app");
+
