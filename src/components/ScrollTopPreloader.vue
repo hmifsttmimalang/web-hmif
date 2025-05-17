@@ -25,19 +25,27 @@ export default {
       loading: true,
     };
   },
+  watch: {
+    $route() {
+      this.triggerPreloader();
+    },
+  },
   mounted() {
-    // Hilangkan preloader setelah halaman dimuat
-    window.addEventListener("load", () => {
-      this.loading = false;
-    });
-
-    // Tampilkan tombol scroll-top saat scroll ke bawah
+    this.triggerPreloader();
     window.addEventListener("scroll", this.handleScroll);
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    triggerPreloader() {
+      this.loading = true;
+      // Simulasikan delay agar terlihat animasi preloader
+      setTimeout(() => {
+        this.loading = false;
+        this.scrollToTop(); // Scroll ke atas saat pindah halaman
+      }, 500); // Ubah sesuai kebutuhan
+    },
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     },

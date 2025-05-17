@@ -15,11 +15,11 @@
       <!-- Desktop Nav -->
       <nav id="navmenu" class="navmenu d-none d-xl-flex">
         <ul>
-          <li><a href="#hero" class="active">Beranda</a></li>
-          <li><a href="#about">Tentang Kami</a></li>
-          <li><a href="#services">Program Kerja</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#team">Tim</a></li>
+          <li><a href="#hero" class="active" @click.prevent="scrollTo('hero')">Beranda</a></li>
+          <li><a href="#about" @click.prevent="scrollTo('about')">Tentang Kami</a></li>
+          <li><a href="#services" @click.prevent="scrollTo('services')">Program Kerja</a></li>
+          <li><a href="#portfolio" @click.prevent="scrollTo('portfolio')">Portfolio</a></li>
+          <li><a href="#team" @click.prevent="scrollTo('team')">Tim</a></li>
           <li><router-link to="/post">Blog</router-link></li>
         </ul>
       </nav>
@@ -32,12 +32,13 @@
       >
         <ul>
           <li>
-            <a href="#hero" class="active" @click="closeMobileNav">Beranda</a>
+            <a href="#hero" class="active" @click.prevent="scrollTo('hero')" @click="closeMobileNav">Beranda</a>
           </li>
-          <li><a href="#about" @click="closeMobileNav">Tentang Kami</a></li>
-          <li><a href="#services" @click="closeMobileNav">Program Kerja</a></li>
-          <li><a href="#portfolio" @click="closeMobileNav">Portfolio</a></li>
-          <li><a href="#team" @click="closeMobileNav">Tim</a></li>
+          <li><a href="#about" @click.prevent="scrollTo('about')" @click="closeMobileNav">Tentang Kami</a></li>
+          <li><a href="#services" @click.prevent="scrollTo('services')" @click="closeMobileNav">Program Kerja</a></li>
+          <li><a href="#portfolio" @click.prevent="scrollTo('portfolio')" @click="closeMobileNav">Portfolio</a></li>
+          <li><a href="#team" @click.prevent="scrollTo('team')" @click="closeMobileNav">Tim</a></li>
+          <li><router-link to="/post">Blog</router-link></li>
         </ul>
       </nav>
 
@@ -90,6 +91,13 @@ function onScroll() {
       });
     }
   });
+}
+
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
 }
 
 onMounted(() => {
