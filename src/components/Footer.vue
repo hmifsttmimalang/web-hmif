@@ -29,11 +29,27 @@
         <div class="col-lg-2 col-6 footer-links">
           <h4>Navigasi</h4>
           <ul>
-            <li><a href="#hero">Beranda</a></li>
-            <li><a href="#about">Tentang Kami</a></li>
-            <li><a href="#services">Program Kerja</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#team">Tim</a></li>
+            <li>
+              <a href="#hero" class="active" @click.prevent="scrollTo('hero')"
+                >Beranda</a
+              >
+            </li>
+            <li>
+              <a href="#about" @click.prevent="scrollTo('about')"
+                >Tentang Kami</a
+              >
+            </li>
+            <li>
+              <a href="#services" @click.prevent="scrollTo('services')"
+                >Program Kerja</a
+              >
+            </li>
+            <li>
+              <a href="#portfolio" @click.prevent="scrollTo('portfolio')"
+                >Portfolio</a
+              >
+            </li>
+            <li><a href="#team" @click.prevent="scrollTo('team')">Tim</a></li>
           </ul>
         </div>
 
@@ -65,22 +81,67 @@
 
     <div class="container copyright text-center mt-4">
       <p>
-       2024 &copy; <span>Copyright</span>
+        2024 &copy; <span>Copyright</span>
         <strong class="px-1 sitename">HMIF SMI MALANG</strong>
       </p>
       <div class="credits">
-        Designed by <a
-              href="https://www.instagram.com/hmifsttmlg?igsh=MWZ2OXJ4NHh3cjlkZA=="
-              >HMIF SMI Malang</a>
+        Designed by
+        <a href="https://www.instagram.com/hmifsttmlg?igsh=MWZ2OXJ4NHh3cjlkZA=="
+          >HMIF SMI Malang</a
+        >
       </div>
     </div>
   </footer>
 </template>
 
-<script>
-export default {
-  name: "FooterSection",
-};
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+let sections;
+let navLinks;
+let mobileNavLinks;
+
+function onScroll() {
+  const scrollPos = window.scrollY + 200;
+  sections.forEach((section) => {
+    const top = section.offsetTop;
+    const height = section.offsetHeight;
+    const id = section.getAttribute("id");
+
+    if (scrollPos >= top && scrollPos <= top + height) {
+      navLinks.forEach((link) => link.classList.remove("active"));
+      mobileNavLinks.forEach((link) => link.classList.remove("active"));
+
+      const navLink = document.querySelector(`#navmenu a[href="#${id}"]`);
+      const mobileNavLink = document.querySelector(
+        `#mobile-navmenu a[href="#${id}"]`
+      );
+
+      if (navLink) navLink.classList.add("active");
+      if (mobileNavLink) mobileNavLink.classList.add("active");
+    }
+  });
+}
+
+onMounted(() => {
+  sections = document.querySelectorAll("section");
+  navLinks = document.querySelectorAll("#navmenu a");
+  mobileNavLinks = document.querySelectorAll("#mobile-navmenu a");
+
+  window.addEventListener("scroll", onScroll);
+  onScroll();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", onScroll);
+});
 </script>
 
 <style scoped>
