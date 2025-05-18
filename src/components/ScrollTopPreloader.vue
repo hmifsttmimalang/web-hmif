@@ -1,18 +1,15 @@
 <template>
   <div>
-    <!-- Scroll Top -->
+    <div id="preloader" v-if="loading"></div>
     <a
       href="#"
       id="scroll-top"
-      class="scroll-top d-flex align-items-center justify-content-center"
-      v-show="showScrollTop"
+      class="scroll-top"
+      :class="{ show: showScrollTop }"
       @click.prevent="scrollToTop"
     >
       <i class="bi bi-arrow-up-short"></i>
     </a>
-
-    <!-- Preloader -->
-    <div id="preloader" v-if="loading"></div>
   </div>
 </template>
 
@@ -40,11 +37,10 @@ export default {
   methods: {
     triggerPreloader() {
       this.loading = true;
-      // Simulasikan delay agar terlihat animasi preloader
       setTimeout(() => {
         this.loading = false;
-        this.scrollToTop(); // Scroll ke atas saat pindah halaman
-      }, 500); // Ubah sesuai kebutuhan
+        this.scrollToTop();
+      }, 500);
     },
     scrollToTop() {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -59,6 +55,8 @@ export default {
 <style scoped>
 #preloader {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background: white no-repeat center center;
@@ -71,10 +69,22 @@ export default {
   bottom: 15px;
   background: #0d6efd;
   color: #fff;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  z-index: 999;
-  transition: opacity 0.3s;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.scroll-top.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 </style>
