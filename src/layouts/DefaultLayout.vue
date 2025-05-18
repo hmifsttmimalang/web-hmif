@@ -14,3 +14,9 @@ export default {
   components: { HeaderDefault },
 };
 </script>
+
+<style scoped>
+main {
+  padding-top: 70px;
+}
+</style>
