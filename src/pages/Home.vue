@@ -5,7 +5,7 @@
     <ServicesSection />
     <MoreServicesSection />
     <PortfolioSection />
-    <TeamSection />
+    <!-- <TeamSection /> -->
     <Footer />
   </LandingLayout>
 </template>
@@ -16,7 +16,7 @@ import AboutSection from "../components/AboutSection.vue";
 import ServicesSection from "../components/ServicesSection.vue";
 import MoreServicesSection from "../components/MoreServicesSection.vue";
 import PortfolioSection from "../components/PortfolioSection.vue";
-import TeamSection from "../components/TeamSection.vue";
+// import TeamSection from "../components/TeamSection.vue";
 import Footer from "../components/Footer.vue";
 import LandingLayout from "../layouts/LandingLayout.vue";
 
@@ -28,7 +28,7 @@ export default {
     ServicesSection,
     MoreServicesSection,
     PortfolioSection,
-    TeamSection,
+    // TeamSection,
     Footer,
   },
 };

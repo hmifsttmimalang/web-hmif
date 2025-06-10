@@ -19,7 +19,7 @@
           <li><a href="#about" @click.prevent="scrollTo('about')">Tentang Kami</a></li>
           <li><a href="#services" @click.prevent="scrollTo('services')">Program Kerja</a></li>
           <li><a href="#portfolio" @click.prevent="scrollTo('portfolio')">Portfolio</a></li>
-          <li><a href="#team" @click.prevent="scrollTo('team')">Tim</a></li>
+          <!-- <li><a href="#team" @click.prevent="scrollTo('team')">Tim</a></li> -->
           <li><router-link to="/post">Blog</router-link></li>
         </ul>
       </nav>

@@ -49,7 +49,7 @@
                 >Portfolio</a
               >
             </li>
-            <li><a href="#team" @click.prevent="scrollTo('team')">Tim</a></li>
+            <!-- <li><a href="#team" @click.prevent="scrollTo('team')">Tim</a></li> -->
           </ul>
         </div>
 
