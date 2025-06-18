@@ -192,6 +192,7 @@
                                 <table class="table table-bordered table-hover">
                                     <tr>
                                         <td>No</td>
+                                        <td>NIM</td>
                                         <td>Nama</td>
                                         <td>Alamat</td>
                                         <td>Prodi</td>
@@ -203,6 +204,7 @@
                                     </tr>
                                     <tr>
                                         <td>1</td>
+                                        <td>423025</td>
                                         <td>Adi Chandra</td>
                                         <td>Jl. Dieng Atas</td>
                                         <td>Teknik Informatika</td>
@@ -216,6 +218,7 @@
                                     </tr>
                                     <tr>
                                         <td>2</td>
+                                        <td>423025</td>
                                         <td>Ardiansyah</td>
                                         <td>Jl. Candi Panggung</td>
                                         <td>Mobile Developer</td>
@@ -229,6 +232,7 @@
                                     </tr>
                                     <tr>
                                         <td>3</td>
+                                        <td>423025</td>
                                         <td>Aventus Akong</td>
                                         <td>Jl. Candi Panggung Atas</td>
                                         <td>Backend Developer</td>

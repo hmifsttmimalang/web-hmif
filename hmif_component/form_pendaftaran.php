@@ -93,6 +93,11 @@
                                             <textarea name="alamat" id="alamat" class="form-control" required></textarea>
                                         </div>
 
+                                         <div class="form-group">
+                                            <label for="nim">NIM</label>
+                                            <input type="number" name="nim" class="form-control" id="nim" placeholder="Masukkan NIM Lengkap Anda..." required>
+                                        </div>
+
                                         <div class="form-group">
                                             <label for="asal_prodi">Asal Prodi</label>
                                             <select name="keahlian" id="keahlian" class="form-control" required>
