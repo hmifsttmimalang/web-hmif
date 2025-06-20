@@ -9,11 +9,8 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        // Cek email
-        $loginField = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL);
-
         $credentials = [
-            $loginField => $request->input('email'),
+            'email' => $request->input('email'),
             'password' => $request->input('password'),
         ];
 
