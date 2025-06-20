@@ -8,7 +8,7 @@
 
               <div class="d-flex justify-content-center py-4">
                 <router-link to="/" class="logo d-flex align-items-center w-auto">
-                  <img src="@/assets/img/logo_hmif.jpg" alt="" width="50">
+                  <img src="@/assets/img/logo_hmif.jpg" alt="Logo HMIF" width="50">
                   <span class="d-none d-lg-block">HMIF SMI MALANG</span>
                 </router-link>
               </div>
@@ -30,13 +30,13 @@
                       </div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 mt-3 mb-3">
                       <label for="password" class="form-label">Password</label>
                       <input type="password" v-model="form.password" class="form-control" id="password" required>
                       <div class="invalid-feedback">Harap masukkan password!</div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 mb-3">
                       <div class="form-check">
                         <input class="form-check-input" type="checkbox" v-model="form.remember" id="rememberMe">
                         <label class="form-check-label" for="rememberMe">Saya ingat</label>
