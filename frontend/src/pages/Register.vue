@@ -174,7 +174,21 @@
 
 <script setup>
 import { ref, reactive } from "vue";
-import '@/assets/css/sb-admin-2.css';
+import { onMounted, onUnmounted } from "vue";
+
+onMounted(() => {
+  const registerStylesheet = document.createElement("link");
+  registerStylesheet.rel = "stylesheet";
+  registerStylesheet.href = "/assets/css/sb-admin-2.css";
+  document.head.appendChild(registerStylesheet);
+});
+
+onUnmounted(() => {
+  const registerStylesheet = document.querySelector('link[href="/assets/css/sb-admin-2.css"]');
+  if (registerStylesheet) {
+    document.head.removeChild(registerStylesheet);
+  }
+});
 
 const form = reactive({
   nama: "",

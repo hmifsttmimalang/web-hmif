@@ -67,36 +67,46 @@
 
 <script setup>
 import { ref, reactive } from "vue";
+import { onMounted, onUnmounted } from "vue";
+import axios from "@/axios";
+import '@/assets/js/sb-admin-2.min.js';
+
+onMounted(() => {
+  const loginStylesheet = document.createElement("link");
+  loginStylesheet.rel = "stylesheet";
+  loginStylesheet.href = "/assets/css/sb-admin-2.css";
+  document.head.appendChild(loginStylesheet);
+});
+
+onUnmounted(() => {
+  const loginStylesheet = document.querySelector('link[href="/assets/css/sb-admin-2.css"]');
+  if (loginStylesheet) {
+    document.head.removeChild(loginStylesheet);
+  }
+});
 
 const form = reactive({
   email: "",
   password: "",
-  remember: false
+  remember: false,
 });
 const error = ref("");
 
 async function login() {
   error.value = "";
   try {
-    await fetch("/sanctum/csrf-cookie", { credentials: "include" });
+    await axios.get("/sanctum/csrf-cookie");
 
-    const res = await fetch("/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        email: form.email,
-        password: form.password,
-        remember: form.remember
-      })
+    const res = await axios.post("/login", {
+      email: form.email,
+      password: form.password,
+      remember: form.remember,
     });
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message || "Login gagal.");
-    }
+
+    const data = res.data;
     window.location.href = "/dashboard";
   } catch (e) {
-    error.value = e.message;
+    error.value = e.response?.data?.message || "Login gagal.";
   }
 }
 </script>
