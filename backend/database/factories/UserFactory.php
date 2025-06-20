@@ -3,42 +3,43 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $gender = $this->faker->randomElement(['L', 'P']);
+        $prodi = $this->faker->randomElement([
+            'Teknik Informatika',
+            'Teknik Sipil',
+            'Digital Arsitektur',
+            'Manajemen Bisnis',
+            'Manajemen Keuangan',
+            'Manajemen Perkantoran',
+            'Manajemen Komunikasi',
+            'Multimedia Broadcasting',
+            'Desain Grafis'
+        ]);
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'nama' => $this->faker->name($gender === 'L' ? 'male' : 'female'),
+            'tempat_lahir' => $this->faker->city,
+            'tanggal_lahir' => $this->faker->date(),
+            'jenis_kelamin' => $gender,
+            'agama' => $this->faker->randomElement(['islam', 'kristen', 'katolik', 'hindu', 'buddha', 'konghucu']),
+            'alamat' => $this->faker->address,
+            'nim' => $this->faker->unique()->numerify('##########'),
+            'prodi' => $prodi,
+            'angkatan' => $this->faker->year(),
+            'alasan' => $this->faker->sentence(),
+            'foto' => 'default.jpg', // Gambar default, atau random image kalau mau
+            'email' => $this->faker->unique()->safeEmail(),
+            'telepon' => $this->faker->phoneNumber,
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => Hash::make('password'), // password default: "password"
+            'role' => 'user',
             'remember_token' => Str::random(10),
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
     }
 }

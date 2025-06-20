@@ -8,4 +8,12 @@ export default defineConfig({
       '@': '/src',
     },
   },
+  server: {
+    proxy: {
+      '/login': 'http://localhost:8000',
+      '/logout': 'http://localhost:8000',
+      '/sanctum': 'http://localhost:8000',
+      '/api': 'http://localhost:8000',
+    },
+  },
 })

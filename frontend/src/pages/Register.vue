@@ -46,9 +46,9 @@
                           <option value="">Pilih Agama</option>
                           <option value="islam">Islam</option>
                           <option value="kristen">Kristen</option>
-                          <option value="katholik">Katolik</option>
+                          <option value="katolik">Katolik</option>
                           <option value="hindu">Hindu</option>
-                          <option value="budha">Budha</option>
+                          <option value="buddha">Buddha</option>
                           <option value="konghucu">Konghucu</option>
                         </select>
                       </div>
