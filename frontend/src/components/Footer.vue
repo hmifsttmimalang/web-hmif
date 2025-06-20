@@ -12,17 +12,10 @@
             didirikan pada 13 Oktober 2013.
           </p>
           <div class="social-links d-flex mt-4">
-            <a href="https://x.com/hmifsttmalang?t=HZ0ZHEsK1a1QEHm64umkKw&s=09"
-              ><i class="bi bi-twitter-x"></i
-            ></a>
-            <a
-              href="https://www.facebook.com/groups/hmifsttmalang/?ref=share&mibextid=NSMWBT"
-              ><i class="bi bi-facebook"></i
-            ></a>
-            <a
-              href="https://www.instagram.com/hmifsttmlg?igsh=MWZ2OXJ4NHh3cjlkZA=="
-              ><i class="bi bi-instagram"></i
-            ></a>
+            <a href="https://x.com/hmifsttmalang?t=HZ0ZHEsK1a1QEHm64umkKw&s=09"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/groups/hmifsttmalang/?ref=share&mibextid=NSMWBT"><i
+                class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/hmifsttmlg?igsh=MWZ2OXJ4NHh3cjlkZA=="><i class="bi bi-instagram"></i></a>
           </div>
         </div>
 
@@ -30,26 +23,19 @@
           <h4>Navigasi</h4>
           <ul>
             <li>
-              <a href="#hero" class="active" @click.prevent="scrollTo('hero')"
-                >Beranda</a
-              >
+              <a href="#hero" class="active" @click.prevent="scrollTo('hero')">Beranda</a>
             </li>
             <li>
-              <a href="#about" @click.prevent="scrollTo('about')"
-                >Tentang Kami</a
-              >
+              <a href="#about" @click.prevent="scrollTo('about')">Tentang Kami</a>
             </li>
             <li>
-              <a href="#services" @click.prevent="scrollTo('services')"
-                >Program Kerja</a
-              >
+              <a href="#services" @click.prevent="scrollTo('services')">Program Kerja</a>
             </li>
             <li>
-              <a href="#portfolio" @click.prevent="scrollTo('portfolio')"
-                >Portfolio</a
-              >
+              <a href="#portfolio" @click.prevent="scrollTo('portfolio')">Portfolio</a>
             </li>
             <!-- <li><a href="#team" @click.prevent="scrollTo('team')">Tim</a></li> -->
+            <li><router-link to="/post">Blog</router-link></li>
           </ul>
         </div>
 
@@ -64,9 +50,7 @@
           </ul>
         </div>
 
-        <div
-          class="col-lg-3 col-md-12 footer-contact text-center text-md-start"
-        >
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
           <h4>Kontak Kami</h4>
           <p>Jl. Candi Panggung Bar. No.48</p>
           <p>Mojolangu, Kec. Lowokwaru</p>
@@ -86,9 +70,7 @@
       </p>
       <div class="credits">
         Designed by
-        <a href="https://www.instagram.com/hmifsttmlg?igsh=MWZ2OXJ4NHh3cjlkZA=="
-          >HMIF SMI Malang</a
-        >
+        <a href="https://www.instagram.com/hmifsttmlg?igsh=MWZ2OXJ4NHh3cjlkZA==">HMIF SMI Malang</a>
       </div>
     </div>
   </footer>
@@ -149,19 +131,24 @@ onBeforeUnmount(() => {
   color: #fff;
   padding: 60px 0;
 }
+
 .footer a {
   text-decoration: none;
 }
+
 .footer a:hover {
   text-decoration: underline;
 }
+
 .footer .logo {
   font-size: 24px;
   font-weight: bold;
 }
+
 .footer .logo img {
   max-height: 40px;
 }
+
 .footer .social-links a {
   margin: 0 10px;
   color: #fff;

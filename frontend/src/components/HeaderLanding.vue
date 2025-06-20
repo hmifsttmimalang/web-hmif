@@ -1,11 +1,6 @@
 <template>
-  <header
-    id="header"
-    class="header d-flex align-items-center fixed-top bg-white shadow-sm"
-  >
-    <div
-      class="container-fluid container-xl d-flex align-items-center justify-content-between position-relative"
-    >
+  <header id="header" class="header d-flex align-items-center fixed-top bg-white shadow-sm">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between position-relative">
       <!-- Logo -->
       <a href="/" class="logo d-flex align-items-center">
         <img src="/assets/img/logo_hmif.jpg" alt="Logo HMIF STT MALANG" />
@@ -21,15 +16,21 @@
           <li><a href="#portfolio" @click.prevent="scrollTo('portfolio')">Portfolio</a></li>
           <!-- <li><a href="#team" @click.prevent="scrollTo('team')">Tim</a></li> -->
           <li><router-link to="/post">Blog</router-link></li>
+          <li v-if="!currentUser"><router-link to="/login">Login</router-link></li>
+          <li v-else class="dropdown">
+            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button">
+              {{ currentUser.name || currentUser.nama }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><router-link to="/dashboard">Dashboard</router-link></li>
+              <li><a href="/logout" @click.prevent="logout">Logout</a></li>
+            </ul>
+          </li>
         </ul>
       </nav>
 
       <!-- Mobile Nav -->
-      <nav
-        id="mobile-navmenu"
-        class="navmenu-mobile d-xl-none"
-        :class="{ 'navmenu-active': isMobileNavActive }"
-      >
+      <nav id="mobile-navmenu" class="navmenu-mobile d-xl-none" :class="{ 'navmenu-active': isMobileNavActive }">
         <ul>
           <li>
             <a href="#hero" class="active" @click.prevent="scrollTo('hero')" @click="closeMobileNav">Beranda</a>
@@ -39,15 +40,22 @@
           <li><a href="#portfolio" @click.prevent="scrollTo('portfolio')" @click="closeMobileNav">Portfolio</a></li>
           <li><a href="#team" @click.prevent="scrollTo('team')" @click="closeMobileNav">Tim</a></li>
           <li><router-link to="/post">Blog</router-link></li>
+          <li v-if="!currentUser"><router-link to="/login">Login</router-link></li>
+          <li v-else class="dropdown">
+            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button">
+              {{ currentUser.name || currentUser.nama }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><router-link to="/dashboard">Dashboard</router-link></li>
+              <li><a href="/logout" @click.prevent="logout">Logout</a></li>
+            </ul>
+          </li>
         </ul>
       </nav>
 
       <!-- Mobile Nav Toggle Button -->
-      <i
-        class="mobile-nav-toggle d-xl-none bi"
-        :class="isMobileNavActive ? 'bi-x' : 'bi-list'"
-        @click="toggleMobileNav"
-      ></i>
+      <i class="mobile-nav-toggle d-xl-none bi" :class="isMobileNavActive ? 'bi-x' : 'bi-list'"
+        @click="toggleMobileNav"></i>
     </div>
   </header>
 </template>
@@ -56,6 +64,7 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const isMobileNavActive = ref(false);
+const currentUser = ref(null);
 let sections;
 let navLinks;
 let mobileNavLinks;
@@ -100,12 +109,22 @@ function scrollTo(id) {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   sections = document.querySelectorAll("section");
   navLinks = document.querySelectorAll("#navmenu a");
   mobileNavLinks = document.querySelectorAll("#mobile-navmenu a");
   window.addEventListener("scroll", onScroll);
   onScroll();
+
+  try {
+    const res = await fetch("/api/user", { credentials: "include" });
+    if (res.ok) {
+      const data = await res.json();
+      currentUser.value = data;
+    }
+  } catch (err) {
+    currentUser.value = null;
+  }
 });
 
 onBeforeUnmount(() => {
