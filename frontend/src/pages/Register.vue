@@ -174,7 +174,7 @@
 
 <script setup>
 import { ref, reactive } from "vue";
-import '../assets/css/sb-admin-2.css';
+import '@/assets/css/sb-admin-2.css';
 
 const form = reactive({
   nama: "",
