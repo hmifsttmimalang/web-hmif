@@ -106,7 +106,7 @@ onMounted(async () => {
   onScroll();
 
   try {
-    const res = await fetch("/api/user", { credentials: "include" });
+    const res = await fetch("/user", { credentials: "include" });
     if (res.ok) {
       const data = await res.json();
       currentUser.value = data;
