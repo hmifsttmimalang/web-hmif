@@ -25,7 +25,7 @@ class PendaftaranController extends Controller
             'email' => 'required|email|unique:users,email',
             'telepon' => 'required|string',
             'password' => 'required|string|min:6',
-            'foto' => 'required|image|max:10240', // Maksimal 10MB
+            'foto' => 'required|image|max:10240',
             'terms' => 'accepted',
         ]);
 
