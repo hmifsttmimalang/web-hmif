@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../pages/Home.vue";
 import BlogPost from "../pages/BlogPost.vue";
-import Register from "../pages/Register.vue";
-import Login from "../pages/Login.vue";
-import User from "../pages/User.vue";
+import Register from "../pages/auth/Register.vue";
+import Login from "../pages/auth/Login.vue";
+import User from "../pages/user/User.vue";
+import EditProfil from "../pages/user/EditProfil.vue";
 
 const routes = [
   {
@@ -34,7 +35,13 @@ const routes = [
     path: "/dashboard",
     name: "User",
     component: User,
-    meta: { title: "HMIF SMI Malang | User" },
+    meta: { title: "User" },
+  },
+  {
+    path: "/dashboard/edit-profil",
+    name: "EditProfil",
+    component: EditProfil,
+    meta: { title: "User | Edit Profil" },
   }
 ];
 
