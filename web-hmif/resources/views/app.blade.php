@@ -25,6 +25,7 @@
 
   <title inertia>HMIF SMI Malang</title>
   @vite('resources/js/app.js')
+  @routes
 </head>
 <body>
   @inertia

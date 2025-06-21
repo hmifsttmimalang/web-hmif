@@ -1,4 +1,5 @@
 <template>
+<Head title="HMIF SMI Malang" />
   <LandingLayout>
     <HeroSection />
     <AboutSection />
@@ -11,6 +12,7 @@
 </template>
 
 <script>
+import { Head } from "@inertiajs/vue3";
 import HeroSection from "../components/HeroSection.vue";
 import AboutSection from "../components/AboutSection.vue";
 import ServicesSection from "../components/ServicesSection.vue";
@@ -22,6 +24,7 @@ import LandingLayout from "../layouts/LandingLayout.vue";
 
 export default {
   components: {
+    Head,
     LandingLayout,
     HeroSection,
     AboutSection,

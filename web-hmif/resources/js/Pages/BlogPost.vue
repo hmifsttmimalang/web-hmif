@@ -1,4 +1,5 @@
 <template>
+<Head title="Blog Post - HMIF SMI Malang" />
   <DefaultLayout>
     <div class="container mt-5">
       <div class="row">
@@ -50,11 +51,13 @@
 </template>
 
 <script>
+import { Head } from "@inertiajs/vue3";
 import DefaultLayout from "../layouts/DefaultLayout.vue";
 
 export default {
   name: "BlogPost",
   components: {
+    Head,
     DefaultLayout,
   },
 }

@@ -11,7 +11,7 @@
       <nav id="navmenu" class="navmenu d-none d-xl-flex">
         <ul>
           <li><Link href="/" :class="{ active: isActive('/') }">Beranda</Link></li>
-          <li><Link href="/post" :class="{ active: isActive('/post') }">Blog</Link></li>
+          <li><Link href="/posts" :class="{ active: isActive('/posts') }">Blog</Link></li>
         </ul>
       </nav>
 
@@ -22,7 +22,7 @@
             <Link href="/" :class="{ active: isActive('/') }" @click="closeMobileNav">Beranda</Link>
           </li>
           <li>
-            <Link href="/post" :class="{ active: isActive('/post') }" @click="closeMobileNav">Blog</Link>
+            <Link href="/posts" :class="{ active: isActive('/posts') }" @click="closeMobileNav">Blog</Link>
           </li>
         </ul>
       </nav>

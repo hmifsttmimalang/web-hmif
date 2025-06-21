@@ -11,14 +11,14 @@ import "../css/app.css";
 
 createInertiaApp({
     resolve: name => {
-        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
-        return pages[`./Pages/${name}.vue`]
+        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true });
+        const page = pages[`./Pages/${name}.vue`];
+        return page && page.default ? page.default : page;
     },
     setup({ el, App, props, plugin }) {
         const vueApp = createApp({ render: () => h(App, props) })
             .use(plugin);
 
-        // Init eksternal plugin setelah mount
         import('aos').then(AOS => {
             AOS.init();
         });
