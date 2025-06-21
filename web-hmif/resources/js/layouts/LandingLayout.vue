@@ -15,7 +15,7 @@ import ScrollTopPreloader from "../components/ScrollTopPreloader.vue";
 export default {
   components: { 
     HeaderLanding, 
-    ScrollTopPreloader 
+    ScrollTopPreloader
   },
 };
 </script>
