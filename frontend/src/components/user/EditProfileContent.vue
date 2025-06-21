@@ -99,5 +99,4 @@
             <input type="file" name="gambar" class="form-control mt-2">
         </div>
     </div>
-
 </template>
