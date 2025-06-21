@@ -41,11 +41,11 @@
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" :class="{ show: dropdownOpen }">
-                    <a class="dropdown-item" href="#">
+                    <!-- <a class="dropdown-item" href="#">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Profil
-                    </a>
-                    <div class="dropdown-divider"></div>
+                    </a> -->
+                    <!-- <div class="dropdown-divider"></div> -->
                     <a class="dropdown-item" href="#" @click.prevent="logout">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Keluar

@@ -9,6 +9,7 @@ import Admin from "../pages/admin/Admin.vue";
 import KelolaData from "../pages/admin/KelolaData.vue";
 import Anggota from "../pages/admin/Anggota.vue";
 import InfoUser from "../pages/admin/InfoUser.vue";
+import DetailAnggota from "../pages/admin/DetailAnggota.vue";
 
 const routes = [
   {
@@ -64,6 +65,13 @@ const routes = [
     name: "Anggota",
     component: Anggota,
     meta: { title: "Admin | Anggota" },
+  },
+  {
+    path: "/admin/anggota/:id",
+    name: "DetailAnggota",
+    component: DetailAnggota,
+    props: true,
+    meta: { title: "Admin | Detail Anggota" },
   },
   {
     path: "/admin/info-user",

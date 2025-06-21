@@ -1,11 +1,11 @@
 <template>
     <router-view />
     <DashAdminLayout>
-        <InfoUserContent />
+        <DetailAnggotaContent />
     </DashAdminLayout>
 </template>
 
 <script setup>
 import DashAdminLayout from '@/layouts/DashAdminLayout.vue';
-import InfoUserContent from '@/components/admin/info-user/InfoUserContent.vue';
+import DetailAnggotaContent from '@/components/admin/anggota/DetailAnggotaContent.vue';
 </script>
