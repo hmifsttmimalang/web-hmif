@@ -31,24 +31,39 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="/dashboard/edit-profil">
+                            <router-link class="dropdown-item d-flex align-items-center" to="/dashboard/edit-profil">
                                 <i class="bi bi-person"></i>
                                 <span>Edit Profil</span>
-                            </a>
+                            </router-link>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="/logout">
+                            <router-link class="dropdown-item d-flex align-items-center" to="#" @click.prevent="logout">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Keluar</span>
-                            </a>
+                            </router-link>
                         </li>
-
                     </ul>
                 </li>
             </ul>
         </nav>
     </header>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router';
+import axios from '@/axios';
+
+const router = useRouter();
+
+async function logout() {
+    try {
+        await axios.post('/logout');
+        router.push('/login');
+    } catch (error) {
+        console.error('Logout gagal:', error);
+    }
+}
+</script>
