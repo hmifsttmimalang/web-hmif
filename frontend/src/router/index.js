@@ -5,6 +5,10 @@ import Register from "../pages/auth/Register.vue";
 import Login from "../pages/auth/Login.vue";
 import User from "../pages/user/User.vue";
 import EditProfil from "../pages/user/EditProfil.vue";
+import Admin from "../pages/admin/Admin.vue";
+import KelolaData from "../pages/admin/KelolaData.vue";
+import Anggota from "../pages/admin/Anggota.vue";
+import InfoUser from "../pages/admin/InfoUser.vue";
 
 const routes = [
   {
@@ -42,6 +46,30 @@ const routes = [
     name: "EditProfil",
     component: EditProfil,
     meta: { title: "User | Edit Profil" },
+  },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: Admin,
+    meta: { title: "Admin" },
+  },
+  {
+    path: "/admin/kelola-data",
+    name: "KelolaData",
+    component: KelolaData,
+    meta: { title: "Admin | Kelola Data" },
+  },
+  {
+    path: "/admin/anggota",
+    name: "Anggota",
+    component: Anggota,
+    meta: { title: "Admin | Anggota" },
+  },
+  {
+    path: "/admin/info-user",
+    name: "InfoUser",
+    component: InfoUser,
+    meta: { title: "Admin | Info Anggota Baru" },
   }
 ];
 
