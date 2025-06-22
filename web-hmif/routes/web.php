@@ -37,4 +37,30 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/edit-profil/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/admin', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('admin.dashboard');
+    Route::get('/admin/kelola-data', function () {
+        return Inertia::render('Admin/KelolaData', [
+            'currentUser' => Auth::user(),
+        ]);
+    })->name('admin.kelola-data');
+    Route::get('/admin/anggota', function () {
+        return Inertia::render('Admin/Anggota', [
+            'currentUser' => Auth::user(),
+        ]);
+    })->name('admin.kelola-data.anggota');
+    Route::get('/admin/anggota/{id}', function () {
+        return Inertia::render('Admin/DetailAnggota', [
+            'currentUser' => Auth::user(),
+        ]);
+    })->name('admin.kelola-data.detail-anggota');
+    Route::get('/admin/info-user', function () {
+        return Inertia::render('Admin/InfoUser', [
+            'currentUser' => Auth::user(),
+        ]);
+    })->name('admin.kelola-data.info-user');
+});
+
 require __DIR__ . '/auth.php';
