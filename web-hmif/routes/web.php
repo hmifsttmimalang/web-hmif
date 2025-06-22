@@ -3,7 +3,6 @@
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\PendaftaranController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -63,5 +62,3 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ]);
     })->name('admin.kelola-data.info-user');
 });
-
-require __DIR__ . '/auth.php';
