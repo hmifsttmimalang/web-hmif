@@ -17,6 +17,9 @@ Route::get('/', function () {
 // Route::get('/posts', function () {
 //     return Inertia::render('BlogPost');
 // });
+Route::get('/unauthorized', function () {
+    return inertia('Unauthorized');
+})->name('unauthorized');
 
 Route::get('/login', function () {
     return Inertia::render('auth/Login');
@@ -37,7 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/edit-profil/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('admin.dashboard');
