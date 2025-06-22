@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminAnggotaController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\PendaftaranController;
+use App\Http\Controllers\KelolaAnggotaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -43,11 +44,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/kelola-data', function () {
-        return Inertia::render('Admin/KelolaData', [
-            'currentUser' => Auth::user(),
-        ]);
-    })->name('admin.kelola-data');
+    Route::get('/admin/kelola-data', [KelolaAnggotaController::class, 'index'])->name('admin.kelola-data');
     Route::get('/admin/anggota', [AdminAnggotaController::class, 'index'])->name('admin.kelola-data.anggota');
     Route::get('/admin/anggota/{id}', function () {
         return Inertia::render('Admin/DetailAnggota', [
