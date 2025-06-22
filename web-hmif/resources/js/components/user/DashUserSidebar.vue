@@ -4,13 +4,11 @@ import { Link, router, usePage } from "@inertiajs/vue3";
 import { route as ziggyRoute } from "ziggy-js";
 import LogoutUserModal from "@/components/ui/LogoutUserModal.vue";
 
-// Dapatkan current path
 const page = usePage();
 const currentUrl = computed(() => page.url);
 const showLogout = ref(false);
 const currentUser = computed(() => page.props.currentUser || {});
 
-// Logout function pakai inertia
 function logout() {
     router.post(ziggyRoute("logout"));
 }
