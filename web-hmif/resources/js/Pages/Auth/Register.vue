@@ -246,7 +246,7 @@ function submit() {
     return;
   }
 
-  form.post(route('pendaftaran.store'), {
+  form.post(route('register.store'), {
     forceFormData: true,
     onSuccess: () => {
       form.reset();
