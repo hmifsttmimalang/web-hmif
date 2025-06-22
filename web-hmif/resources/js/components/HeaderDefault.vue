@@ -12,6 +12,18 @@
         <ul>
           <li><Link href="/" :class="{ active: isActive('/') }">Beranda</Link></li>
           <li><Link href="/posts" :class="{ active: isActive('/posts') }">Blog</Link></li>
+          <li v-if="!currentUser">
+            <Link href="/login" :class="{ active: isActive('/login') }">Login</Link>
+          </li>
+          <li v-else class="dropdown user-dropdown-desktop" :class="{ show: desktopDropdownOpen }">
+            <a href="#" class="dropdown-toggle" @click="toggleDropdown(false, $event)" :aria-expanded="desktopDropdownOpen" role="button">
+              {{ currentUser.name || currentUser.nama }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" :class="{ show: desktopDropdownOpen }">
+              <li><Link href="/dashboard">Dashboard</Link></li>
+              <li><a href="/logout" @click.prevent="logout">Logout</a></li>
+            </ul>
+          </li>
         </ul>
       </nav>
 
@@ -24,6 +36,18 @@
           <li>
             <Link href="/posts" :class="{ active: isActive('/posts') }" @click="closeMobileNav">Blog</Link>
           </li>
+          <li v-if="!currentUser">
+            <Link href="/login" :class="{ active: isActive('/login') }" @click="closeMobileNav">Login</Link>
+          </li>
+          <li v-else class="dropdown user-dropdown-mobile" :class="{ show: mobileDropdownOpen }">
+            <a href="#" class="dropdown-toggle" @click="toggleDropdown(true, $event)" :aria-expanded="mobileDropdownOpen" role="button">
+              {{ currentUser.nama }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" :class="{ show: mobileDropdownOpen }">
+              <li><Link href="/dashboard" @click="closeMobileNav">Dashboard</Link></li>
+              <li><a href="/logout" @click.prevent="logout">Logout</a></li>
+            </ul>
+          </li>
         </ul>
       </nav>
 
@@ -34,28 +58,66 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { Link, usePage } from "@inertiajs/vue3";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { Link, usePage, router } from "@inertiajs/vue3";
 
-// Path logo pakai BASE_URL supaya aman di subfolder/deployment manapun
 const logoUrl = `${import.meta.env.BASE_URL}assets/img/logo_hmif.jpg`;
 
 const isMobileNavActive = ref(false);
 const page = usePage();
+const currentUser = computed(() => page.props.currentUser);
+
+// Pakai 2 dropdownOpen: satu buat desktop, satu buat mobile
+const desktopDropdownOpen = ref(false);
+const mobileDropdownOpen = ref(false);
+
+function toggleDropdown(isMobile = false, event) {
+  if (event) event.preventDefault();
+  if (isMobile) {
+    mobileDropdownOpen.value = !mobileDropdownOpen.value;
+  } else {
+    desktopDropdownOpen.value = !desktopDropdownOpen.value;
+  }
+}
+function closeDropdown() {
+  desktopDropdownOpen.value = false;
+  mobileDropdownOpen.value = false;
+}
+
+function handleClickOutside(event) {
+  const desktopDropdown = document.querySelector('.user-dropdown-desktop');
+  const mobileDropdown = document.querySelector('.user-dropdown-mobile');
+  if (desktopDropdown && !desktopDropdown.contains(event.target)) {
+    desktopDropdownOpen.value = false;
+  }
+  if (mobileDropdown && !mobileDropdown.contains(event.target)) {
+    mobileDropdownOpen.value = false;
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('click', handleClickOutside);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('click', handleClickOutside);
+});
 
 function toggleMobileNav() {
   isMobileNavActive.value = !isMobileNavActive.value;
+  closeDropdown();
 }
 function closeMobileNav() {
   isMobileNavActive.value = false;
+  closeDropdown();
 }
 
-// Fungsi active route manual (karena Inertia gak auto kasih class active)
 function isActive(path) {
   return page.url === path;
 }
 
-// Scroll logic tetap sama kalau butuh
+function logout() {
+  router.post("/logout");
+}
 </script>
 
 <style scoped>
@@ -133,5 +195,12 @@ a {
   font-size: 1.8rem;
   cursor: pointer;
   z-index: 1000;
+}
+
+.dropdown .dropdown-menu {
+  display: none;
+}
+.dropdown.show .dropdown-menu {
+  display: block;
 }
 </style>

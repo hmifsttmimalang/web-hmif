@@ -14,14 +14,19 @@
           <li><a href="#about" @click.prevent="scrollTo('about')">Tentang Kami</a></li>
           <li><a href="#services" @click.prevent="scrollTo('services')">Program Kerja</a></li>
           <li><a href="#portfolio" @click.prevent="scrollTo('portfolio')">Portfolio</a></li>
-          <!-- <li><a href="#team" @click.prevent="scrollTo('team')">Tim</a></li> -->
           <li><Link href="/posts">Blog</Link></li>
-          <li v-if="!currentUser"><Link href="/login">Login</Link></li>
-          <li v-else class="dropdown">
-            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button">
+          <li v-if="!currentUser">
+            <Link href="/login">Login</Link>
+          </li>
+          <li
+            v-else
+            class="dropdown user-dropdown-desktop"
+            :class="{ show: desktopDropdownOpen }"
+          >
+            <a href="#" class="dropdown-toggle" @click="toggleDropdown(false, $event)" :aria-expanded="desktopDropdownOpen" role="button">
               {{ currentUser.name || currentUser.nama }} <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" :class="{ show: desktopDropdownOpen }">
               <li><Link href="/dashboard">Dashboard</Link></li>
               <li><a href="/logout" @click.prevent="logout">Logout</a></li>
             </ul>
@@ -41,12 +46,16 @@
           <li><a href="#team" @click.prevent="scrollTo('team')" @click="closeMobileNav">Tim</a></li>
           <li><Link href="/posts">Blog</Link></li>
           <li v-if="!currentUser"><Link href="/login">Login</Link></li>
-          <li v-else class="dropdown">
-            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" role="button">
+          <li
+            v-else
+            class="dropdown user-dropdown-mobile"
+            :class="{ show: mobileDropdownOpen }"
+          >
+            <a href="#" class="dropdown-toggle" @click="toggleDropdown(true, $event)" :aria-expanded="mobileDropdownOpen" role="button">
               {{ currentUser.name || currentUser.nama }} <span class="caret"></span>
             </a>
-            <ul class="dropdown-menu">
-              <li><Link href="/dashboard">Dashboard</Link></li>
+            <ul class="dropdown-menu" :class="{ show: mobileDropdownOpen }">
+              <li><Link href="/dashboard" @click="closeMobileNav">Dashboard</Link></li>
               <li><a href="/logout" @click.prevent="logout">Logout</a></li>
             </ul>
           </li>
@@ -54,38 +63,80 @@
       </nav>
 
       <!-- Mobile Nav Toggle Button -->
-      <i class="mobile-nav-toggle d-xl-none bi" :class="isMobileNavActive ? 'bi-x' : 'bi-list'"
-        @click="toggleMobileNav"></i>
+      <i class="mobile-nav-toggle d-xl-none bi" :class="isMobileNavActive ? 'bi-x' : 'bi-list'" @click="toggleMobileNav"></i>
     </div>
   </header>
 </template>
 
 <script setup>
-import { Link, router } from '@inertiajs/vue3';
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { Link, router, usePage } from '@inertiajs/vue3';
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import logo from '@/assets/img/logo_hmif.jpg';
+
+const page = usePage();
+const currentUser = computed(() => page.props.currentUser);
+
+const isMobileNavActive = ref(false);
+const desktopDropdownOpen = ref(false);
+const mobileDropdownOpen = ref(false);
+
+// Logic SPA untuk dropdown
+function toggleDropdown(isMobile = false, event) {
+  if (event) event.preventDefault();
+  if (isMobile) {
+    mobileDropdownOpen.value = !mobileDropdownOpen.value;
+  } else {
+    desktopDropdownOpen.value = !desktopDropdownOpen.value;
+  }
+}
+function closeDropdown() {
+  desktopDropdownOpen.value = false;
+  mobileDropdownOpen.value = false;
+}
+
+function handleClickOutside(event) {
+  const desktopDropdown = document.querySelector('.user-dropdown-desktop');
+  const mobileDropdown = document.querySelector('.user-dropdown-mobile');
+  if (desktopDropdown && !desktopDropdown.contains(event.target)) {
+    desktopDropdownOpen.value = false;
+  }
+  if (mobileDropdown && !mobileDropdown.contains(event.target)) {
+    mobileDropdownOpen.value = false;
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('click', handleClickOutside);
+
+  // Scroll logic tetap
+  sections = document.querySelectorAll("section");
+  navLinks = document.querySelectorAll("#navmenu a");
+  mobileNavLinks = document.querySelectorAll("#mobile-navmenu a");
+  window.addEventListener("scroll", onScroll);
+  onScroll();
+});
+onBeforeUnmount(() => {
+  window.removeEventListener('click', handleClickOutside);
+  window.removeEventListener("scroll", onScroll);
+});
+
+function toggleMobileNav() {
+  isMobileNavActive.value = !isMobileNavActive.value;
+  closeDropdown();
+}
+function closeMobileNav() {
+  isMobileNavActive.value = false;
+  closeDropdown();
+}
 
 function logout() {
   router.post('/logout');
 }
 
-const isMobileNavActive = ref(false);
-const currentUser = ref(null);
-let sections;
-let navLinks;
-let mobileNavLinks;
-
-function toggleMobileNav() {
-  isMobileNavActive.value = !isMobileNavActive.value;
-}
-
-function closeMobileNav() {
-  isMobileNavActive.value = false;
-}
-
+// Section scroll logic tetap
+let sections, navLinks, mobileNavLinks;
 function onScroll() {
   const scrollY = window.pageYOffset;
-
   sections.forEach((section) => {
     const offsetTop = section.offsetTop - 100;
     const offsetBottom = offsetTop + section.offsetHeight;
@@ -107,25 +158,12 @@ function onScroll() {
     }
   });
 }
-
 function scrollTo(id) {
   const el = document.getElementById(id);
   if (el) {
     el.scrollIntoView({ behavior: 'smooth' });
   }
 }
-
-onMounted(() => {
-  sections = document.querySelectorAll("section");
-  navLinks = document.querySelectorAll("#navmenu a");
-  mobileNavLinks = document.querySelectorAll("#mobile-navmenu a");
-  window.addEventListener("scroll", onScroll);
-  onScroll();
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("scroll", onScroll);
-});
 </script>
 
 <style scoped>
@@ -207,4 +245,7 @@ a {
   cursor: pointer;
   z-index: 1000;
 }
+
+.dropdown .dropdown-menu { display: none; }
+.dropdown.show .dropdown-menu { display: block; }
 </style>
