@@ -33,7 +33,7 @@ class UserFactory extends Factory
             'prodi' => $prodi,
             'angkatan' => $this->faker->year(),
             'alasan' => $this->faker->sentence(),
-            'foto' => 'default.jpg', // Gambar default, atau random image kalau mau
+            'foto' => 'foto/default.jpg', // Gambar default, atau random image kalau mau
             'email' => $this->faker->unique()->safeEmail(),
             'telepon' => $this->faker->phoneNumber,
             'email_verified_at' => now(),
