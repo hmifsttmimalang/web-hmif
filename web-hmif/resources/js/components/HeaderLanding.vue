@@ -43,7 +43,7 @@
           <li><a href="#about" @click.prevent="scrollTo('about')" @click="closeMobileNav">Tentang Kami</a></li>
           <li><a href="#services" @click.prevent="scrollTo('services')" @click="closeMobileNav">Program Kerja</a></li>
           <li><a href="#portfolio" @click.prevent="scrollTo('portfolio')" @click="closeMobileNav">Portfolio</a></li>
-          <li><a href="#team" @click.prevent="scrollTo('team')" @click="closeMobileNav">Tim</a></li>
+          <!-- <li><a href="#team" @click.prevent="scrollTo('team')" @click="closeMobileNav">Tim</a></li> -->
           <!-- <li><Link href="/posts">Blog</Link></li> -->
           <li v-if="!currentUser"><Link href="/login">Login</Link></li>
           <li
