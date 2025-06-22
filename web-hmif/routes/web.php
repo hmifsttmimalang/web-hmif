@@ -3,6 +3,7 @@
 use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\AdminAnggotaController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\PendaftaranController;
 use App\Http\Controllers\KelolaAnggotaController;
@@ -25,19 +26,17 @@ Route::get('/unauthorized', function () {
     return Inertia::render('Unauthorized');
 })->name('unauthorized');
 
-Route::get('/login', function () {
-    return Inertia::render('Auth/Login');
-})->name('login');
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 Route::get('/register', [PendaftaranController::class, 'create'])->name('register');
-
 Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
     Route::get('/dashboard/edit-profil', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/dashboard/edit-profil/update', [ProfileController::class, 'update'])->name('profile.update');
 });
