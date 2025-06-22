@@ -1,18 +1,18 @@
 <script setup>
-import { ref } from 'vue'
-import { Link, router, usePage } from '@inertiajs/vue3'
-import { route as ziggyRoute } from 'ziggy-js'
-import { computed } from 'vue'
-import LogoutUserModal from '@/components/ui/LogoutUserModal.vue'
+import { ref, computed } from "vue";
+import { Link, router, usePage } from "@inertiajs/vue3";
+import { route as ziggyRoute } from "ziggy-js";
+import LogoutUserModal from "@/components/ui/LogoutUserModal.vue";
 
 // Dapatkan current path
-const page = usePage()
-const currentUrl = computed(() => page.url)
-const showLogout = ref(false)
+const page = usePage();
+const currentUrl = computed(() => page.url);
+const showLogout = ref(false);
+const currentUser = computed(() => page.props.currentUser || {});
 
 // Logout function pakai inertia
 function logout() {
-    router.post(ziggyRoute('logout'))
+    router.post(ziggyRoute("logout"));
 }
 </script>
 
@@ -21,7 +21,10 @@ function logout() {
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
                 <Link
-                    :class="['nav-link', currentUrl === '/dashboard' ? 'active' : '']"
+                    :class="[
+                        'nav-link',
+                        currentUrl === '/dashboard' ? 'active' : '',
+                    ]"
                     href="/dashboard"
                 >
                     <i class="bi bi-grid"></i>
@@ -30,11 +33,26 @@ function logout() {
             </li>
             <li class="nav-item">
                 <Link
-                    :class="['nav-link', currentUrl === '/dashboard/edit-profil' ? 'active' : '']"
+                    :class="[
+                        'nav-link',
+                        currentUrl === '/dashboard/edit-profil' ? 'active' : '',
+                    ]"
                     href="/dashboard/edit-profil"
                 >
                     <i class="bi bi-person-fill-gear"></i>
                     <span>Edit Profil</span>
+                </Link>
+            </li>
+                        <li
+                v-if="currentUser.role === 'admin'"
+                class="nav-item"
+            >
+                <Link
+                    :class="['nav-link', currentUrl.startsWith('/admin') ? 'active' : '']"
+                    href="/admin"
+                >
+                    <i class="bi bi-shield-lock"></i>
+                    <span>Admin Dashboard</span>
                 </Link>
             </li>
             <li class="nav-item">
@@ -45,7 +63,11 @@ function logout() {
             </li>
         </ul>
     </aside>
-    <LogoutUserModal :show="showLogout" @close="showLogout = false" @logout="logout" />
+    <LogoutUserModal
+        :show="showLogout"
+        @close="showLogout = false"
+        @logout="logout"
+    />
 </template>
 
 <style scoped>
