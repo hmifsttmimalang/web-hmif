@@ -221,11 +221,11 @@ function submit() {
                 >
                     <span
                         v-if="form.processing"
-                        class="spinner-border spinner-border-sm me-2"
+                        class="spinner-border spinner-border-sm me-2 ms-2"
                     ></span>
                     Ubah
                 </button>
-                <Link href="/dashboard" class="btn btn-secondary mb-5"
+                <Link href="/dashboard" class="btn btn-secondary mb-5 ms-2"
                     >Kembali</Link
                 >
             </form>

@@ -1,14 +1,3 @@
-<template>
-    <div>
-        <DashUserHeader />
-        <DashUserSidebar />
-        <main id="main" class="main">
-            <slot />
-        </main>
-    </div>
-    <ScrollTopPreloader />
-</template>
-
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
 import DashUserHeader from '../components/user/DashUserHeader.vue';
@@ -74,3 +63,14 @@ onUnmounted(() => {
     scriptEls.length = 0;
 });
 </script>
+
+<template>
+    <div>
+        <DashUserHeader />
+        <DashUserSidebar />
+        <main id="main" class="main">
+            <slot />
+        </main>
+    </div>
+    <ScrollTopPreloader />
+</template>
