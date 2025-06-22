@@ -52,7 +52,7 @@ function logout() {
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         @click.prevent="toggleDropdown" :aria-expanded="dropdownOpen">
                         <img
-                        :src="user.foto ? `/storage/foto/${user.foto}` : '/assets2/img/profile-img.jpg'"
+                        :src="user.foto ? `/storage/${user.foto}` : '/assets2/img/default.jpg'"
                         alt="Profile"
                         class="rounded-circle"
                         />

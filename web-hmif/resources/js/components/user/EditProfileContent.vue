@@ -1,53 +1,152 @@
+<script setup>
+import { useForm, usePage, Link } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
+import { route } from "ziggy-js";
+
+// Ambil user dari props inertia (pastikan currentUser pasti ada!)
+const user = usePage().props.currentUser || {};
+
+// Inisialisasi form dengan fallback "" (biar ga null/undefined)
+const form = useForm({
+    nama: user.nama || "",
+    tempat_lahir: user.tempat_lahir || "",
+    tanggal_lahir: user.tanggal_lahir || "",
+    jenis_kelamin: user.jenis_kelamin || "",
+    agama: user.agama || "",
+    alamat: user.alamat || "",
+    email: user.email || "",
+    telepon: user.telepon || "",
+    password: "",
+    password_confirmation: "",
+    foto: null, // default: null, jangan string path!
+});
+
+// Foto preview: ambil dari user.foto (string) jika ada, atau default
+const fotoPreview = ref(
+    user.foto ? `/storage/${user.foto}` : "/assets2/img/profile-img.jpg"
+);
+
+// Ganti foto (preview dan form)
+function onFileChange(e) {
+    const file = e.target.files[0];
+    form.foto = file || null;
+    if (file) {
+        fotoPreview.value = URL.createObjectURL(file);
+    }
+}
+
+// Kalau foto direset/null, kembali ke foto asli user
+watch(
+    () => form.foto,
+    (val) => {
+        if (!val) {
+            fotoPreview.value = user.foto
+                ? `/storage/${user.foto}`
+                : "/assets2/img/profile-img.jpg";
+        }
+    }
+);
+
+function submit() {
+    form.transform(data => ({
+        ...data
+    })).post(route("profile.update"), {
+        forceFormData: true,
+        onSuccess: () => window.location.reload(),
+    });
+}
+</script>
+
 <template>
-    <!-- page title -->
     <div class="pagetitle">
         <h1>Edit Profil</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Edit Profil Peserta</li>
+                <li class="breadcrumb-item">
+                    <Link href="/">Home</Link>
+                </li>
+                <li class="breadcrumb-item active">Edit Profil Anggota</li>
             </ol>
         </nav>
     </div>
 
-    <!-- Content -->
     <div class="row">
         <div class="col-md-8">
-            <form class="user">
+            <form
+                class="user"
+                @submit.prevent="submit"
+                enctype="multipart/form-data"
+            >
                 <div class="form-group mb-3">
                     <label for="nama">Nama</label>
-                    <input type="text" name="nama" class="form-control" id="nama"
-                        placeholder="Masukkan Nama Lengkap Anda...">
+                    <input
+                        type="text"
+                        v-model="form.nama"
+                        class="form-control"
+                        id="nama"
+                        placeholder="Masukkan Nama Lengkap Anda..."
+                    />
+                    <div class="text-danger" v-if="form.errors.nama">
+                        {{ form.errors.nama }}
+                    </div>
                 </div>
-
                 <div class="form-group row mb-3">
                     <div class="col-md-6">
                         <label for="tempat_lahir">Tempat Lahir</label>
-                        <input type="text" name="tempat_lahir" class="form-control" id="tempat_lahir"
-                            placeholder="Tempat Lahir Anda...">
+                        <input
+                            type="text"
+                            v-model="form.tempat_lahir"
+                            class="form-control"
+                            id="tempat_lahir"
+                            placeholder="Tempat Lahir Anda..."
+                        />
                     </div>
                     <div class="col-md-6">
                         <label for="tanggal_lahir">Tanggal Lahir</label>
-                        <input type="date" name="tanggal_lahir" class="form-control" id="tanggal_lahir"
-                            placeholder="Tanggal Lahir Anda...">
+                        <input
+                            type="date"
+                            v-model="form.tanggal_lahir"
+                            class="form-control"
+                            id="tanggal_lahir"
+                            placeholder="Tanggal Lahir Anda..."
+                        />
                     </div>
                 </div>
-
                 <div class="form-group row mb-3">
                     <div class="col-md-6">
-                        <label for="jenis_kelamin">Jenis Kelamin</label>
+                        <label>Jenis Kelamin</label>
                         <div class="form-check">
-                            <input type="radio" name="jenis_kelamin" value="L" class="form-check-input" id="laki">
-                            <label for="laki" class="form-check-label">Laki-Laki</label>
+                            <input
+                                type="radio"
+                                v-model="form.jenis_kelamin"
+                                value="L"
+                                class="form-check-input"
+                                id="laki"
+                            />
+                            <label for="laki" class="form-check-label"
+                                >Laki-Laki</label
+                            >
                         </div>
                         <div class="form-check">
-                            <input type="radio" name="jenis_kelamin" value="P" class="form-check-input" id="perempuan">
-                            <label for="perempuan" class="form-check-label">Perempuan</label>
+                            <input
+                                type="radio"
+                                v-model="form.jenis_kelamin"
+                                value="P"
+                                class="form-check-input"
+                                id="perempuan"
+                            />
+                            <label for="perempuan" class="form-check-label"
+                                >Perempuan</label
+                            >
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="agama">Agama</label>
-                        <select name="agama" id="agama" class="form-control">
+                        <select
+                            v-model="form.agama"
+                            id="agama"
+                            class="form-control"
+                        >
                             <option value="">Pilih Agama</option>
                             <option value="islam">Islam</option>
                             <option value="kristen">Kristen</option>
@@ -58,45 +157,89 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="form-group mb-3">
                     <label for="alamat">Alamat</label>
-                    <textarea name="alamat" id="alamat" class="form-control"></textarea>
+                    <textarea
+                        v-model="form.alamat"
+                        id="alamat"
+                        class="form-control"
+                    ></textarea>
                 </div>
-
                 <div class="form-group row mb-3">
                     <div class="col-md-6">
                         <label for="email">Email</label>
-                        <input type="email" name="email" class="form-control" id="email"
-                            placeholder="Email Aktif Anda...">
+                        <input
+                            type="email"
+                            v-model="form.email"
+                            class="form-control"
+                            id="email"
+                            placeholder="Email Aktif Anda..."
+                        />
                     </div>
                     <div class="col-md-6">
                         <label for="telepon">Telepon</label>
-                        <input type="text" name="telepon" class="form-control" id="telepon"
-                            placeholder="No Telepon Anda...">
+                        <input
+                            type="text"
+                            v-model="form.telepon"
+                            class="form-control"
+                            id="telepon"
+                            placeholder="No Telepon Anda..."
+                        />
                     </div>
                 </div>
-
                 <div class="form-group row mb-4">
                     <div class="col-md-6">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" class="form-control" id="password"
-                            placeholder="Masukkan Password Anda...">
+                        <label for="password">Password Baru</label>
+                        <input
+                            type="password"
+                            v-model="form.password"
+                            class="form-control"
+                            id="password"
+                            placeholder="Masukkan Password Baru..."
+                        />
+                        <div class="text-danger" v-if="form.errors.password">
+                            {{ form.errors.password }}
+                        </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="konfirmasi_password">Ulangi Password</label>
-                        <input type="password" name="password" class="form-control" id="konfirmasi_password"
-                            placeholder="Ulangi Password Anda...">
+                        <label for="password_confirmation"
+                            >Ulangi Password</label
+                        >
+                        <input
+                            type="password"
+                            v-model="form.password_confirmation"
+                            class="form-control"
+                            id="password_confirmation"
+                            placeholder="Ulangi Password Anda..."
+                        />
                     </div>
                 </div>
-
-                <button type="submit" name="simpan" class="btn btn-primary mb-5">Ubah</button>
-                <router-link to="/dashboard" class="btn btn-secondary mb-5">Kembali</router-link>
+                <button
+                    type="submit"
+                    class="btn btn-primary mb-5"
+                    :disabled="form.processing"
+                >
+                    <span
+                        v-if="form.processing"
+                        class="spinner-border spinner-border-sm me-2"
+                    ></span>
+                    Ubah
+                </button>
+                <Link href="/dashboard" class="btn btn-secondary mb-5"
+                    >Kembali</Link
+                >
             </form>
         </div>
         <div class="col-md-4">
-            <img src="/assets2/img/profile-img.jpg" alt="foto profil" class="img-fluid">
-            <input type="file" name="gambar" class="form-control mt-2">
+            <img :src="fotoPreview" alt="foto profil" class="img-fluid" />
+            <input
+                type="file"
+                @change="onFileChange"
+                class="form-control mt-2"
+            />
         </div>
+    </div>
+    <div v-if="form.recentlySuccessful" class="alert alert-success">
+        Berhasil disimpan!
     </div>
 </template>
