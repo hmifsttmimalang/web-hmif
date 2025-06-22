@@ -1,69 +1,3 @@
-<script setup>
-import { onMounted, onUnmounted } from "vue";
-import { Head, Link, useForm } from '@inertiajs/vue3'
-import { ref } from "vue"
-import { route } from 'ziggy-js'
-
-onMounted(() => {
-  const registerStylesheet = document.createElement("link");
-  registerStylesheet.rel = "stylesheet";
-  registerStylesheet.href = "/assets/css/sb-admin-2.css";
-  document.head.appendChild(registerStylesheet);
-});
-
-onUnmounted(() => {
-  const registerStylesheet = document.querySelector('link[href="/assets/css/sb-admin-2.css"]');
-  if (registerStylesheet) {
-    document.head.removeChild(registerStylesheet);
-  }
-});
-
-const showModal = ref(false);
-
-const form = useForm({
-  nama: "",
-  tempat_lahir: "",
-  tanggal_lahir: "",
-  jenis_kelamin: "",
-  agama: "",
-  alamat: "",
-  nim: "",
-  prodi: "",
-  angkatan: "",
-  alasan: "",
-  email: "",
-  telepon: "",
-  password: "",
-  konfirmasi_password: "",
-  terms: false,
-  foto: null,
-});
-
-function onFileChange(e) {
-  form.foto = e.target.files[0];
-}
-
-function submit() {
-  // Validasi lokal (bisa dihapus kalau semua di-backend)
-  if (form.password !== form.konfirmasi_password) {
-    form.errors.konfirmasi_password = "Password dan Konfirmasi password tidak sama!";
-    return;
-  }
-  if (!form.terms) {
-    form.errors.terms = "Anda harus menyetujui syarat dan ketentuan.";
-    return;
-  }
-
-  form.post(route('pendaftaran.store'), {
-    forceFormData: true,
-    onSuccess: () => {
-      // Reset atau tampilkan notifikasi sukses di sini
-      form.reset();
-    },
-  });
-}
-</script>
-
 <template>
   <Head title="Registrasi Anggota HMIF" />
   <div class="container">
@@ -194,9 +128,9 @@ function submit() {
                         <div class="invalid-feedback d-block" v-if="form.errors.password">{{ form.errors.password }}</div>
                       </div>
                       <div class="col-md-6">
-                        <label for="konfirmasi_password">Konfirmasi Password</label>
-                        <input type="password" v-model="form.konfirmasi_password" class="form-control" id="konfirmasi_password" required placeholder="Konfirmasi Password Anda..." />
-                        <div class="invalid-feedback d-block" v-if="form.errors.konfirmasi_password">{{ form.errors.konfirmasi_password }}</div>
+                        <label for="password_confirmation">Konfirmasi Password</label>
+                        <input type="password" v-model="form.password_confirmation" class="form-control" id="password_confirmation" required placeholder="Konfirmasi Password Anda..." />
+                        <div class="invalid-feedback d-block" v-if="form.errors.password_confirmation">{{ form.errors.password_confirmation }}</div>
                       </div>
                     </div>
                     <!-- Syarat & Ketentuan -->
@@ -256,3 +190,67 @@ function submit() {
     </div>
   </div>
 </template>
+
+<script setup>
+import { onMounted, onUnmounted } from "vue";
+import { Head, Link, useForm } from '@inertiajs/vue3'
+import { ref } from "vue"
+import { route } from 'ziggy-js'
+
+onMounted(() => {
+  const registerStylesheet = document.createElement("link");
+  registerStylesheet.rel = "stylesheet";
+  registerStylesheet.href = "/assets/css/sb-admin-2.css";
+  document.head.appendChild(registerStylesheet);
+});
+
+onUnmounted(() => {
+  const registerStylesheet = document.querySelector('link[href="/assets/css/sb-admin-2.css"]');
+  if (registerStylesheet) {
+    document.head.removeChild(registerStylesheet);
+  }
+});
+
+const showModal = ref(false);
+
+const form = useForm({
+  nama: "",
+  tempat_lahir: "",
+  tanggal_lahir: "",
+  jenis_kelamin: "",
+  agama: "",
+  alamat: "",
+  nim: "",
+  prodi: "",
+  angkatan: "",
+  alasan: "",
+  email: "",
+  telepon: "",
+  password: "",
+  password_confirmation: "",
+  terms: false,
+  foto: null,
+});
+
+function onFileChange(e) {
+  form.foto = e.target.files[0];
+}
+
+function submit() {
+  if (form.password !== form.password_confirmation) {
+    form.errors.password_confirmation = "Password dan Konfirmasi password tidak sama!";
+    return;
+  }
+  if (!form.terms) {
+    form.errors.terms = "Anda harus menyetujui syarat dan ketentuan.";
+    return;
+  }
+
+  form.post(route('pendaftaran.store'), {
+    forceFormData: true,
+    onSuccess: () => {
+      form.reset();
+    },
+  });
+}
+</script>
