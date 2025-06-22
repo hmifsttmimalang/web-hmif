@@ -17,17 +17,16 @@ Route::get('/', function () {
 // Route::get('/posts', function () {
 //     return Inertia::render('BlogPost');
 // });
+
 Route::get('/unauthorized', function () {
-    return inertia('Unauthorized');
+    return Inertia::render('Unauthorized');
 })->name('unauthorized');
 
 Route::get('/login', function () {
     return Inertia::render('auth/Login');
 })->name('login');
 
-Route::get('/register', function () {
-    return Inertia::render('auth/Register');
-})->name('register');
+Route::get('/register', [PendaftaranController::class, 'create'])->name('register');
 
 Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
 
