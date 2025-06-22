@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\AdminAnggotaController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ProfileController;
@@ -53,9 +54,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
             'currentUser' => Auth::user(),
         ]);
     })->name('admin.kelola-data.detail-anggota');
-    Route::get('/admin/info-user', function () {
-        return Inertia::render('Admin/InfoUser', [
-            'currentUser' => Auth::user(),
-        ]);
-    })->name('admin.kelola-data.info-user');
+    Route::get('/admin/info-user', [InfoUserController::class, 'index'])->name('admin.kelola-data.info-user');
 });
