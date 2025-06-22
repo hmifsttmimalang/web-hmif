@@ -19,6 +19,7 @@ class AdminOnly
         if (!Auth::check() || Auth::user()->role !== 'admin') {
             return redirect()->route('unauthorized')->with('error', 'Akses khusus admin!');
         }
+        
         return $next($request);
     }
 }
