@@ -6,12 +6,14 @@
             <slot />
         </main>
     </div>
+    <ScrollTopPreloader />
 </template>
 
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
 import DashUserHeader from '../components/user/DashUserHeader.vue';
 import DashUserSidebar from '../components/user/DashUserSidebar.vue';
+import ScrollTopPreloader from '../components/ScrollTopPreloader.vue';
 
 let userDashboard;
 const linkEls = [];
