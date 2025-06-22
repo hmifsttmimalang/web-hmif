@@ -24,4 +24,11 @@ class AdminAnggotaController extends Controller
             'anggota' => $anggota,
         ]);
     }
+    public function show($id)
+    {
+        $anggota = User::find($id); // atau pakai findOrFail
+        return inertia('Admin/DetailAnggota', [
+            'anggota' => $anggota
+        ]);
+    }
 }

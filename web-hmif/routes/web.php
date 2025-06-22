@@ -26,7 +26,7 @@ Route::get('/unauthorized', function () {
 })->name('unauthorized');
 
 Route::get('/login', function () {
-    return Inertia::render('auth/Login');
+    return Inertia::render('Auth/Login');
 })->name('login');
 
 Route::get('/register', [PendaftaranController::class, 'create'])->name('register');
@@ -46,10 +46,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/kelola-data', [KelolaAnggotaController::class, 'index'])->name('admin.kelola-data');
     Route::get('/admin/anggota', [AdminAnggotaController::class, 'index'])->name('admin.kelola-data.anggota');
-    Route::get('/admin/anggota/{id}', function () {
-        return Inertia::render('Admin/DetailAnggota', [
-            'currentUser' => Auth::user(),
-        ]);
-    })->name('admin.kelola-data.detail-anggota');
+    Route::get('/admin/anggota/{id}', [AdminAnggotaController::class, 'show'])->name('admin.kelola-data.detail-anggota');
     Route::get('/admin/info-user', [InfoUserController::class, 'index'])->name('admin.kelola-data.info-user');
 });
