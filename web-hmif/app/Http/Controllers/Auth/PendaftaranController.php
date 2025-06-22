@@ -12,9 +12,19 @@ use Inertia\Inertia;
 
 class PendaftaranController extends Controller
 {
+    /**
+     * Display the registration form.
+     */
+    public function create()
+    {
+        return Inertia::render('Auth/Register', [
+            'title' => 'Pendaftaran Anggota Baru',
+            'description' => 'Silakan isi formulir pendaftaran untuk menjadi anggota HMIF.',
+        ]);
+    }
+
     public function store(Request $request)
     {
-        // Validasi semua field
         $data = $request->validate([
             'nama' => 'required|string|max:255',
             'tempat_lahir' => 'required|string|max:255',
@@ -33,21 +43,17 @@ class PendaftaranController extends Controller
             'foto' => 'nullable|image|max:5120',
         ]);
 
-        // Handle upload foto jika ada
         if ($request->hasFile('foto')) {
             $data['foto'] = $request->file('foto')->store('foto', 'public');
         }
 
-        // Buat user baru
         $user = User::create([
             ...$data,
             'password' => Hash::make($data['password']),
         ]);
 
-        // Optional: langsung login
         Auth::login($user);
 
-        // Redirect ke dashboard atau halaman lain
         return redirect()->route('dashboard')->with('success', 'Pendaftaran berhasil! Selamat datang, ' . $user->nama . '!');
     }
 }
