@@ -62,6 +62,8 @@ class ProfileController extends Controller
             }
         }
 
+        $data = $request->validate($rules);
+
         if ($request->hasFile('foto')) {
             if ($user->foto && $user->foto !== 'default.jpg') {
                 Storage::disk('public')->delete('foto/' . $user->foto);
