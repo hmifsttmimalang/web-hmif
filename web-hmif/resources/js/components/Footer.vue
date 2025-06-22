@@ -35,7 +35,7 @@
             </li>
             <!-- <li><a href="#team" @click.prevent="scrollTo('team')">Tim</a></li> -->
             <li>
-              <Link href="/post">Blog</Link>
+              <!-- <Link href="/post">Blog</Link> -->
             </li>
           </ul>
         </div>

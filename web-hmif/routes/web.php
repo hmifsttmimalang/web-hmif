@@ -14,9 +14,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/posts', function () {
-    return Inertia::render('BlogPost');
-});
+// Route::get('/posts', function () {
+//     return Inertia::render('BlogPost');
+// });
 
 Route::get('/login', function () {
     return Inertia::render('auth/Login');
