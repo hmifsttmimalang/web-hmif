@@ -1,11 +1,14 @@
 <script setup>
+import { ref } from 'vue'
 import { Link, router, usePage } from '@inertiajs/vue3'
 import { route as ziggyRoute } from 'ziggy-js'
 import { computed } from 'vue'
+import LogoutUserModal from '@/components/ui/LogoutUserModal.vue'
 
 // Dapatkan current path
 const page = usePage()
 const currentUrl = computed(() => page.url)
+const showLogout = ref(false)
 
 // Logout function pakai inertia
 function logout() {
@@ -35,13 +38,14 @@ function logout() {
                 </Link>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" @click.prevent="logout">
+                <a class="nav-link" href="#" @click.prevent="showLogout = true">
                     <i class="bi bi-box-arrow-in-right"></i>
                     <span>Keluar</span>
                 </a>
             </li>
         </ul>
     </aside>
+    <LogoutUserModal :show="showLogout" @close="showLogout = false" @logout="logout" />
 </template>
 
 <style scoped>

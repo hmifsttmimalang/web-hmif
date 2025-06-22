@@ -2,9 +2,11 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { Link, router, usePage } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
+import LogoutUserModal from '@/components/ui/LogoutUserModal.vue'
 
 const page = usePage()
 const user = computed(() => page.props.currentUser)
+const showLogout = ref(false)
 
 const dropdownOpen = ref(false)
 
@@ -77,7 +79,7 @@ function logout() {
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#" @click.prevent="logout">
+                            <a class="dropdown-item d-flex align-items-center" href="#" @click.prevent="showLogout = true">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Keluar</span>
                             </a>
@@ -87,6 +89,7 @@ function logout() {
             </ul>
         </nav>
     </header>
+    <LogoutUserModal :show="showLogout" @close="showLogout = false" @logout="logout" />
 </template>
 
 <style scoped>
