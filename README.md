@@ -47,6 +47,7 @@ Ada fitur **auth (login/register), manajemen anggota, dashboard**, dsb.
 ```
 
 ## 🧹 Fitur Utama
+
 - Autentikasi Login/Register (Laravel Breeze, Inertia, Bootstrap style)
 - Dashboard admin/user (role-based access: superadmin, admin, user)
 - Manajemen data anggota: tambah, update, hapus, import, export
@@ -57,6 +58,7 @@ Ada fitur **auth (login/register), manajemen anggota, dashboard**, dsb.
 - Notifikasi sukses/gagal otomatis
 
 ## 🔧 Cara Menjalankan (Dev Mode)
+
 1. Clone repo ini:
 
 ```bash
@@ -64,23 +66,24 @@ git clone https://github.com/hmifsttmimalang/web-hmif.git
 cd web-hmif
 ```
 
-2. Install backend (Laravel)
+1. Install backend (Laravel):
 
 ```bash
 composer install
 cp .env.example .env
 php artisan key:generate
+
 # setting database di .env lalu:
 php artisan migrate
 ```
 
-3. Install frontend (npm)
+1. Install frontend (npm)
 
 ```bash
 npm install
 ```
 
-4. Jalankan dua server (bebas 2 terminal)
+1. Jalankan dua server (bebas 2 terminal)
 
 ```bash
 # Terminal 1
@@ -90,39 +93,41 @@ php artisan serve
 npm run dev
 ```
 
-5. Akses di browser
+1. Akses di browser
 
-- http://localhost:8000/
+- [http://localhost:8000/]
 
 ---
 
 ## 🧑‍💻 Kontributor
 
-* [Ardiansyah](https://github.com/ardie069)
-* [Adi Chandra Isro'Salsabilla](https://github.com/bangarchad)
+- [Ardiansyah](https://github.com/ardie069)
+- [Adi Chandra Isro'Salsabilla](https://github.com/bangarchad)
 
 ---
 
 ## 📄 Lisensi
 
-Proyek ini menggunakan lisensi [Apache-2.0](LICENSE) -- bebas pakai, asal ngasih kredit.
+Proyek ini menggunakan lisensi [Apache-2.0](LICENSE) — bebas pakai, asal ngasih kredit.
 
 ---
 
-## 📝 Catatan Migrasi dari Versi Lama
+### 📝 Catatan Migrasi dari Versi Lama
 
-- Dulu: Full Vue 3 + Bootstrap (static landing page, tanpa backend)
-- Sekarang: Laravel (backend/auth/role) + Vue + Inertia (SPA/komponen dinamis)
-- Semua logic auth, akses, validasi — sekarang handle di backend, error langsung muncul di frontend
-- Frontend gak pakai vue-router manual: Semua routing lewat Inertia + route Laravel
+> [!NOTE]
+> Dulu: Full Vue 3 + Bootstrap (static landing page, tanpa backend)
+> Sekarang: Laravel (backend/auth/role) + Vue + Inertia (SPA/komponen dinamis)
+> Semua logic auth, akses, validasi — sekarang handle di backend, error langsung muncul di frontend
+> Frontend gak pakai vue-router manual: Semua routing lewat Inertia + route Laravel
 
 ## ❓ FAQ Singkat
 
-- Q: Gak nemu menu/fitur tertentu?
-- A: Cek role user kamu, beberapa fitur cuma buat admin/superadmin.
-
-- Q: Error login/register?
-- A: Cek field di form, cek juga DB migration sudah update.
-
-- Q: Mau ganti tampilan/fitur? 
-- A: Tinggal edit di resources/js/Pages/ atau backend controller Laravel.
+> [!TIP]
+> Gak nemu menu/fitur tertentu?
+> Cek role user kamu, beberapa fitur cuma buat admin/superadmin.
+>
+> Error login/register?
+> Cek field di form, cek juga DB migration sudah update.
+>
+> Mau ganti tampilan/fitur?
+> Tinggal edit di resources/js/Pages/ atau backend controller Laravel.
