@@ -25,7 +25,7 @@ class AdminDashboardController extends Controller
             Carbon::parse('2025-09-02 23:59:59')
         ])->count();
 
-        $totalAnggota = User::all()->count();
+        $totalAnggota = User::where('role', '!=', 'superadmin')->count();
 
         return Inertia::render('Admin/Dashboard', [
             'pendaftarBaru' => $pendaftarBaru,
