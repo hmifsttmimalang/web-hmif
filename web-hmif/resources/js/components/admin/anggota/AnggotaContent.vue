@@ -72,9 +72,10 @@ function cetak(anggota) {
                                 <span
                                     class="badge"
                                     :class="{
+                                        'bg-info': anggota.status === 'Baru',
                                         'bg-success':
                                             anggota.status === 'Aktif',
-                                        'bg-info':
+                                        'bg-secondary':
                                             anggota.status === 'Demisioner',
                                         'bg-danger':
                                             anggota.status === 'Nonaktif',

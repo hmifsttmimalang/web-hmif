@@ -16,7 +16,9 @@ class AdminAnggotaController extends Controller
             'nama',
             'alamat',
             'prodi',
-            'angkatan'
+            'angkatan',
+            'jabatan',
+            'status',
         ]);
         // NOTE: kalau kolom jabatan dan status belum ada di tabel, tambahkan di migration/model.
 
