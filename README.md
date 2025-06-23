@@ -59,43 +59,39 @@ Ada fitur **auth (login/register), manajemen anggota, dashboard**, dsb.
 
 ## 🔧 Cara Menjalankan (Dev Mode)
 
+```markdown
 1. Clone repo ini:
 
-```bash
-git clone https://github.com/hmifsttmimalang/web-hmif.git
-cd web-hmif
+    ```bash
+    git clone https://github.com/hmifsttmimalang/web-hmif.git
+    cd web-hmif
+    ```
+
+2. Install backend (Laravel):
+
+    ```bash
+    composer install
+    cp .env.example .env
+    php artisan key:generate
+    php artisan migrate
+    ```
+
+3. Install frontend (npm):
+    ```bash
+    npm install
+    ```
+
+4. Jalankan dua server (di 2 terminal berbeda):
+    ```bash
+    php artisan serve
+    npm run dev
+    ```
+
+5. Akses di browser
+
+http://localhost:8000/
+
 ```
-
-1. Install backend (Laravel):
-
-```bash
-composer install
-cp .env.example .env
-php artisan key:generate
-
-# setting database di .env lalu:
-php artisan migrate
-```
-
-1. Install frontend (npm)
-
-```bash
-npm install
-```
-
-1. Jalankan dua server (bebas 2 terminal)
-
-```bash
-# Terminal 1
-php artisan serve
-
-# Terminal 2
-npm run dev
-```
-
-1. Akses di browser
-
-- [http://localhost:8000/]
 
 ---
 
@@ -116,18 +112,24 @@ Proyek ini menggunakan lisensi [Apache-2.0](LICENSE) — bebas pakai, asal ngasi
 
 > [!NOTE]
 > Dulu: Full Vue 3 + Bootstrap (static landing page, tanpa backend)
+>
 > Sekarang: Laravel (backend/auth/role) + Vue + Inertia (SPA/komponen dinamis)
+>
 > Semua logic auth, akses, validasi — sekarang handle di backend, error langsung muncul di frontend
+>
 > Frontend gak pakai vue-router manual: Semua routing lewat Inertia + route Laravel
 
 ## ❓ FAQ Singkat
 
 > [!TIP]
 > Gak nemu menu/fitur tertentu?
+>
 > Cek role user kamu, beberapa fitur cuma buat admin/superadmin.
 >
 > Error login/register?
+>
 > Cek field di form, cek juga DB migration sudah update.
 >
 > Mau ganti tampilan/fitur?
+>
 > Tinggal edit di resources/js/Pages/ atau backend controller Laravel.
