@@ -44,8 +44,6 @@ function goToPage(p) {
                                 <th>Alamat</th>
                                 <th>Prodi</th>
                                 <th>Angkatan</th>
-                                <th>No. Telepon</th>
-                                <th>Email</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
@@ -60,8 +58,6 @@ function goToPage(p) {
                                 <td>{{ user.alamat }}</td>
                                 <td>{{ user.prodi }}</td>
                                 <td class="text-center">{{ user.angkatan }}</td>
-                                <td class="text-center">{{ user.telepon }}</td>
-                                <td class="text-center">{{ user.email }}</td>
                                 <td class="text-center">
                                     <span class="badge bg-info">{{
                                         user.status

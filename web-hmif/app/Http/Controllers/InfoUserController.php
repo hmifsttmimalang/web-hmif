@@ -12,6 +12,8 @@ class InfoUserController extends Controller
     {
         $start = now()->subMonths(2); // 2 bulan terakhir, misal
         $userBaruList = User::where('created_at', '>=', $start)
+            ->where('role', 'user')
+            ->where('status', 'Baru')
             ->orderByDesc('created_at')
             ->get([
                 'id',
@@ -20,8 +22,7 @@ class InfoUserController extends Controller
                 'alamat',
                 'prodi',
                 'angkatan',
-                'telepon',
-                'email',
+                'status',
             ]);
         return Inertia::render('Admin/InfoUser', [
             'userBaruList' => $userBaruList,
