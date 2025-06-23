@@ -41,12 +41,17 @@ function logout() {
                     <span>Edit Profil</span>
                 </Link>
             </li>
-                        <li
-                v-if="currentUser.role === 'admin'"
+            <li
+                v-if="
+                    currentUser.role === 'admin' || 'superadmin'
+                "
                 class="nav-item"
             >
                 <Link
-                    :class="['nav-link', currentUrl.startsWith('/admin') ? 'active' : '']"
+                    :class="[
+                        'nav-link',
+                        currentUrl.startsWith('/admin') ? 'active' : '',
+                    ]"
                     href="/admin"
                 >
                     <i class="bi bi-shield-lock"></i>
