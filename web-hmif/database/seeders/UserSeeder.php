@@ -16,17 +16,37 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'L',
             'agama' => 'islam',
             'alamat' => 'Jl. Contoh Alamat No. 1, Bandung',
-            'nim' => '1234567890',
+            'nim' => '123890',
             'prodi' => 'Teknik Informatika',
             'angkatan' => 2020,
             'alasan' => 'Untuk mengelola organisasi',
-            'foto' => 'foto/default.jpg', // Gambar default untuk admin
+            'foto' => 'foto/default.jpg',
             'email' => 'admin@hmif.local',
             'telepon' => '081234567890',
-            'password' => bcrypt('admin12345'), // Password untuk admin
+            'password' => bcrypt('admin12345'),
             'jabatan' => null,
             'status' => 'Aktif',
             'role' => 'admin',
+        ]);
+
+        User::factory()->create([
+            'nama' => 'Super Admin',
+            'tempat_lahir' => 'Bandung',
+            'tanggal_lahir' => '2000-01-01',
+            'jenis_kelamin' => 'L',
+            'agama' => 'islam',
+            'alamat' => 'Jl. Contoh Alamat No. 1, Bandung',
+            'nim' => '156780',
+            'prodi' => 'Teknik Informatika',
+            'angkatan' => 2020,
+            'alasan' => 'Untuk mengelola organisasi',
+            'foto' => 'foto/default.jpg',
+            'email' => 'superadmin@hmif.local',
+            'telepon' => '08323734450',
+            'password' => bcrypt('superadmin123'),
+            'jabatan' => null,
+            'status' => 'Aktif',
+            'role' => 'superadmin',
         ]);
 
         User::factory()->create([
@@ -36,7 +56,7 @@ class UserSeeder extends Seeder
             'jenis_kelamin' => 'L',
             'agama' => 'islam',
             'alamat' => 'Jl. Contoh Alamat No. 2, Bandung',
-            'nim' => '0987654321',
+            'nim' => '765421',
             'prodi' => 'Teknik Informatika',
             'angkatan' => 2021,
             'alasan' => 'Untuk berpartisipasi dalam organisasi',
