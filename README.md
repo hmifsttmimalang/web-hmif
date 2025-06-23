@@ -1,61 +1,128 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🌐 HMIF SMI Malang – Website Fullstack
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Ini proyek **Website Resmi HMIF SMI Malang**.  
+Sekarang bukan cuma landing page:  
+Sudah **Laravel 12 (API & Backend) + Vue 3 + Inertia.js (SPA) + Bootstrap 5**  
+Ada fitur **auth (login/register), manajemen anggota, dashboard**, dsb.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Stack & Teknologi
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Laravel 12](https://laravel.com/) — Backend, API, Auth, DB, Routing
+- [Inertia.js](https://inertiajs.com/) — “Jembatan” antara Laravel & Vue (SPA tanpa API manual)
+- [Vue 3](https://vuejs.org/) — Frontend, Component, Routing
+- [Bootstrap 5](https://getbootstrap.com/) — UI, responsive, cepat
+- [Vite](https://vitejs.dev/) — Dev server & build tool
+- [Ziggy](https://github.com/tighten/ziggy) — Biar named route Laravel bisa dipanggil di frontend
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📁 Struktur Proyek
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+├── public/
+│   └── assets/
+│       └── img/
+├── resources/
+│   ├── js/
+│   │   ├── Pages/
+│   │   │   ├── Home.vue
+│   │   │   ├── Auth/
+│   │   │   │   ├── Login.vue
+│   │   │   │   └── Register.vue
+│   │   │   ├── Admin/
+│   │   │   │   └── KelolaData.vue
+│   │   ├── components/
+│   │   ├── layouts/
+│   │   └── app.js
+│   └── views/
+│       └── app.blade.php
+├── routes/
+│   ├── web.php
+│   └── auth.php
+├── vite.config.js
+├── package.json
+└── README.md
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🧹 Fitur Utama
+- Autentikasi Login/Register (Laravel Breeze, Inertia, Bootstrap style)
+- Dashboard admin/user (role-based access: superadmin, admin, user)
+- Manajemen data anggota: tambah, update, hapus, import, export
+- Sidebar & Navbar aktif otomatis
+- SPA feel (semua page pindah tanpa reload)
+- Validasi server-side (semua error tampil di frontend)
+- File upload (foto user/anggota)
+- Notifikasi sukses/gagal otomatis
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🔧 Cara Menjalankan (Dev Mode)
+1. Clone repo ini:
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/hmifsttmimalang/web-hmif.git
+cd web-hmif
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. Install backend (Laravel)
 
-### Premium Partners
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+# setting database di .env lalu:
+php artisan migrate
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3. Install frontend (npm)
 
-## Contributing
+```bash
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. Jalankan dua server (bebas 2 terminal)
 
-## Code of Conduct
+```bash
+# Terminal 1
+php artisan serve
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Terminal 2
+npm run dev
+```
 
-## Security Vulnerabilities
+5. Akses di browser
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- http://localhost:8000/
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🧑‍💻 Kontributor
+
+* [Ardiansyah](https://github.com/ardie069)
+* [Adi Chandra Isro'Salsabilla](https://github.com/bangarchad)
+
+---
+
+## 📄 Lisensi
+
+Proyek ini menggunakan lisensi [Apache-2.0](LICENSE) -- bebas pakai, asal ngasih kredit.
+
+---
+
+## 📝 Catatan Migrasi dari Versi Lama
+
+- Dulu: Full Vue 3 + Bootstrap (static landing page, tanpa backend)
+- Sekarang: Laravel (backend/auth/role) + Vue + Inertia (SPA/komponen dinamis)
+- Semua logic auth, akses, validasi — sekarang handle di backend, error langsung muncul di frontend
+- Frontend gak pakai vue-router manual: Semua routing lewat Inertia + route Laravel
+
+## ❓ FAQ Singkat
+
+- Q: Gak nemu menu/fitur tertentu?
+- A: Cek role user kamu, beberapa fitur cuma buat admin/superadmin.
+
+- Q: Error login/register?
+- A: Cek field di form, cek juga DB migration sudah update.
+
+- Q: Mau ganti tampilan/fitur? 
+- A: Tinggal edit di resources/js/Pages/ atau backend controller Laravel.
