@@ -1,19 +1,31 @@
 <script setup>
 import { usePage, Link } from "@inertiajs/vue3";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import "dayjs/locale/id";
+import capitalize from "@/utils/capitalize.js"; 
 
-// Anggota diambil dari props (Inertia), bukan dummy lokal
 const page = usePage();
-const anggota = page.props.anggota; // Pastikan controller kirim 'anggota'
+const anggota = page.props.anggota;
+
+dayjs.extend(localizedFormat);
+dayjs.locale("id");
+
+function formatTanggal(tgl) {
+    if (!tgl) return "-";
+    return dayjs(tgl).format("LL");
+}
+
 </script>
 
 <template>
     <div class="container-fluid" v-if="anggota">
-      <h1 class="h3 mb-3 text-gray-800">Detail Anggota</h1>
-      <div class="d-flex justify-content-start mb-3">
-          <Link class="btn btn-secondary" href="/admin/kelola-data"
-              >Kembali</Link
-          >
-      </div>
+        <Link class="btn btn-secondary mb-3" href="/admin/kelola-data"
+            >Kembali</Link
+        >
+        <hr class="border-secondary" />
+        <h1 class="h3 mb-3 text-gray-800">Detail Anggota</h1>
+        <div class="d-flex justify-content-start mb-3"></div>
         <div class="row">
             <!-- Data Diri -->
             <div class="col-md-6">
@@ -47,7 +59,7 @@ const anggota = page.props.anggota; // Pastikan controller kirim 'anggota'
                                 </h6>
                                 <h6 class="mb-0">
                                     {{ anggota.tempat_lahir }},
-                                    {{ anggota.tanggal_lahir }}
+                                    {{ formatTanggal(anggota.tanggal_lahir) }}
                                 </h6>
                             </li>
                             <li class="list-group-item">
@@ -62,7 +74,7 @@ const anggota = page.props.anggota; // Pastikan controller kirim 'anggota'
                             </li>
                             <li class="list-group-item">
                                 <h6 class="mb-1 font-bold">Agama</h6>
-                                <h6 class="mb-0">{{ anggota.agama }}</h6>
+                                <h6 class="mb-0">{{ capitalize(anggota.agama) }}</h6>
                             </li>
                             <li class="list-group-item">
                                 <h6 class="mb-1 font-bold">Alamat</h6>
