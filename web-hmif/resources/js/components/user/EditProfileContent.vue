@@ -18,12 +18,11 @@ const form = useForm({
     telepon: user.telepon || "",
     password: "",
     password_confirmation: "",
-    foto: null, // default: null, jangan string path!
+    foto: null,
 });
 
-// Foto preview: ambil dari user.foto (string) jika ada, atau default
 const fotoPreview = ref(
-    user.foto ? `/storage/${user.foto}` : "/assets2/img/profile-img.jpg"
+    user.foto ? `/storage/${user.foto}` : "/assets2/img/default.jpg"
 );
 
 // Ganti foto (preview dan form)
