@@ -92,7 +92,7 @@
                     <div class="form-group row">
                       <div class="col-md-6">
                         <label for="foto">Foto PAS (3x4)</label>
-                        <input id="foto" type="file" @change="onFileChange" class="form-control" required />
+                        <input id="foto" type="file" @change="onFileChange" class="form-control" />
                         <div class="invalid-feedback d-block" v-if="form.errors.foto">{{ form.errors.foto }}</div>
                       </div>
                       <div class="col-md-6">

@@ -37,7 +37,7 @@ class PendaftaranController extends Controller
             'telepon' => 'required|string|max:20',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'terms' => 'accepted',
-            'foto' => 'nullable|image|max:5120',
+            'foto' => 'nullable|image|max:5120|mimes:jpeg,jpg',
         ]);
 
         if ($request->hasFile('foto')) {
