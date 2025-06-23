@@ -119,7 +119,7 @@ Proyek ini menggunakan lisensi [Apache-2.0](LICENSE) — bebas pakai, asal ngasi
 >
 > Frontend gak pakai vue-router manual: Semua routing lewat Inertia + route Laravel
 
-## ❓ FAQ Singkat
+### ❓ FAQ Singkat
 
 > [!TIP]
 > Gak nemu menu/fitur tertentu?
