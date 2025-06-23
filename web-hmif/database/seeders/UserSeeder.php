@@ -24,6 +24,8 @@ class UserSeeder extends Seeder
             'email' => 'admin@hmif.local',
             'telepon' => '081234567890',
             'password' => bcrypt('admin12345'), // Password untuk admin
+            'jabatan' => null,
+            'status' => 'Aktif',
             'role' => 'admin',
         ]);
 
@@ -42,6 +44,8 @@ class UserSeeder extends Seeder
             'email' => 'user@hmif.local',
             'telepon' => '089876543210',
             'password' => bcrypt('user12345'), // Password untuk user
+            'jabatan' => null,
+            'status' => 'Baru',
             'role' => 'user',
         ]);
 

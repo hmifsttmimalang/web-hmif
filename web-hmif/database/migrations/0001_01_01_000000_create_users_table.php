@@ -23,11 +23,13 @@ return new class extends Migration
             $table->string('prodi');
             $table->string('angkatan');
             $table->text('alasan');
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->string('email')->unique();
             $table->string('telepon');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('jabatan')->nullable();
+            $table->enum('status', ['Baru', 'Aktif', 'Demisioner', 'Nonaktif'])->default('Baru');
             $table->string('role')->default('user');
             $table->rememberToken();
             $table->timestamps();

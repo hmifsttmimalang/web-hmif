@@ -33,11 +33,13 @@ class UserFactory extends Factory
             'prodi' => $prodi,
             'angkatan' => $this->faker->year(),
             'alasan' => $this->faker->sentence(),
-            'foto' => 'foto/default.jpg', // Gambar default, atau random image kalau mau
+            'foto' => 'foto/default.jpg',
             'email' => $this->faker->unique()->safeEmail(),
             'telepon' => $this->faker->phoneNumber,
             'email_verified_at' => now(),
-            'password' => Hash::make('password'), // password default: "password"
+            'password' => Hash::make('password'),
+            'jabatan' => null,
+            'status' => $this->faker->randomElement(['Baru', 'Aktif', 'Demisioner', 'Nonaktif']),
             'role' => 'user',
             'remember_token' => Str::random(10),
         ];
