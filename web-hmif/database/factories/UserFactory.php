@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'jenis_kelamin' => $gender,
             'agama' => $this->faker->randomElement(['islam', 'kristen', 'katolik', 'hindu', 'buddha', 'konghucu']),
             'alamat' => $this->faker->address,
-            'nim' => $this->faker->unique()->numerify('##########'),
+            'nim' => $this->faker->unique()->numerify('######'),
             'prodi' => $prodi,
             'angkatan' => $this->faker->year(),
             'alasan' => $this->faker->sentence(),
