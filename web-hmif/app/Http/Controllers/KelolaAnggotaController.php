@@ -18,6 +18,8 @@ class KelolaAnggotaController extends Controller
                 'alamat',
                 'prodi',
                 'angkatan',
+                'jabatan',
+                'status',
             ]);
 
         return Inertia::render('Admin/KelolaData', [
