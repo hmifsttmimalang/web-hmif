@@ -12,6 +12,7 @@ class KelolaAnggotaController extends Controller
     public function index()
     {
         $anggota = User::orderBy('created_at', 'desc')
+            ->where('role', '!=', 'superadmin')
             ->get([
                 'id',
                 'nim',

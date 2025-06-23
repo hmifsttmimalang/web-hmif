@@ -10,17 +10,17 @@ class AdminAnggotaController extends Controller
 {
     public function index()
     {
-        // Hanya user biasa, urutkan nama
-        $anggota = User::orderBy('nama')->get([
-            'nim',
-            'nama',
-            'alamat',
-            'prodi',
-            'angkatan',
-            'jabatan',
-            'status',
-        ]);
-        // NOTE: kalau kolom jabatan dan status belum ada di tabel, tambahkan di migration/model.
+        $anggota = User::orderBy('nama')
+            ->where('role', '!=', 'superadmin')
+            ->get([
+                'nim',
+                'nama',
+                'alamat',
+                'prodi',
+                'angkatan',
+                'jabatan',
+                'status',
+            ]);
 
         return Inertia::render('Admin/Anggota', [
             'anggota' => $anggota,
@@ -28,7 +28,7 @@ class AdminAnggotaController extends Controller
     }
     public function show($id)
     {
-        $anggota = User::find($id); // atau pakai findOrFail
+        $anggota = User::find($id);
         return inertia('Admin/DetailAnggota', [
             'anggota' => $anggota
         ]);
