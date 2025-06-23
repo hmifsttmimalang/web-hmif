@@ -175,6 +175,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
+import { route } from "ziggy-js";
 
 import ImportModal from "@/components/ui/ImportModal.vue";
 import ConfirmDeleteModal from "@/components/ui/ConfirmDeleteModal.vue";
@@ -218,9 +219,11 @@ const paginatedData = computed(() =>
 function prevPage() {
     if (pageNum.value > 1) pageNum.value--;
 }
+
 function nextPage() {
     if (pageNum.value < totalPages.value) pageNum.value++;
 }
+
 function goToPage(p) {
     if (p >= 1 && p <= totalPages.value) pageNum.value = p;
 }
@@ -228,30 +231,41 @@ function goToPage(p) {
 function detailAnggota(anggota) {
     router.visit(`/admin/anggota/${anggota.id}`);
 }
+
 function confirmDelete(anggota) {
     anggotaToDelete.value = anggota;
     showDelete.value = true;
 }
+
 function deleteAnggota() {
-    anggotaList.value = anggotaList.value.filter(
-        (a) => a.nim !== anggotaToDelete.value.nim
+    router.delete(
+        route("admin.anggota.destroy", { anggota: anggotaToDelete.value.id }),
+        {
+            onSuccess: () => {
+                showDelete.value = false;
+                router.reload({ preserveScroll: true });
+            },
+        }
     );
-    showDelete.value = false;
 }
+
 function showUpdateModal(anggota) {
     anggotaToUpdate.value = { ...anggota };
     showUpdate.value = true;
 }
+
 function updateAnggota(updated) {
     const idx = anggotaList.value.findIndex((a) => a.nim === updated.nim);
     if (idx !== -1)
         anggotaList.value[idx] = { ...anggotaList.value[idx], ...updated };
     showUpdate.value = false;
 }
+
 function importFile(file) {
     alert("File import: " + file.name);
     showImport.value = false;
 }
+
 </script>
 
 <style scoped>
