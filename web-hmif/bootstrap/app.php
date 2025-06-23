@@ -16,7 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
         $middleware->alias([
-            'admin' => \App\Http\Middleware\AdminOnly::class,
+            'superadmin' => \App\Http\Middleware\checkRole::class,
+            'admin' => \App\Http\Middleware\checkRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
