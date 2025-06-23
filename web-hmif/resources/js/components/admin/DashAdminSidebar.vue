@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { Link, router, usePage } from "@inertiajs/vue3";
 import LogoutModal from "../ui/LogoutModal.vue";
 
