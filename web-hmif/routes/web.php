@@ -33,7 +33,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 Route::get('/register', [PendaftaranController::class, 'create'])->name('register');
 Route::post('/register', [PendaftaranController::class, 'store'])->name('register.store');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
