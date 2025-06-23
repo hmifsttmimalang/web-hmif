@@ -183,6 +183,7 @@ import UpdateAnggotaModal from "@/components/ui/UpdateAnggotaModal.vue";
 
 const page = usePage();
 const anggotaList = computed(() => page.props.anggota ?? []);
+const currentUser = page.props.currentUser;
 const userRole = page.props.currentUser?.role || "user";
 
 const search = ref("");
