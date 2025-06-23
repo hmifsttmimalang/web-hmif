@@ -34,7 +34,6 @@
                                 <th>No</th>
                                 <th>NIM</th>
                                 <th>Nama</th>
-                                <th>Alamat</th>
                                 <th>Prodi</th>
                                 <th>Angkatan</th>
                                 <th>Jabatan</th>
@@ -52,7 +51,6 @@
                                 </td>
                                 <td class="text-center">{{ anggota.nim }}</td>
                                 <td>{{ anggota.nama }}</td>
-                                <td>{{ anggota.alamat }}</td>
                                 <td>{{ anggota.prodi }}</td>
                                 <td class="text-center">
                                     {{ anggota.angkatan }}
@@ -85,6 +83,13 @@
                                         Cek
                                     </button>
                                     <button
+                                        v-if="
+                                            (userRole === 'superadmin' &&
+                                                anggota.id !==
+                                                    currentUser.id) ||
+                                            (userRole === 'admin' &&
+                                                anggota.role === 'user')
+                                        "
                                         class="btn btn-danger btn-sm me-1"
                                         @click="confirmDelete(anggota)"
                                     >
@@ -176,7 +181,8 @@ import ConfirmDeleteModal from "@/components/ui/ConfirmDeleteModal.vue";
 import UpdateAnggotaModal from "@/components/ui/UpdateAnggotaModal.vue";
 
 const page = usePage();
-const anggotaList = ref(page.props.anggota ?? []);
+const anggotaList = computed(() => page.props.anggota ?? []);
+const userRole = page.props.currentUser?.role || "user";
 
 const search = ref("");
 const pageNum = ref(1);

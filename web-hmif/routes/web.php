@@ -41,9 +41,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/edit-profil/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin', 'superadmin'])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+    // kelola data anggota
     Route::get('/admin/kelola-data', [KelolaAnggotaController::class, 'index'])->name('admin.kelola-data');
+    Route::patch('/admin/anggota/{id}', [KelolaAnggotaController::class, 'update'])->name('admin.anggota.update');
+
     Route::get('/admin/anggota', [AdminAnggotaController::class, 'index'])->name('admin.kelola-data.anggota');
     Route::get('/admin/anggota/{id}', [AdminAnggotaController::class, 'show'])->name('admin.kelola-data.detail-anggota');
     Route::get('/admin/info-user', [InfoUserController::class, 'index'])->name('admin.kelola-data.info-user');

@@ -4,36 +4,71 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Update Anggota</h5>
-                    <button type="button" class="btn-close" @click="$emit('close')"></button>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        @click="$emit('close')"
+                    ></button>
                 </div>
                 <form @submit.prevent="submit">
                     <div class="modal-body">
-                        <input type="hidden" v-model="form.id_anggota">
+                        <input type="hidden" v-model="form.id_anggota" />
 
                         <div class="mb-3">
                             <label class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-control" v-model="form.nama" required>
+                            <input
+                                type="text"
+                                class="form-control"
+                                v-model="form.nama"
+                                disabled
+                            />
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Program Studi</label>
-                            <select class="form-select" v-model="form.prodi" required>
-                                <option value="" disabled>Pilih Prodi</option>
-                                <option>Teknik Informatika</option>
-                                <option>Teknik Sipil</option>
-                                <option>Manajemen Bisnis</option>
+                            <label class="form-label">Jabatan</label>
+                            <select
+                                class="form-select"
+                                v-model="form.jabatan"
+                                required
+                            >
+                                <option value="" disabled>Pilih Jabatan</option>
+                                <option value="Ketua umum">Ketua Umum</option>
+                                <option value="Wakil ketua umum">
+                                    Wakil Ketua Umum
+                                </option>
+                                <option value="Sekretaris">Sekretaris</option>
+                                <option value="Bendahara">Bendahara</option>
                             </select>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Angkatan</label>
-                            <input type="text" class="form-control" v-model="form.angkatan" required>
+                            <label class="form-label">Status</label>
+                            <select
+                                class="form-select"
+                                v-model="form.status"
+                                required
+                            >
+                                <option value="Baru">
+                                    Pilih Status
+                                </option>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Demisioner">Demisioner</option>
+                                <option value="Nonaktif">Nonaktif</option>
+                            </select>
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="$emit('close')">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            @click="$emit('close')"
+                        >
+                            Batal
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Simpan Perubahan
+                        </button>
                     </div>
                 </form>
             </div>
@@ -41,36 +76,43 @@
     </div>
 </template>
 <script setup>
-import { reactive, watch, toRefs } from 'vue'
-const props = defineProps(['anggota'])
-const emit = defineEmits(['close', 'save'])
+import { reactive, watch } from "vue";
+import { router } from "@inertiajs/vue3";
+import { route } from "ziggy-js";
+const props = defineProps(["anggota"]);
+const emit = defineEmits(["close", "save"]);
 
 const form = reactive({
-    id_anggota: '',
-    nama: '',
-    prodi: '',
-    angkatan: ''
-})
+    id_anggota: "",
+    nama: "",
+    jabatan: "",
+    status: "",
+});
 
-// Sync ke props setiap kali anggota berubah
 watch(
     () => props.anggota,
     (val) => {
         if (val) {
-            form.id_anggota = val.id_anggota ?? ''
-            form.nama = val.nama ?? ''
-            form.prodi = val.prodi ?? ''
-            form.angkatan = val.angkatan ?? ''
+            form.id_anggota = val.id ?? "";
+            form.nama = val.nama ?? "";
+            form.jabatan = val.jabatan ?? "";
+            form.status = val.status ?? "";
         }
     },
     { immediate: true }
-)
+);
 
 function submit() {
-    emit('save', { ...form })
-    emit('close')
+    router.patch(route("admin.anggota.update", { id: form.id_anggota }), form, {
+        onSuccess: () => {
+            emit("close");
+            router.visit(route("admin.kelola-data"), { preserveScroll: true });
+        },
+        onError: () => alert("Gagal update data!"),
+    });
 }
 </script>
+
 <style scoped>
 .modal-backdrop {
     position: fixed;
