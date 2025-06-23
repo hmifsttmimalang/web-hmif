@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminOnly
+class checkRole
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,10 @@ class AdminOnly
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || Auth::user()->role !== 'admin') {
+        if (!Auth::check() || !in_array(Auth::user()->role, ['admin', 'superadmin'])) {
             return redirect()->route('unauthorized')->with('error', 'Akses khusus admin!');
         }
-        
+
         return $next($request);
     }
 }
