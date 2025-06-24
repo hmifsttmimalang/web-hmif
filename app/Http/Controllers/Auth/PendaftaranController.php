@@ -40,6 +40,8 @@ class PendaftaranController extends Controller
             'foto' => 'nullable|image|max:5120|mimes:jpeg,jpg',
         ]);
 
+        $data['username'] = explode('@', $data['email'])[0];
+
         if ($request->hasFile('foto')) {
             $data['foto'] = $request->file('foto')->store('foto', 'public');
         }
