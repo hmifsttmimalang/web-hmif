@@ -33,6 +33,18 @@ function logout() {
                 <Link
                     :class="[
                         'nav-link',
+                        currentUrl === '/' ? 'active' : '',
+                    ]"
+                    href="/"
+                >
+                    <i class="bi bi-house"></i>
+                    <span>Beranda</span>
+                </Link>
+            </li>
+            <li class="nav-item">
+                <Link
+                    :class="[
+                        'nav-link',
                         currentUrl === '/dashboard/edit-profil' ? 'active' : '',
                     ]"
                     href="/dashboard/edit-profil"
@@ -43,7 +55,7 @@ function logout() {
             </li>
             <li
                 v-if="
-                    currentUser.role === 'admin' || 'superadmin'
+                    currentUser.role !== 'user'
                 "
                 class="nav-item"
             >
