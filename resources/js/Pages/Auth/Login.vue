@@ -24,7 +24,7 @@ defineProps({
 })
 
 const form = useForm({
-  email: "",
+  login: "",
   password: "",
   remember: false,
 });
@@ -55,15 +55,15 @@ function submit() {
                 <div class="card-body">
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Masuk Ke Akun Kamu</h5>
-                    <p class="text-center small">Masukkan email & password untuk login</p>
+                    <p class="text-center small">Masukkan email atau username & password untuk login</p>
                   </div>
 
                   <form @submit.prevent="submit">
                     <div class="col-12">
-                      <label for="email" class="form-label">Email</label>
+                      <label for="login" class="form-label">Email atau Username</label>
                       <div class="input-group has-validation">
-                        <input type="email" v-model="form.email" class="form-control" id="email" required :class="{ 'is-invalid': form.errors.email }">
-                        <div class="invalid-feedback" v-if="form.errors.email">{{ form.errors.email }}</div>
+                        <input type="text" v-model="form.login" class="form-control" id="login" required :class="{ 'is-invalid': form.errors.login }">
+                        <div class="invalid-feedback" v-if="form.errors.login">{{ form.errors.login }}</div>
                       </div>
                     </div>
 
