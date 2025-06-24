@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { Link, router, usePage } from "@inertiajs/vue3";
-import LogoutModal from "../ui/LogoutModal.vue";
+import LogoutModal from "@/components/ui/LogoutModal.vue";
 
 const showLogout = ref(false);
 
