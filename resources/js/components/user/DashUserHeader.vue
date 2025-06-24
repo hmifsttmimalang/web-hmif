@@ -64,7 +64,7 @@ function logout() {
                             class="rounded-circle"
                         />
                         <span class="d-none d-md-block dropdown-toggle ps-2">
-                            {{ user.nama }}
+                            {{ user.username }}
                         </span>
                     </a>
                     <ul

@@ -8,8 +8,8 @@ const dropdownRef = ref(null);
 const page = usePage();
 const showLogout = ref(false);
 
-const adminName = computed(
-    () => page.props.currentUser?.nama ?? "Administrator"
+const adminUsername = computed(
+    () => page.props.currentUser?.username ?? "Administrator"
 );
 const adminImg = computed(() =>
     page.props.currentUser?.foto
@@ -97,7 +97,7 @@ onUnmounted(() => {
                     @click.prevent="toggleDropdown"
                 >
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{
-                        adminName
+                        adminUsername
                     }}</span>
                     <img
                         class="img-profile rounded-circle"

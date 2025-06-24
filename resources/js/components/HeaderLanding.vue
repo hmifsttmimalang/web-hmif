@@ -156,8 +156,8 @@ function scrollTo(id) {
                             :aria-expanded="desktopDropdownOpen"
                             role="button"
                         >
-                            {{ currentUser.name || currentUser.nama }}
-                            <span class="caret"></span>
+                            {{ currentUser.username }}
+                            <span class="caret ms-1"></span>
                         </a>
                         <ul
                             class="dropdown-menu"
@@ -231,8 +231,8 @@ function scrollTo(id) {
                             :aria-expanded="mobileDropdownOpen"
                             role="button"
                         >
-                            {{ currentUser.name || currentUser.nama }}
-                            <span class="caret"></span>
+                            {{ currentUser.username }}
+                            <span class="caret ms-1"></span>
                         </a>
                         <ul
                             class="dropdown-menu"
