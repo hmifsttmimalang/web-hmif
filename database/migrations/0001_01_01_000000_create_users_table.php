@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
             $table->string('agama')->nullable();
             $table->text('alamat')->nullable();
-            $table->string('nim')->unique();
+            $table->string('nim')->unique()->nullable();
             $table->string('prodi')->nullable();
             $table->string('angkatan')->nullable();
             $table->text('alasan')->nullable();
