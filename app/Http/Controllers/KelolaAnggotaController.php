@@ -33,12 +33,20 @@ class KelolaAnggotaController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
+        $loginUser = Auth::user();
+
         $user->jabatan = $request->jabatan;
         $user->status = $request->status;
+
+        if ($loginUser->role === 'superadmin' && $request->has('role')) {
+            $user->role = $request->role;
+        }
+
         $user->save();
 
         return redirect()->route('admin.kelola-data')->with('success', 'Data anggota diupdate!');
     }
+
 
     public function destroy(User $anggota)
     {

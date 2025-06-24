@@ -1,13 +1,18 @@
 <script setup>
 import { reactive, watch } from "vue";
-import { router } from "@inertiajs/vue3";
+import { router, usePage } from "@inertiajs/vue3";
 import { route } from "ziggy-js";
+
+const page = usePage();
+const currentUser = page.props.currentUser || {};
+
 const props = defineProps(["anggota"]);
 const emit = defineEmits(["close", "save"]);
 
 const form = reactive({
     id_anggota: "",
     nama: "",
+    role: "",
     jabatan: "",
     status: "",
 });
@@ -17,6 +22,7 @@ watch(
     (val) => {
         if (val) {
             form.id_anggota = val.id ?? "";
+            form.role = val.role ?? "";
             form.nama = val.nama ?? "";
             form.jabatan = val.jabatan ?? "";
             form.status = val.status ?? "";
@@ -60,6 +66,22 @@ function submit() {
                                 v-model="form.nama"
                                 disabled
                             />
+                        </div>
+
+                        <div
+                            class="mb-3"
+                            v-if="currentUser.role === 'superadmin'"
+                        >
+                            <label class="form-label">Akses</label>
+                            <select
+                                class="form-select"
+                                v-model="form.role"
+                                required
+                            >
+                                <option value="" disabled>Pilih Akses</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">Anggota</option>
+                            </select>
                         </div>
 
                         <div class="mb-3">
