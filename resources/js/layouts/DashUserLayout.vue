@@ -1,8 +1,8 @@
 <script setup>
-import { onMounted, onUnmounted } from 'vue';
-import DashUserHeader from '../components/user/DashUserHeader.vue';
-import DashUserSidebar from '../components/user/DashUserSidebar.vue';
-import ScrollTopPreloader from '../components/ScrollTopPreloader.vue';
+import { onMounted, onUnmounted } from "vue";
+import DashUserHeader from "../components/user/DashUserHeader.vue";
+import DashUserSidebar from "../components/user/DashUserSidebar.vue";
+import ScrollTopPreloader from "../components/ScrollTopPreloader.vue";
 
 let userDashboard;
 const linkEls = [];
@@ -46,7 +46,9 @@ onMounted(() => {
     loadScript("/assets2/vendor/simple-datatables/simple-datatables.js");
     loadScript("/assets2/vendor/tinymce/tinymce.min.js");
     loadScript("/assets2/vendor/php-email-form/validate.js");
-    loadScript("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js");
+    loadScript(
+        "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"
+    );
     loadScript("/assets/js/dashUser.js");
 });
 
@@ -55,7 +57,7 @@ onUnmounted(() => {
         document.head.removeChild(userDashboard);
     }
 
-    scriptEls.forEach(script => {
+    scriptEls.forEach((script) => {
         if (script.parentNode) {
             script.parentNode.removeChild(script);
         }
