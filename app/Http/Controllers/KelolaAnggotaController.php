@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\AnggotaImport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Inertia\Inertia;
 
+/**
+ * @see \Maatwebsite\Excel\Facades\Excel
+ */
 class KelolaAnggotaController extends Controller
 {
     public function index()
@@ -30,6 +35,22 @@ class KelolaAnggotaController extends Controller
         ]);
     }
 
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv|max:2048',
+        ]);
+
+        try {
+            Excel::import(new AnggotaImport, $request->file('file'));
+            return back()->with('success', 'Import data anggota berhasil!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['import' => 'Import gagal: ' . $e->getMessage()]);
+        }
+    }
+
+
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -46,7 +67,6 @@ class KelolaAnggotaController extends Controller
 
         return redirect()->route('admin.kelola-data')->with('success', 'Data anggota diupdate!');
     }
-
 
     public function destroy(User $anggota)
     {

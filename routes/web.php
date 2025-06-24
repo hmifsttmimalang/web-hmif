@@ -46,9 +46,11 @@ Route::middleware(['auth', 'admin', 'superadmin'])->group(function () {
 
     // kelola data anggota
     Route::get('/admin/kelola-data', [KelolaAnggotaController::class, 'index'])->name('admin.kelola-data');
+    Route::post('/admin/anggota/import', [KelolaAnggotaController::class, 'import'])->name('admin.anggota.import');
     Route::patch('/admin/anggota/{id}', [KelolaAnggotaController::class, 'update'])->name('admin.anggota.update');
     Route::delete('/admin/anggota/{anggota}', [KelolaAnggotaController::class, 'destroy'])->name('admin.anggota.destroy');
 
+    // anggota
     Route::get('/admin/anggota', [AdminAnggotaController::class, 'index'])->name('admin.kelola-data.anggota');
     Route::get('/admin/anggota/{id}', [AdminAnggotaController::class, 'show'])->name('admin.kelola-data.detail-anggota');
     Route::get('/admin/info-user', [InfoUserController::class, 'index'])->name('admin.kelola-data.info-user');

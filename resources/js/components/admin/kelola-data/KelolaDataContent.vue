@@ -89,8 +89,19 @@ function updateAnggota(updated) {
 }
 
 function importFile(file) {
-    alert("File import: " + file.name);
-    showImport.value = false;
+    const formData = new FormData();
+    formData.append("file", file);
+
+    router.post(route("admin.anggota.import"), formData, {
+        forceFormData: true,
+        onSuccess: () => {
+            showImport.value = false;
+            router.reload({ preserveScroll: true });
+        },
+        onError: (err) => {
+            alert("Gagal import. Pastikan format benar.");
+        },
+    });
 }
 </script>
 
