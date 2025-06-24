@@ -1,3 +1,99 @@
+<script setup>
+import { ref, computed } from "vue";
+import { router, usePage } from "@inertiajs/vue3";
+import { route } from "ziggy-js";
+
+import ImportModal from "@/components/ui/ImportModal.vue";
+import ConfirmDeleteModal from "@/components/ui/ConfirmDeleteModal.vue";
+import UpdateAnggotaModal from "@/components/ui/UpdateAnggotaModal.vue";
+
+const page = usePage();
+const anggotaList = computed(() => page.props.anggota ?? []);
+const currentUser = page.props.currentUser;
+const userRole = page.props.currentUser?.role || "user";
+
+const search = ref("");
+const pageNum = ref(1);
+const perPage = 10;
+const showImport = ref(false);
+const showDelete = ref(false);
+const showUpdate = ref(false);
+const anggotaToDelete = ref(null);
+const anggotaToUpdate = ref(null);
+
+const filteredData = computed(() =>
+    anggotaList.value.filter(
+        (anggota) =>
+            (anggota.nama &&
+                anggota.nama
+                    .toLowerCase()
+                    .includes(search.value.toLowerCase())) ||
+            (anggota.nim && anggota.nim.includes(search.value))
+    )
+);
+
+const totalPages = computed(() =>
+    Math.ceil(filteredData.value.length / perPage)
+);
+
+const paginatedData = computed(() =>
+    filteredData.value.slice(
+        (pageNum.value - 1) * perPage,
+        pageNum.value * perPage
+    )
+);
+
+function prevPage() {
+    if (pageNum.value > 1) pageNum.value--;
+}
+
+function nextPage() {
+    if (pageNum.value < totalPages.value) pageNum.value++;
+}
+
+function goToPage(p) {
+    if (p >= 1 && p <= totalPages.value) pageNum.value = p;
+}
+
+function detailAnggota(anggota) {
+    router.visit(`/admin/anggota/${anggota.id}`);
+}
+
+function confirmDelete(anggota) {
+    anggotaToDelete.value = anggota;
+    showDelete.value = true;
+}
+
+function deleteAnggota() {
+    router.delete(
+        route("admin.anggota.destroy", { anggota: anggotaToDelete.value.id }),
+        {
+            onSuccess: () => {
+                showDelete.value = false;
+                router.reload({ preserveScroll: true });
+            },
+        }
+    );
+}
+
+function showUpdateModal(anggota) {
+    anggotaToUpdate.value = { ...anggota };
+    showUpdate.value = true;
+}
+
+function updateAnggota(updated) {
+    const idx = anggotaList.value.findIndex((a) => a.nim === updated.nim);
+    if (idx !== -1)
+        anggotaList.value[idx] = { ...anggotaList.value[idx], ...updated };
+    showUpdate.value = false;
+}
+
+function importFile(file) {
+    alert("File import: " + file.name);
+    showImport.value = false;
+}
+</script>
+
 <template>
     <div class="container-fluid">
         <h1 class="h3 mb-3 text-gray-800">Kelola Data Anggota</h1>
@@ -171,103 +267,6 @@
         />
     </div>
 </template>
-
-<script setup>
-import { ref, computed } from "vue";
-import { router, usePage } from "@inertiajs/vue3";
-import { route } from "ziggy-js";
-
-import ImportModal from "@/components/ui/ImportModal.vue";
-import ConfirmDeleteModal from "@/components/ui/ConfirmDeleteModal.vue";
-import UpdateAnggotaModal from "@/components/ui/UpdateAnggotaModal.vue";
-
-const page = usePage();
-const anggotaList = computed(() => page.props.anggota ?? []);
-const currentUser = page.props.currentUser;
-const userRole = page.props.currentUser?.role || "user";
-
-const search = ref("");
-const pageNum = ref(1);
-const perPage = 10;
-const showImport = ref(false);
-const showDelete = ref(false);
-const showUpdate = ref(false);
-const anggotaToDelete = ref(null);
-const anggotaToUpdate = ref(null);
-
-const filteredData = computed(() =>
-    anggotaList.value.filter(
-        (anggota) =>
-            (anggota.nama &&
-                anggota.nama
-                    .toLowerCase()
-                    .includes(search.value.toLowerCase())) ||
-            (anggota.nim && anggota.nim.includes(search.value))
-    )
-);
-
-const totalPages = computed(() =>
-    Math.ceil(filteredData.value.length / perPage)
-);
-
-const paginatedData = computed(() =>
-    filteredData.value.slice(
-        (pageNum.value - 1) * perPage,
-        pageNum.value * perPage
-    )
-);
-
-function prevPage() {
-    if (pageNum.value > 1) pageNum.value--;
-}
-
-function nextPage() {
-    if (pageNum.value < totalPages.value) pageNum.value++;
-}
-
-function goToPage(p) {
-    if (p >= 1 && p <= totalPages.value) pageNum.value = p;
-}
-
-function detailAnggota(anggota) {
-    router.visit(`/admin/anggota/${anggota.id}`);
-}
-
-function confirmDelete(anggota) {
-    anggotaToDelete.value = anggota;
-    showDelete.value = true;
-}
-
-function deleteAnggota() {
-    router.delete(
-        route("admin.anggota.destroy", { anggota: anggotaToDelete.value.id }),
-        {
-            onSuccess: () => {
-                showDelete.value = false;
-                router.reload({ preserveScroll: true });
-            },
-        }
-    );
-}
-
-function showUpdateModal(anggota) {
-    anggotaToUpdate.value = { ...anggota };
-    showUpdate.value = true;
-}
-
-function updateAnggota(updated) {
-    const idx = anggotaList.value.findIndex((a) => a.nim === updated.nim);
-    if (idx !== -1)
-        anggotaList.value[idx] = { ...anggotaList.value[idx], ...updated };
-    showUpdate.value = false;
-}
-
-function importFile(file) {
-    alert("File import: " + file.name);
-    showImport.value = false;
-}
-
-</script>
 
 <style scoped>
 .table-responsive {
