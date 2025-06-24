@@ -69,7 +69,7 @@ function logout() {
                 :class="{ active: isActive('/admin/anggota') }"
                 href="/admin/anggota"
             >
-                <i class="fas fa-fw fa-user"></i>
+                <i class="fas fa-fw fa-users"></i>
                 <span>Anggota</span>
             </Link>
         </li>
@@ -79,7 +79,7 @@ function logout() {
                 :class="{ active: isActive('/admin/info-user') }"
                 href="/admin/info-user"
             >
-                <i class="fas fa-fw fa-user"></i>
+                <i class="fas fa-fw fa-users"></i>
                 <span>Info Anggota Baru</span>
             </Link>
         </li>
