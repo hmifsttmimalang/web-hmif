@@ -61,7 +61,7 @@ function submit() {
                 <li class="breadcrumb-item">
                     <Link href="/">Home</Link>
                 </li>
-                <li class="breadcrumb-item active">Edit Profil Anggota</li>
+                <li class="breadcrumb-item active">Edit Profil User</li>
             </ol>
         </nav>
     </div>
@@ -73,7 +73,7 @@ function submit() {
                 @submit.prevent="submit"
                 enctype="multipart/form-data"
             >
-                <div class="form-group mb-3">
+                <div class="form-group mb-3" v-if="user.role !== 'superadmin'">
                     <label for="nama">Nama</label>
                     <input
                         type="text"
@@ -86,7 +86,7 @@ function submit() {
                         {{ form.errors.nama }}
                     </div>
                 </div>
-                <div class="form-group row mb-3">
+                <div class="form-group row mb-3" v-if="user.role !== 'superadmin'">
                     <div class="col-md-6">
                         <label for="tempat_lahir">Tempat Lahir</label>
                         <input
@@ -108,7 +108,7 @@ function submit() {
                         />
                     </div>
                 </div>
-                <div class="form-group row mb-3">
+                <div class="form-group row mb-3" v-if="user.role !== 'superadmin'">
                     <div class="col-md-6">
                         <label>Jenis Kelamin</label>
                         <div class="form-check">
