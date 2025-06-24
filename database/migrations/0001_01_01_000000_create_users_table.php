@@ -14,18 +14,18 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->string('agama');
-            $table->text('alamat');
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
+            $table->string('agama')->nullable();
+            $table->text('alamat')->nullable();
             $table->string('nim')->unique();
-            $table->string('prodi');
-            $table->string('angkatan');
-            $table->text('alasan');
+            $table->string('prodi')->nullable();
+            $table->string('angkatan')->nullable();
+            $table->text('alasan')->nullable();
             $table->string('foto')->nullable();
             $table->string('email')->unique();
-            $table->string('telepon');
+            $table->string('telepon')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('username')->unique();
             $table->string('password');
