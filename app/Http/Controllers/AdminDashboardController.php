@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class AdminDashboardController extends Controller
@@ -18,7 +17,7 @@ class AdminDashboardController extends Controller
             //     Carbon::parse('2025-09-02 23:59:59')
             // ])
             ->orderBy('created_at', 'desc')
-            ->paginate(10, ['nim', 'nama', 'alamat', 'prodi', 'angkatan']);
+            ->paginate(10, ['nim', 'nama', 'alamat', 'prodi', 'angkatan', 'status']);
 
         $totalPendaftar = User::whereBetween('created_at', [
             Carbon::parse('2025-07-07 00:00:00'),

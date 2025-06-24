@@ -117,7 +117,7 @@ const totalAnggota = computed(() => page.props.totalAnggota || 0);
                             <td>{{ p.alamat }}</td>
                             <td>{{ p.prodi }}</td>
                             <td class="text-center">{{ p.angkatan }}</td>
-                            <td class="text-center"><span class="badge badge-info">Baru</span></td>
+                            <td class="text-center"><span class="badge badge-info">{{ p.status }}</span></td>
                         </tr>
                         <tr
                             v-if="
