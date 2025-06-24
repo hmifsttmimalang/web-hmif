@@ -3,10 +3,8 @@ import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
 import { route } from "ziggy-js";
 
-// Ambil user dari props inertia (pastikan currentUser pasti ada!)
 const user = usePage().props.currentUser || {};
 
-// Inisialisasi form dengan fallback "" (biar ga null/undefined)
 const form = useForm({
     nama: user.nama || "",
     tempat_lahir: user.tempat_lahir || "",
@@ -25,7 +23,6 @@ const fotoPreview = ref(
     user.foto ? `/storage/${user.foto}` : "/assets2/img/default.jpg"
 );
 
-// Ganti foto (preview dan form)
 function onFileChange(e) {
     const file = e.target.files[0];
     form.foto = file || null;
@@ -34,21 +31,20 @@ function onFileChange(e) {
     }
 }
 
-// Kalau foto direset/null, kembali ke foto asli user
 watch(
     () => form.foto,
     (val) => {
         if (!val) {
             fotoPreview.value = user.foto
                 ? `/storage/${user.foto}`
-                : "/assets2/img/profile-img.jpg";
+                : "/assets2/img/default.jpg";
         }
     }
 );
 
 function submit() {
-    form.transform(data => ({
-        ...data
+    form.transform((data) => ({
+        ...data,
     })).post(route("profile.update"), {
         forceFormData: true,
         onSuccess: () => window.location.reload(),
