@@ -2,9 +2,8 @@
 import { ref, computed } from "vue";
 import { Link, usePage } from "@inertiajs/vue3";
 
-// Data dari backend (bisa nanti diubah dari props)
 const page = usePage();
-const userBaruList = ref(page.props.userBaruList ?? []); // array dari backend
+const userBaruList = computed(() => page.props.userBaruList ?? []);
 
 const pageNum = ref(1);
 const perPage = 10;

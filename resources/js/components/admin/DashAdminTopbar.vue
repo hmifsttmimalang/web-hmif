@@ -14,7 +14,7 @@ const adminName = computed(
 const adminImg = computed(() =>
     page.props.currentUser?.foto
         ? `/storage/${page.props.currentUser.foto}`
-        : "/assets/img/undraw_profile.svg"
+        : "/assets2/img/default.jpg"
 );
 
 function toggleDropdown(e) {
