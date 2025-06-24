@@ -106,7 +106,7 @@ function formatTanggal(tgl) {
                                 <h6 class="mb-1 font-bold">Angkatan</h6>
                                 <h6 class="mb-0">{{ anggota.angkatan }}</h6>
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item" v-if="anggota.alasan != null">
                                 <h6 class="mb-1 font-bold">Alasan Bergabung</h6>
                                 <h6 class="mb-0">{{ anggota.alasan }}</h6>
                             </li>
