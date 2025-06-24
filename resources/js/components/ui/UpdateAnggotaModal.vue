@@ -1,3 +1,41 @@
+<script setup>
+import { reactive, watch } from "vue";
+import { router } from "@inertiajs/vue3";
+import { route } from "ziggy-js";
+const props = defineProps(["anggota"]);
+const emit = defineEmits(["close", "save"]);
+
+const form = reactive({
+    id_anggota: "",
+    nama: "",
+    jabatan: "",
+    status: "",
+});
+
+watch(
+    () => props.anggota,
+    (val) => {
+        if (val) {
+            form.id_anggota = val.id ?? "";
+            form.nama = val.nama ?? "";
+            form.jabatan = val.jabatan ?? "";
+            form.status = val.status ?? "";
+        }
+    },
+    { immediate: true }
+);
+
+function submit() {
+    router.patch(route("admin.anggota.update", { id: form.id_anggota }), form, {
+        onSuccess: () => {
+            emit("close");
+            router.visit(route("admin.kelola-data"), { preserveScroll: true });
+        },
+        onError: () => alert("Gagal update data!"),
+    });
+}
+</script>
+
 <template>
     <div class="modal-backdrop" @click.self="$emit('close')">
         <div class="modal-dialog modal-dialog-centered">
@@ -48,9 +86,7 @@
                                 v-model="form.status"
                                 required
                             >
-                                <option value="Baru">
-                                    Pilih Status
-                                </option>
+                                <option value="Baru">Pilih Status</option>
                                 <option value="Aktif">Aktif</option>
                                 <option value="Demisioner">Demisioner</option>
                                 <option value="Nonaktif">Nonaktif</option>
@@ -75,43 +111,6 @@
         </div>
     </div>
 </template>
-<script setup>
-import { reactive, watch } from "vue";
-import { router } from "@inertiajs/vue3";
-import { route } from "ziggy-js";
-const props = defineProps(["anggota"]);
-const emit = defineEmits(["close", "save"]);
-
-const form = reactive({
-    id_anggota: "",
-    nama: "",
-    jabatan: "",
-    status: "",
-});
-
-watch(
-    () => props.anggota,
-    (val) => {
-        if (val) {
-            form.id_anggota = val.id ?? "";
-            form.nama = val.nama ?? "";
-            form.jabatan = val.jabatan ?? "";
-            form.status = val.status ?? "";
-        }
-    },
-    { immediate: true }
-);
-
-function submit() {
-    router.patch(route("admin.anggota.update", { id: form.id_anggota }), form, {
-        onSuccess: () => {
-            emit("close");
-            router.visit(route("admin.kelola-data"), { preserveScroll: true });
-        },
-        onError: () => alert("Gagal update data!"),
-    });
-}
-</script>
 
 <style scoped>
 .modal-backdrop {
