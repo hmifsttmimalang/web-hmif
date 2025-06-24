@@ -1,21 +1,8 @@
-<template>
-    <div id="wrapper">
-        <DashAdminSidebar />
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                <DashAdminTopbar />
-                <slot />
-            </div>
-        </div>
-    </div>
-    <ScrollTopPreloader />
-</template>
-
 <script setup>
-import { onMounted, onUnmounted } from 'vue';
-import DashAdminSidebar from '@/components/admin/DashAdminSidebar.vue';
-import DashAdminTopbar from '@/components/admin/DashAdminTopbar.vue';
-import ScrollTopPreloader from '@/components/ScrollTopPreloader.vue';
+import { onMounted, onUnmounted } from "vue";
+import DashAdminSidebar from "@/components/admin/DashAdminSidebar.vue";
+import DashAdminTopbar from "@/components/admin/DashAdminTopbar.vue";
+import ScrollTopPreloader from "@/components/ScrollTopPreloader.vue";
 
 const styleHrefs = [
     "/assets/vendor/bootstrap/css/bootstrap.min.css",
@@ -32,8 +19,11 @@ const loadedLinks = [];
 const loadedScripts = [];
 
 function loadStyle(href) {
-    // Cek biar tidak double
-    if (![...document.head.querySelectorAll("link")].some(l => l.href.includes(href))) {
+    if (
+        ![...document.head.querySelectorAll("link")].some((l) =>
+            l.href.includes(href)
+        )
+    ) {
         const link = document.createElement("link");
         link.rel = "stylesheet";
         link.href = href;
@@ -43,8 +33,11 @@ function loadStyle(href) {
 }
 
 function loadScript(src) {
-    // Cek biar tidak double
-    if (![...document.body.querySelectorAll("script")].some(s => s.src.includes(src))) {
+    if (
+        ![...document.body.querySelectorAll("script")].some((s) =>
+            s.src.includes(src)
+        )
+    ) {
         const script = document.createElement("script");
         script.src = src;
         script.async = false;
@@ -59,7 +52,20 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-    loadedLinks.forEach(link => link.remove());
-    loadedScripts.forEach(script => script.remove());
+    loadedLinks.forEach((link) => link.remove());
+    loadedScripts.forEach((script) => script.remove());
 });
 </script>
+
+<template>
+    <div id="wrapper">
+        <DashAdminSidebar />
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <DashAdminTopbar />
+                <slot />
+            </div>
+        </div>
+    </div>
+    <ScrollTopPreloader />
+</template>
