@@ -28,6 +28,7 @@ class User extends Authenticatable
         'prodi',
         'angkatan',
         'alasan',
+        'username',
         'email',
         'telepon',
         'password',
