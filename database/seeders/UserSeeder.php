@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
             'angkatan' => 2020,
             'alasan' => 'Untuk mengelola organisasi',
             'foto' => 'foto/default.jpg',
+            'username' => 'admin',
             'email' => 'admin@hmif.local',
             'telepon' => '081234567890',
             'password' => bcrypt('admin12345'),
@@ -41,6 +42,7 @@ class UserSeeder extends Seeder
             'angkatan' => 2020,
             'alasan' => 'Untuk mengelola organisasi',
             'foto' => 'foto/default.jpg',
+            'username' => 'superadmin',
             'email' => 'superadmin@hmif.local',
             'telepon' => '08323734450',
             'password' => bcrypt('superadmin123'),
@@ -60,16 +62,16 @@ class UserSeeder extends Seeder
             'prodi' => 'Teknik Informatika',
             'angkatan' => 2021,
             'alasan' => 'Untuk berpartisipasi dalam organisasi',
-            'foto' => 'foto/default.jpg', // Gambar default untuk user
+            'foto' => 'foto/default.jpg',
+            'username' => 'user',
             'email' => 'user@hmif.local',
             'telepon' => '089876543210',
-            'password' => bcrypt('user12345'), // Password untuk user
+            'password' => bcrypt('user12345'),
             'jabatan' => null,
             'status' => 'Baru',
             'role' => 'user',
         ]);
 
-        // User random
         User::factory(13)->create();
     }
 }

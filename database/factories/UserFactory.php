@@ -11,6 +11,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $gender = $this->faker->randomElement(['L', 'P']);
+
         $prodi = $this->faker->randomElement([
             'Teknik Informatika',
             'Teknik Sipil',
@@ -22,6 +23,10 @@ class UserFactory extends Factory
             'Multimedia Broadcasting',
             'Desain Grafis'
         ]);
+
+        $email = $this->faker->unique()->safeEmail();
+        $username = explode('@', $email)[0];
+
         return [
             'nama' => $this->faker->name($gender === 'L' ? 'male' : 'female'),
             'tempat_lahir' => $this->faker->city,
@@ -34,9 +39,10 @@ class UserFactory extends Factory
             'angkatan' => $this->faker->year(),
             'alasan' => $this->faker->sentence(),
             'foto' => 'foto/default.jpg',
-            'email' => $this->faker->unique()->safeEmail(),
+            'email' => $email,
             'telepon' => $this->faker->phoneNumber,
             'email_verified_at' => now(),
+            'username' => $username,
             'password' => Hash::make('password'),
             'jabatan' => null,
             'status' => $this->faker->randomElement(['Baru', 'Aktif', 'Demisioner', 'Nonaktif']),
