@@ -12,6 +12,7 @@ const form = useForm({
     jenis_kelamin: user.jenis_kelamin || "",
     agama: user.agama || "",
     alamat: user.alamat || "",
+    username: user.username || "",
     email: user.email || "",
     telepon: user.telepon || "",
     password: "",
@@ -161,6 +162,22 @@ function submit() {
                     ></textarea>
                 </div>
                 <div class="form-group row mb-3">
+                    <div class="form-group mb-3">
+                        <label for="username">Username</label>
+                        <input
+                            type="text"
+                            v-model="form.username"
+                            class="form-control"
+                            id="username"
+                            placeholder="Tulis username anda..."
+                            required
+                            maxlength="255"
+                            autocomplete="username"
+                        />
+                        <div class="text-danger" v-if="form.errors.username">
+                            {{ form.errors.username }}
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <label for="email">Email</label>
                         <input
