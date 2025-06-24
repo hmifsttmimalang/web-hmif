@@ -1,16 +1,3 @@
-<template>
-<Head title="HMIF SMI Malang" />
-  <LandingLayout>
-    <HeroSection />
-    <AboutSection />
-    <ServicesSection />
-    <MoreServicesSection />
-    <PortfolioSection />
-    <!-- <TeamSection /> -->
-    <Footer />
-  </LandingLayout>
-</template>
-
 <script>
 import { Head } from "@inertiajs/vue3";
 import HeroSection from "../components/HeroSection.vue";
@@ -36,6 +23,19 @@ export default {
   },
 };
 </script>
+
+<template>
+<Head title="HMIF SMI Malang" />
+  <LandingLayout>
+    <HeroSection />
+    <AboutSection />
+    <ServicesSection />
+    <MoreServicesSection />
+    <PortfolioSection />
+    <!-- <TeamSection /> -->
+    <Footer />
+  </LandingLayout>
+</template>
 
 <style scoped>
 html {
