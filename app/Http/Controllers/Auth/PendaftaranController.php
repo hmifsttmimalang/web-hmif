@@ -37,7 +37,7 @@ class PendaftaranController extends Controller
             'telepon' => 'required|string|max:20',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'terms' => 'accepted',
-            'foto' => 'nullable|image|max:5120|mimes:jpeg,jpg',
+            'foto' => 'required|image|max:5120|mimes:jpeg,jpg',
         ]);
 
         $data['username'] = explode('@', $data['email'])[0];
@@ -53,6 +53,6 @@ class PendaftaranController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('dashboard')->with('success', 'Pendaftaran berhasil! Selamat datang, ' . $user->nama . '!');
+        return redirect()->route('login')->with('success', 'Pendaftaran berhasil! Selamat datang, ' . $user->nama . '!');
     }
 }
