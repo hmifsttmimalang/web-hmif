@@ -53,7 +53,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function registration()
+    public function memberRegistration()
     {
         return $this->hasOne(MemberRegistration::class);
     }
