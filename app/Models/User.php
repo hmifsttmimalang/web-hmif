@@ -19,20 +19,15 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'nama',
-        'tempat_lahir',
-        'tanggal_lahir',
-        'jenis_kelamin',
-        'agama',
-        'alamat',
         'nim',
         'prodi',
         'angkatan',
-        'alasan',
-        'username',
-        'email',
         'telepon',
+        'instagram',
+        'email',
+        'foto',
+        'username',
         'password',
-        'foto'
     ];
 
     /**
@@ -56,5 +51,10 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function registration()
+    {
+        return $this->hasOne(MemberRegistration::class);
     }
 }
