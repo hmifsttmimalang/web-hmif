@@ -24,6 +24,7 @@ class MemberRegistration extends Model
         'minat_lainnya',
         'pengalaman_organisasi',
         'divisi',
+        'ket_portofolio',
         'link_portofolio',
         'file_portofolio',
         'skill',

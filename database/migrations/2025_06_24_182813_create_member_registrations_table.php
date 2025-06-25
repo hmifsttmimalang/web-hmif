@@ -36,7 +36,8 @@ return new class extends Migration
             $table->string('divisi');
             
             // portfolio
-            $table->text('link_portofolio')->nullable();
+            $table->text('ket_portofolio')->nullable();
+            $table->string('link_portofolio')->nullable();
             $table->string('file_portofolio')->nullable();
             $table->text('skill')->nullable();
 

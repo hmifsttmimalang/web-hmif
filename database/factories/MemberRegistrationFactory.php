@@ -33,7 +33,7 @@ class MemberRegistrationFactory extends Factory
 
             // info tambahan
             'tempat_lahir' => $this->faker->city,
-            'tanggal_lahir' => $this->faker->date('Y-m-d', '-18 years'),
+            'tanggal_lahir' => $this->faker->dateTimeBetween('-30 years', '-17 years')->format('Y-m-d'),
             'jenis_kelamin' => $genderCode,
             'agama' => $this->faker->randomElement(['islam', 'kristen', 'katolik', 'hindu', 'buddha', 'konghucu']),
             'alamat' => $this->faker->address,
@@ -59,6 +59,7 @@ class MemberRegistrationFactory extends Factory
             ]),
 
             // portfolio
+            'ket_portofolio' => $this->faker->optional()->sentence(),
             'link_portofolio' => $this->faker->optional()->url(),
             'file_portofolio' => $this->faker->optional()->filePath(),
             'skill' => $this->faker->optional()->words(3, true),

@@ -24,7 +24,7 @@ class PendaftaranController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            // USERS table
+            // tabel users
             'nama' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'username' => 'nullable|string|max:255|unique:users,username',
@@ -34,10 +34,10 @@ class PendaftaranController extends Controller
             'telepon' => 'required|string|max:20',
             'instagram' => 'nullable|string|max:100|unique:users,instagram',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'foto' => 'required|image|max:5120|mimes:jpeg,jpg',
+            'foto' => 'required|image|max:7168|mimes:jpeg,jpg',
             'terms' => 'accepted',
 
-            // MEMBER_REGISTRATIONS table
+            // tabel member_registrations
             'tempat_lahir' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:L,P',
@@ -54,8 +54,9 @@ class PendaftaranController extends Controller
             'pengalaman_organisasi' => 'required|string',
             'divisi' => 'required|string|max:100',
 
+            'ket_portofolio' => 'nullable|string|max:255',
             'link_portofolio' => 'nullable|url',
-            'file_portofolio' => 'nullable|file|max:10240',
+            'file_portofolio' => 'nullable|file|max:10240|mimes:jpg,jpeg,pdf,png',
             'skill' => 'nullable|string|max:255',
 
             'ide' => 'required|string',
@@ -89,13 +90,11 @@ class PendaftaranController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        // Simpan file portofolio jika ada
         $filePorto = null;
         if ($request->hasFile('file_portofolio')) {
             $filePorto = $request->file('file_portofolio')->store('portofolio', 'public');
         }
 
-        // Simpan member registration
         $user->memberRegistration()->create([
             'tempat_lahir' => $validated['tempat_lahir'],
             'tanggal_lahir' => $validated['tanggal_lahir'],
@@ -110,6 +109,7 @@ class PendaftaranController extends Controller
             'minat_lainnya' => $validated['minat_lainnya'] ?? null,
             'pengalaman_organisasi' => $validated['pengalaman_organisasi'],
             'divisi' => $validated['divisi'],
+            'ket_portofolio' => $validated['ket_portofolio'] ?? null,
             'link_portofolio' => $validated['link_portofolio'] ?? null,
             'file_portofolio' => $filePorto,
             'skill' => $validated['skill'] ?? null,
