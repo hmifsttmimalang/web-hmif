@@ -1,42 +1,27 @@
 <script setup>
-import { ref, watch } from "vue";
 import { useForm, usePage, Link } from "@inertiajs/vue3";
+import { ref, watch } from "vue";
 import { route } from "ziggy-js";
 
 const user = usePage().props.currentUser || {};
 
-function extractNomor(teleponLink) {
-    if (!teleponLink) return "";
-    const match = teleponLink.match(/wa\.me\/(\d+)/);
-    if (!match) return "";
-    const nomor = match[1];
-    if (nomor.startsWith("62")) {
-        return "0" + nomor.slice(2);
-    }
-    return nomor;
-}
+const showPassword = ref(false);
+const showPasswordConfirmation = ref(false);
 
 const form = useForm({
-    nama: user.nama,
-    tempat_lahir: user.member_registration.tempat_lahir,
-    tanggal_lahir: user.member_registration.tanggal_lahir,
-    jenis_kelamin: user.member_registration.jenis_kelamin,
-    agama: user.member_registration.agama,
-    alamat: user.member_registration.alamat,
-    username: user.username,
-    email: user.email,
-    telepon: extractNomor(user.telepon),
+    nama: user.nama || "",
+    tempat_lahir: user.member_registration?.tempat_lahir || "",
+    tanggal_lahir: user.member_registration?.tanggal_lahir || "",
+    jenis_kelamin: user.member_registration?.jenis_kelamin || "",
+    agama: user.member_registration?.agama || "",
+    alamat: user.member_registration?.alamat || "",
+    username: user.username || "",
+    email: user.email || "",
+    telepon: user.telepon || "",
     password: "",
     password_confirmation: "",
     foto: null,
 });
-
-if (form.telepon && form.telepon.includes("wa.me/")) {
-    const extracted = form.telepon.replace(/\D/g, ""); // hanya angka
-    if (extracted.startsWith("62")) {
-        form.telepon = "0" + extracted.slice(2);
-    }
-}
 
 const fotoPreview = ref(
     user.foto ? `/storage/${user.foto}` : "/assets2/img/default.jpg"
@@ -62,17 +47,9 @@ watch(
 );
 
 function submit() {
-    form.transform((data) => {
-        const updated = { ...data }; // salin semua field
-        let nomor = updated.telepon?.replace(/\D/g, "") ?? "";
-        if (nomor.startsWith("0")) {
-            nomor = "62" + nomor.slice(1);
-        } else if (nomor.startsWith("+62")) {
-            nomor = nomor.slice(1);
-        }
-        updated.telepon = `https://wa.me/${nomor}`;
-        return updated;
-    }).post(route("profile.update"), {
+    form.transform((data) => ({
+        ...data,
+    })).post(route("profile.update"), {
         forceFormData: true,
         onSuccess: () => window.location.reload(),
     });
@@ -234,13 +211,28 @@ function submit() {
                 <div class="form-group row mb-4">
                     <div class="col-md-6">
                         <label for="password">Password Baru</label>
-                        <input
-                            type="password"
-                            v-model="form.password"
-                            class="form-control"
-                            id="password"
-                            placeholder="Masukkan Password Baru..."
-                        />
+                        <div class="input-group">
+                            <input
+                                :type="showPassword ? 'text' : 'password'"
+                                v-model="form.password"
+                                class="form-control"
+                                id="password"
+                                placeholder="Masukkan Password Baru..."
+                            />
+                            <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                @click="showPassword = !showPassword"
+                            >
+                                <i
+                                    :class="
+                                        showPassword
+                                            ? 'bi bi-eye-slash'
+                                            : 'bi bi-eye'
+                                    "
+                                ></i>
+                            </button>
+                        </div>
                         <div class="text-danger" v-if="form.errors.password">
                             {{ form.errors.password }}
                         </div>
@@ -249,13 +241,35 @@ function submit() {
                         <label for="password_confirmation"
                             >Ulangi Password</label
                         >
-                        <input
-                            type="password"
-                            v-model="form.password_confirmation"
-                            class="form-control"
-                            id="password_confirmation"
-                            placeholder="Ulangi Password Anda..."
-                        />
+                        <div class="input-group">
+                            <input
+                                :type="
+                                    showPasswordConfirmation
+                                        ? 'text'
+                                        : 'password'
+                                "
+                                v-model="form.password_confirmation"
+                                class="form-control"
+                                id="password_confirmation"
+                                placeholder="Ulangi Password Anda..."
+                            />
+                            <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                @click="
+                                    showPasswordConfirmation =
+                                        !showPasswordConfirmation
+                                "
+                            >
+                                <i
+                                    :class="
+                                        showPasswordConfirmation
+                                            ? 'bi bi-eye-slash'
+                                            : 'bi bi-eye'
+                                    "
+                                ></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <button
