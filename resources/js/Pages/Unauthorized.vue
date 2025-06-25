@@ -1,3 +1,9 @@
+<script setup>
+import { Link, usePage } from '@inertiajs/vue3'
+const page = usePage()
+const error = page.props.flash.error || ''
+</script>
+
 <template>
   <div class="unauth-wrapper">
     <div class="unauth-card">
@@ -9,12 +15,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { Link, usePage } from '@inertiajs/vue3'
-const page = usePage()
-const error = page.props.flash?.error || ''
-</script>
 
 <style scoped>
 .unauth-wrapper {
@@ -29,7 +29,7 @@ const error = page.props.flash?.error || ''
   padding: 2.5rem 2.1rem 2.1rem 2.1rem;
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 4px 32px rgba(30,32,37,0.10);
+  box-shadow: 0 4px 32px rgba(30, 32, 37, 0.10);
   text-align: center;
   max-width: 350px;
   margin: auto;
@@ -61,6 +61,7 @@ const error = page.props.flash?.error || ''
   text-decoration: none;
   font-size: 1.05rem;
 }
+
 .unauth-btn:hover {
   background: #189e8d;
   color: #fff;

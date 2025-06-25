@@ -1,5 +1,18 @@
+<script>
+import { Head } from "@inertiajs/vue3";
+import DefaultLayout from "../layouts/DefaultLayout.vue";
+
+export default {
+  name: "BlogPost",
+  components: {
+    Head,
+    DefaultLayout,
+  },
+}
+</script>
+
 <template>
-<Head title="Blog Post - HMIF SMI Malang" />
+  <Head title="Blog Post - HMIF SMI Malang" />
   <DefaultLayout>
     <div class="container mt-5">
       <div class="row">
@@ -9,11 +22,7 @@
             <p class="blog-post-meta">
               Ditulis oleh <a href="#">Penulis</a> pada <span>16 Mei 2025</span>
             </p>
-            <img
-              src="https://dummyimage.com/800x400/000/fff"
-              class="img-fluid rounded mb-4"
-              alt="Gambar Artikel"
-            />
+            <img src="https://dummyimage.com/800x400/000/fff" class="img-fluid rounded mb-4" alt="Gambar Artikel" />
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
               lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod
@@ -49,16 +58,3 @@
     </div>
   </DefaultLayout>
 </template>
-
-<script>
-import { Head } from "@inertiajs/vue3";
-import DefaultLayout from "../layouts/DefaultLayout.vue";
-
-export default {
-  name: "BlogPost",
-  components: {
-    Head,
-    DefaultLayout,
-  },
-}
-</script>
