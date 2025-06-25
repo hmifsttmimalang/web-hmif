@@ -54,7 +54,7 @@ function goToPage(p) {
                                 </td>
                                 <td class="text-center">{{ user.nim }}</td>
                                 <td>{{ user.nama }}</td>
-                                <td>{{ user.alamat }}</td>
+                                <td>{{ user.member_registration.alamat }}</td>
                                 <td>{{ user.prodi }}</td>
                                 <td class="text-center">{{ user.angkatan }}</td>
                                 <td class="text-center">

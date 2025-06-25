@@ -10,8 +10,10 @@ class InfoUserController extends Controller
 {
     public function index()
     {
-        $start = now()->subMonths(2); // 2 bulan terakhir, misal
-        $userBaruList = User::where('created_at', '>=', $start)
+        $start = now()->subMonths(2);
+
+        $userBaruList = User::with('memberRegistration')
+            ->where('created_at', '>=', $start)
             ->where('role', 'user')
             ->where('status', 'Baru')
             ->orderByDesc('created_at')
@@ -19,11 +21,11 @@ class InfoUserController extends Controller
                 'id',
                 'nim',
                 'nama',
-                'alamat',
                 'prodi',
                 'angkatan',
                 'status',
             ]);
+
         return Inertia::render('Admin/InfoUser', [
             'userBaruList' => $userBaruList,
         ]);
