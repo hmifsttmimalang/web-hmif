@@ -43,7 +43,7 @@
                     <td>{{ $i + 1 }}</td>
                     <td>{{ $a->nim }}</td>
                     <td>{{ $a->nama }}</td>
-                    <td>{{ $a->memberRegistration->alamat }}</td>
+                    <td>{{ $a->memberRegistration->alamat ?? '-' }}</td>
                     <td>{{ $a->prodi }}</td>
                     <td>{{ $a->angkatan }}</td>
                     <td>{{ $a->jabatan ?? '-' }}</td>
