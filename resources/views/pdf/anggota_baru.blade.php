@@ -1,56 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
+
 <head>
-    <meta charset="utf-8" />
-    <title>Data Anggota HMIF</title>
+    <meta charset="UTF-8">
+    <title>Data Anggota Baru</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #333;
+        }
+
+        h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12px;
+            margin-top: 10px;
         }
 
         th,
         td {
-            border: 1px solid #333;
-            padding: 4px;
+            border: 1px solid #999;
+            padding: 8px;
             text-align: left;
         }
 
         th {
-            background: #eee;
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #efefef;
         }
     </style>
 </head>
+
 <body>
-    <h2>Data Anggota HMIF</h2>
+    <h3>Data Anggota Baru</h3>
     <table>
         <thead>
             <tr>
                 <th>No</th>
-                <th>NIM</th>
                 <th>Nama</th>
+                <th>NIM</th>
                 <th>Alamat</th>
                 <th>Prodi</th>
                 <th>Angkatan</th>
-                <th>Jabatan</th>
-                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($anggota as $i => $a)
+            @foreach ($anggotaBaru as $index => $a)
                 <tr>
-                    <td>{{ $i + 1 }}</td>
-                    <td>{{ $a->nim }}</td>
+                    <td>{{ $index + 1 }}</td>
                     <td>{{ $a->nama }}</td>
+                    <td>{{ $a->nim }}</td>
                     <td>{{ $a->memberRegistration->alamat }}</td>
                     <td>{{ $a->prodi }}</td>
                     <td>{{ $a->angkatan }}</td>
-                    <td>{{ $a->jabatan ?? '-' }}</td>
-                    <td>{{ $a->status }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 </body>
+
 </html>

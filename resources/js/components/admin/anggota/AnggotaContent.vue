@@ -36,6 +36,10 @@ function downloadPdf() {
     window.open(route("anggota.cetak-pdf"), "_blank");
 }
 
+function cetakAnggotaBaru() {
+    window.open(route("anggota.cetakBaru"), "_blank");
+}
+
 function cetak(anggota) {
     window.open(route("anggota.cetak-kartu", { id: anggota.id }), "_blank");
 }
@@ -46,6 +50,12 @@ function cetak(anggota) {
         <h1 class="h3 mb-3 text-gray-800">Data Anggota</h1>
         <button class="btn btn-warning btn-sm mb-3" @click="downloadPdf">
             Cetak Data
+        </button>
+        <button
+            class="btn btn-primary btn-sm mb-3 ms-2"
+            @click="cetakAnggotaBaru"
+        >
+            Cetak Anggota Baru
         </button>
         <div class="row">
             <div class="col-md-12">
@@ -76,7 +86,9 @@ function cetak(anggota) {
                                 <td>{{ anggota.nama }}</td>
                                 <td>{{ anggota.alamat }}</td>
                                 <td>{{ anggota.prodi }}</td>
-                                <td class="text-center">{{ anggota.angkatan }}</td>
+                                <td class="text-center">
+                                    {{ anggota.angkatan }}
+                                </td>
                                 <td class="text-center">
                                     {{ anggota.jabatan || "-" }}
                                 </td>
@@ -84,7 +96,8 @@ function cetak(anggota) {
                                     <span
                                         class="badge"
                                         :class="{
-                                            'bg-info': anggota.status === 'Baru',
+                                            'bg-info':
+                                                anggota.status === 'Baru',
                                             'bg-success':
                                                 anggota.status === 'Aktif',
                                             'bg-secondary':
