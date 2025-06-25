@@ -61,7 +61,9 @@ class AnggotaImport implements ToCollection, WithHeadingRow
                     'harapan' => $row['harapan'] ?? null,
                     'bagi_waktu' => $row['bagi_waktu'] ?? null,
                     'kontribusi' => $row['kontribusi'] ?? null,
-                    'minat' => array_map('trim', explode(',', $row['minat'] ?? '')),
+                    'minat' => empty($row['minat'])
+                        ? null
+                        : array_map('trim', explode(',', $row['minat'])),
                     'minat_lainnya' => $row['minat_lainnya'] ?? null,
                     'pengalaman_organisasi' => $row['pengalaman_organisasi'] ?? null,
                     'divisi' => $row['divisi'] ?? null,
