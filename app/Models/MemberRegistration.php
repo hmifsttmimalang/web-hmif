@@ -11,6 +11,7 @@ class MemberRegistration extends Model
 
     protected $table = 'member_registrations';
     protected $fillable = [
+        'user_id',
         'tempat_lahir',
         'tanggal_lahir',
         'jenis_kelamin',

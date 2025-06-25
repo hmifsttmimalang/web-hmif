@@ -23,17 +23,17 @@ return new class extends Migration
             $table->text('alamat');
 
             // motivasi
-            $table->text('motivasi');
-            $table->text('harapan');
-            $table->text('bagi_waktu');
+            $table->text('motivasi')->nullable();
+            $table->text('harapan')->nullable();
+            $table->text('bagi_waktu')->nullable();
             
-            $table->string('kontribusi');
+            $table->string('kontribusi')->nullable();
 
             // minat dan bakat
             $table->json('minat')->nullable();
             $table->string('minat_lainnya')->nullable();
-            $table->text('pengalaman_organisasi');
-            $table->string('divisi');
+            $table->text('pengalaman_organisasi')->nullable();
+            $table->string('divisi')->nullable();
             
             // portfolio
             $table->text('ket_portofolio')->nullable();
@@ -42,8 +42,8 @@ return new class extends Migration
             $table->text('skill')->nullable();
 
             // ide dan solusi
-            $table->text('ide');
-            $table->text('solusi');
+            $table->text('ide')->nullable();
+            $table->text('solusi')->nullable();
 
             $table->timestamps();
         });
