@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps, defineEmits } from "vue";
 import { router } from "@inertiajs/vue3";
 
 const props = defineProps({ show: Boolean });
