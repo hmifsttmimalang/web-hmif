@@ -59,14 +59,30 @@ export default {
     },
     mounted() {
         this.$nextTick(() => {
-            this.iso = new Isotope(".isotope-container", {
+            const iso = new Isotope(".isotope-container", {
                 itemSelector: ".isotope-item",
                 layoutMode: "masonry",
             });
 
-            GLightbox({
-                selector: ".glightbox",
+            this.iso = iso;
+
+            // Tunggu semua gambar load dulu baru layout
+            const images = document.querySelectorAll(".isotope-container img");
+            let loaded = 0;
+
+            images.forEach((img) => {
+                if (img.complete) {
+                    loaded++;
+                    if (loaded === images.length) iso.layout();
+                } else {
+                    img.addEventListener("load", () => {
+                        loaded++;
+                        if (loaded === images.length) iso.layout();
+                    });
+                }
             });
+
+            GLightbox({ selector: ".glightbox" });
         });
     },
     beforeUnmount() {
@@ -88,55 +104,26 @@ export default {
         </div>
         <div class="container">
             <div class="isotope-layout" data-layout="masonry">
-                <ul
-                    class="portfolio-filters isotope-filters"
-                    data-aos="fade-up"
-                    data-aos-delay="100"
-                >
-                    <li
-                        v-for="filter in filters"
-                        :key="filter.value"
-                        :class="{
-                            'filter-active': activeFilter === filter.value,
-                        }"
-                        @click="changeFilter(filter.value)"
-                    >
+                <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+                    <li v-for="filter in filters" :key="filter.value" :class="{
+                        'filter-active': activeFilter === filter.value,
+                    }" @click="changeFilter(filter.value)">
                         {{ filter.label }}
                     </li>
                 </ul>
-                <div
-                    class="row gy-4 isotope-container"
-                    data-aos="fade-up"
-                    data-aos-delay="200"
-                >
-                    <div
-                        v-for="(project, index) in projects"
-                        :key="index"
-                        class="col-lg-4 col-md-6 portfolio-item isotope-item"
-                        :class="project.filterClass"
-                    >
+                <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+                    <div v-for="(project, index) in projects" :key="index"
+                        class="col-lg-4 col-md-6 portfolio-item isotope-item" :class="project.filterClass">
                         <div class="portfolio-content h-100">
-                            <img
-                                :src="project.imgSrc"
-                                class="img-fluid"
-                                alt=""
-                            />
+                            <img :src="project.imgSrc" class="img-fluid" alt="" />
                             <div class="portfolio-info">
                                 <h4>{{ project.title }}</h4>
                                 <p>{{ project.description }}</p>
-                                <a
-                                    :href="project.imgSrc"
-                                    title="Preview"
-                                    data-gallery="portfolio-gallery-app"
-                                    class="glightbox preview-link"
-                                >
+                                <a :href="project.imgSrc" title="Preview" data-gallery="portfolio-gallery-app"
+                                    class="glightbox preview-link">
                                     <i class="bi bi-zoom-in"></i>
                                 </a>
-                                <a
-                                    href="portfolio-details.html"
-                                    title="More Details"
-                                    class="details-link"
-                                >
+                                <a href="portfolio-details.html" title="More Details" class="details-link">
                                     <i class="bi bi-link-45deg"></i>
                                 </a>
                             </div>
@@ -154,6 +141,7 @@ export default {
     color: #007bff;
     cursor: pointer;
 }
+
 .portfolio-item {
     transition: transform 0.3s ease;
 }
