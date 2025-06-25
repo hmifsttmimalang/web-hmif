@@ -1,85 +1,74 @@
 <?php
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\MemberRegistration;
 
-test('profile page is displayed', function () {
-    $user = User::factory()->create();
+beforeEach(function () {
+    $this->user = User::factory()->create([
+        'password' => Hash::make('password123'),
+        'role' => 'user',
+    ]);
 
-    $response = $this
-        ->actingAs($user)
-        ->get('/profile');
-
-    $response->assertOk();
+    $this->actingAs($this->user);
 });
 
-test('profile information can be updated', function () {
-    $user = User::factory()->create();
+it('can update user profile without changing password or photo', function () {
+    $response = $this->post(route('profile.update'), [
+        'nama' => 'User Baru',
+        'username' => 'newusername',
+        'email' => 'newemail@example.com',
+        'telepon' => '081234567890',
 
-    $response = $this
-        ->actingAs($user)
-        ->patch('/profile', [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        'tempat_lahir' => 'Malang',
+        'tanggal_lahir' => '2000-01-01',
+        'jenis_kelamin' => 'L',
+        'agama' => 'Islam',
+        'alamat' => 'Jl. Kebenaran',
+    ]);
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+    $response->assertSessionHasNoErrors();
+    $response->assertRedirect();
 
-    $user->refresh();
+    $this->assertDatabaseHas(User::class, [
+        'id' => $this->user->id,
+        'nama' => 'User Baru',
+        'username' => 'newusername',
+        'email' => 'newemail@example.com',
+        'telepon' => 'https://wa.me/6281234567890',
+    ]);
 
-    $this->assertSame('Test User', $user->name);
-    $this->assertSame('test@example.com', $user->email);
-    $this->assertNull($user->email_verified_at);
+    $this->assertDatabaseHas(MemberRegistration::class, [
+        'user_id' => $this->user->id,
+        'tempat_lahir' => 'Malang',
+    ]);
 });
 
-test('email verification status is unchanged when the email address is unchanged', function () {
-    $user = User::factory()->create();
+it('can upload and replace user photo', function () {
+    Storage::fake('public');
 
-    $response = $this
-        ->actingAs($user)
-        ->patch('/profile', [
-            'name' => 'Test User',
-            'email' => $user->email,
-        ]);
+    $file = UploadedFile::fake()->image('new.jpg', 300, 300);
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/profile');
+    $response = $this->post(route('profile.update'), [
+        'nama' => 'Foto User',
+        'username' => 'fotouser',
+        'email' => 'foto@example.com',
+        'telepon' => '081111111111',
+        'foto' => $file,
 
-    $this->assertNotNull($user->refresh()->email_verified_at);
-});
+        'tempat_lahir' => 'Malang',
+        'tanggal_lahir' => '2000-01-01',
+        'jenis_kelamin' => 'L',
+        'agama' => 'Islam',
+        'alamat' => 'Jl. Jalan',
+    ]);
 
-test('user can delete their account', function () {
-    $user = User::factory()->create();
+    $response->assertRedirect();
 
-    $response = $this
-        ->actingAs($user)
-        ->delete('/profile', [
-            'password' => 'password',
-        ]);
+    $user = $this->user->fresh();
+    expect($user->foto)->not->toBeNull();
 
-    $response
-        ->assertSessionHasNoErrors()
-        ->assertRedirect('/');
-
-    $this->assertGuest();
-    $this->assertNull($user->fresh());
-});
-
-test('correct password must be provided to delete account', function () {
-    $user = User::factory()->create();
-
-    $response = $this
-        ->actingAs($user)
-        ->from('/profile')
-        ->delete('/profile', [
-            'password' => 'wrong-password',
-        ]);
-
-    $response
-        ->assertSessionHasErrors('password')
-        ->assertRedirect('/profile');
-
-    $this->assertNotNull($user->fresh());
+    Storage::disk('public')->assertExists($user->foto);
 });
