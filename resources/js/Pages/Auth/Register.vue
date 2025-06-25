@@ -35,6 +35,14 @@ const steps = [
     AkunKontakForm,
 ];
 
+function onFileChange(e) {
+    form.foto = e.target.files[0];
+}
+
+function onPortofolioChange(e) {
+    form.file_portofolio = e.target.files[0];
+}
+
 const form = useForm({
     nama: "",
     tempat_lahir: "",
@@ -138,7 +146,65 @@ function submit() {
                                 :is="steps[step]"
                                 :form="form"
                                 :errors="form.errors"
+                                :key="steps[step].name"
                             />
+
+                            <!-- Foto dan angkatan-->
+                            <div class="form-group row" v-show="step === 0">
+                                <div class="col-md-6">
+                                    <label for="foto"
+                                        >Kirim foto terbaik kamu</label
+                                    >
+                                    <input
+                                        type="file"
+                                        @change="onFileChange"
+                                        class="form-control"
+                                        required
+                                    />
+                                    <div
+                                        class="invalid-feedback d-block"
+                                        v-if="form.errors.foto"
+                                    >
+                                        {{ form.errors.foto }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="angkatan">Angkatan</label>
+                                    <input
+                                        type="text"
+                                        v-model="form.angkatan"
+                                        class="form-control"
+                                        id="angkatan"
+                                        placeholder="Kamu Angkatan Berapa?"
+                                        required
+                                    />
+                                    <div
+                                        class="invalid-feedback d-block"
+                                        v-if="form.errors.angkatan"
+                                    >
+                                        {{ form.errors.angkatan }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- File Portofolio -->
+                            <div class="form-group" v-show="step === 3">
+                                <label for="file_portofolio"
+                                    >File Portofolio (maks 10MB)</label
+                                >
+                                <input
+                                    type="file"
+                                    id="file_portofolio"
+                                    @change="onPortofolioChange"
+                                    class="form-control"
+                                />
+                                <div
+                                    class="invalid-feedback d-block"
+                                    v-if="form.errors.file_portofolio"
+                                >
+                                    {{ form.errors.file_portofolio }}
+                                </div>
+                            </div>
 
                             <hr />
 

@@ -26,23 +26,6 @@ defineProps({
         </div>
     </div>
 
-    <!-- File Portofolio -->
-    <div class="form-group">
-        <label for="file_portofolio">File Portofolio (maks 10MB)</label>
-        <input
-            type="file"
-            id="file_portofolio"
-            @change="(e) => (form.file_portofolio = e.target.files[0])"
-            class="form-control"
-        />
-        <div
-            class="invalid-feedback d-block"
-            v-if="form.errors.file_portofolio"
-        >
-            {{ form.errors.file_portofolio }}
-        </div>
-    </div>
-
     <div class="form-group">
         <label for="skill">Tools atau software yang kamu kuasai</label>
         <input

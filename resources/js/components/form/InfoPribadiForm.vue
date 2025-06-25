@@ -57,6 +57,7 @@ defineProps({
             </div>
         </div>
     </div>
+
     <!-- Jenis Kelamin & Agama -->
     <div class="form-group row">
         <div class="col-md-6">
@@ -92,6 +93,7 @@ defineProps({
                 {{ form.errors.jenis_kelamin }}
             </div>
         </div>
+
         <div class="col-md-6">
             <label for="agama">Agama</label>
             <select
@@ -113,6 +115,7 @@ defineProps({
             </div>
         </div>
     </div>
+
     <!-- Alamat -->
     <div class="form-group">
         <label for="alamat">Alamat</label>
@@ -127,6 +130,7 @@ defineProps({
             {{ form.errors.alamat }}
         </div>
     </div>
+
     <!-- NIM -->
     <div class="form-group">
         <label for="nim">NIM</label>
@@ -142,11 +146,14 @@ defineProps({
             {{ form.errors.nim }}
         </div>
     </div>
+
     <!-- Prodi -->
     <div class="form-group">
         <label for="prodi">Asal Prodi</label>
         <select v-model="form.prodi" id="prodi" class="form-control" required>
-            <option value="" disabled selected hidden>Pilih Prodi atau Jurusan Kuliah Kamu</option>
+            <option value="" disabled selected hidden>
+                Pilih Prodi atau Jurusan Kuliah Kamu
+            </option>
             <option value="Teknik Informatika">Teknik Informatika</option>
             <option value="Teknik Sipil">Teknik Sipil</option>
             <option value="Digital Arsitektur">Digital Arsitektur</option>
@@ -161,36 +168,6 @@ defineProps({
         </select>
         <div class="invalid-feedback d-block" v-if="form.errors.prodi">
             {{ form.errors.prodi }}
-        </div>
-    </div>
-    <!-- Foto -->
-    <div class="form-group row">
-        <div class="col-md-6">
-            <label for="foto">Foto PAS (3x4)</label>
-            <input
-                id="foto"
-                type="file"
-                @change="onFileChange"
-                class="form-control"
-                required
-            />
-            <div class="invalid-feedback d-block" v-if="form.errors.foto">
-                {{ form.errors.foto }}
-            </div>
-        </div>
-        <div class="col-md-6">
-            <label for="angkatan">Angkatan</label>
-            <input
-                type="text"
-                v-model="form.angkatan"
-                class="form-control"
-                id="angkatan"
-                placeholder="Kamu Angkatan Berapa?"
-                required
-            />
-            <div class="invalid-feedback d-block" v-if="form.errors.angkatan">
-                {{ form.errors.angkatan }}
-            </div>
         </div>
     </div>
 </template>
