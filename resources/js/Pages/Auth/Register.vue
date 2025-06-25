@@ -62,6 +62,7 @@ const form = useForm({
     minat: [],
     minat_lainnya: "",
     skill: "",
+    ket_portofolio: "",
     link_portofolio: "",
     file_portofolio: null,
     instagram: "",

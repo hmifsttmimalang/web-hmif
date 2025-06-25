@@ -7,16 +7,30 @@ defineProps({
 
 <template>
     <div class="form-group">
-        <label for="link_portofolio"
+        <label for="ket_portofolio"
             >Apakah kamu memiliki portofolio atau karya yang ingin dibagikan
             (jika ada)</label
         >
         <input
             type="url"
+            v-model="form.ket_portofolio"
+            id="ket_portofolio"
+            class="form-control"
+            placeholder="isi penjelasan singkat"
+        />
+        <div class="invalid-feedback d-block" v-if="form.errors.ket_portofolio">
+            {{ form.errors.ket_portofolio }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="link_portofolio">Link portofolio (jika ada)</label>
+        <input
+            type="url"
             v-model="form.link_portofolio"
             id="link_portofolio"
             class="form-control"
-            placeholder="Isi jika ada"
+            placeholder="isi portofolio dengan link jika ada misalnya www.example.com"
         />
         <div
             class="invalid-feedback d-block"
