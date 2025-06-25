@@ -10,8 +10,7 @@ class UserFactory extends Factory
 {
     public function definition(): array
     {
-        $gender = $this->faker->randomElement(['L', 'P']);
-
+        $gender = 'male';
         $prodi = $this->faker->randomElement([
             'Teknik Informatika',
             'Teknik Sipil',
@@ -28,25 +27,20 @@ class UserFactory extends Factory
         $username = explode('@', $email)[0];
 
         return [
-            'nama' => $this->faker->name($gender === 'L' ? 'male' : 'female'),
-            'tempat_lahir' => $this->faker->city,
-            'tanggal_lahir' => $this->faker->date(),
-            'jenis_kelamin' => $gender,
-            'agama' => $this->faker->randomElement(['islam', 'kristen', 'katolik', 'hindu', 'buddha', 'konghucu']),
-            'alamat' => $this->faker->address,
+            'nama' => $this->faker->name($gender),
             'nim' => $this->faker->unique()->numerify('######'),
             'prodi' => $prodi,
-            'angkatan' => $this->faker->year(),
-            'alasan' => $this->faker->sentence(),
-            'foto' => 'foto/default.jpg',
+            'angkatan' => (string) $this->faker->numberBetween(2022, 2025),
+            'telepon' => 'https://wa.me/62' . $this->faker->numerify('812#######'),
+            'instagram' => $this->faker->unique()->userName(),
             'email' => $email,
-            'telepon' => $this->faker->phoneNumber,
             'email_verified_at' => now(),
+            'foto' => 'foto/default.jpg',
             'username' => $username,
             'password' => Hash::make('password'),
+            'role' => 'user',
             'jabatan' => null,
             'status' => $this->faker->randomElement(['Baru', 'Aktif', 'Demisioner', 'Nonaktif']),
-            'role' => 'user',
             'remember_token' => Str::random(10),
         ];
     }

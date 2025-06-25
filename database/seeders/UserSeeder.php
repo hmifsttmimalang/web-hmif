@@ -2,34 +2,36 @@
 
 namespace Database\Seeders;
 
+use App\Models\MemberRegistration;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
     public function run(): void
     {
+        // Admin Superuser
         User::factory()->create([
             'nama' => 'Admin',
-            'tempat_lahir' => null,
-            'tanggal_lahir' => null,
-            'jenis_kelamin' => null,
-            'agama' => null,
-            'alamat' => 'Jl. Candi Panggung Barat No 48, Kota Malang 65142, Jawa Timur',
             'nim' => null,
             'prodi' => null,
             'angkatan' => null,
-            'alasan' => null,
+            'telepon' => null,
+            'instagram' => null,
+            'email' => 'hmifsttmimalang@gmail.com',
+            'email_verified_at' => now(),
             'foto' => 'foto/default.jpg',
             'username' => 'admin',
-            'email' => 'hmifsttmimalang@gmail.com',
-            'telepon' => null,
-            'password' => bcrypt('HmifSttmiMalang2025'),
+            'password' => Hash::make('HmifSttmiMalang2025'),
             'jabatan' => null,
             'status' => 'Aktif',
             'role' => 'superadmin',
         ]);
 
-        User::factory(13)->create();
+        // 13 User biasa
+        MemberRegistration::factory()
+            ->count(13)
+            ->create();
     }
 }
