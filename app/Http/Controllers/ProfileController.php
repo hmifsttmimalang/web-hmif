@@ -2,107 +2,90 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+    /**
+     * Tampilkan halaman edit profil dengan data user dan relasinya.
+     */
     public function edit()
     {
+        $user = User::with('memberRegistration')->findOrFail(Auth::id());
+
         return inertia('EditProfil', [
-            'currentUser' => Auth::user(),
+            'currentUser' => $user,
         ]);
     }
 
     /**
-     * Update the authenticated user's profile.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Perbarui data profil user yang sedang login.
      */
     public function update(Request $request)
     {
-        /** @var \App\Models\User|null $user */
         $user = Auth::user();
 
         if (!$user) {
             return back()->withErrors(['auth' => 'User tidak ditemukan atau belum login.']);
         }
-
-        $rules = [
-            'nama' => 'sometimes|required|string|max:255',
-            'tempat_lahir' => 'sometimes|required|string|max:255',
-            'tanggal_lahir' => 'sometimes|required|date',
-            'jenis_kelamin' => 'sometimes|required|in:L,P',
-            'agama' => 'sometimes|required|string|max:255',
-            'alamat' => 'sometimes|required|string|max:255',
-            'username' => 'sometimes|required|max:255|unique:users,username,' . $user->id,
-            'email' => 'sometimes|required|email|max:255|unique:users,email,' . $user->id,
-            'telepon' => 'sometimes|required|string|max:20',
+        
+        // Validasi input utama user
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'telepon' => 'required|string|max:100',
             'foto' => 'nullable|image|max:5120',
-        ];
+            'password' => 'nullable|confirmed|min:8',
+        ]);
 
-        if ($request->input('password') === null || $request->input('password') === '') {
-            $request->request->remove('password');
+        // Format nomor telepon ke wa.me
+        if (!empty($validated['telepon'])) {
+            $nomor = preg_replace('/\D/', '', $validated['telepon']);
+            if (str_starts_with($nomor, '0')) {
+                $nomor = '62' . substr($nomor, 1);
+            } elseif (str_starts_with($nomor, '+62')) {
+                $nomor = substr($nomor, 1);
+            }
+            $validated['telepon'] = 'https://wa.me/' . $nomor;
         }
-        if ($request->filled('password')) {
-            $rules['password'] = ['confirmed', 'min:8'];
-        }
-
-        if ($request->hasFile('foto')) {
-            $data['foto'] = $request->file('foto')->store('foto', 'public');
-        }
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
+        
+        // Hash password jika diisi
+        if (!empty($validated['password'])) {
+            $validated['password'] = Hash::make($validated['password']);
         } else {
-            if (isset($data['password'])) {
-                unset($data['password']);
-            }
+            unset($validated['password']);
         }
 
-        $data = $request->validate($rules);
-
+        // Handle upload foto profil
         if ($request->hasFile('foto')) {
-            if ($user->foto && $user->foto !== 'default.jpg') {
-                Storage::disk('public')->delete('foto/' . $user->foto);
+            if ($user->foto && $user->foto !== 'foto/default.jpg') {
+                Storage::disk('public')->delete($user->foto);
             }
-            $data['foto'] = $request->file('foto')->store('foto', 'public');
+            $validated['foto'] = $request->file('foto')->store('foto', 'public');
+        }
+        
+        /** @var \App\Models\User $user */
+        $user->update($validated);
+
+        // Update ke tabel member_registration (jika bukan superadmin)
+        if ($user->role !== 'superadmin') {
+            $user->memberRegistration()->updateOrCreate(
+                ['user_id' => $user->id],
+                $request->only([
+                    'tempat_lahir',
+                    'tanggal_lahir',
+                    'jenis_kelamin',
+                    'agama',
+                    'alamat',
+                ])
+            );
         }
 
-        if (empty($data['foto'])) {
-            unset($data['foto']);
-        }
-
-        $allowedFields = [
-            'nama',
-            'tempat_lahir',
-            'tanggal_lahir',
-            'jenis_kelamin',
-            'agama',
-            'alamat',
-            'username',
-            'email',
-            'telepon',
-            'foto',
-            'password'
-        ];
-        $filteredData = array_intersect_key($data, array_flip($allowedFields));
-
-        try {
-            $user->fill($filteredData);
-            $user->save();
-            $user->refresh();
-
-            return back()->with('success', 'Profil berhasil diperbarui!');
-        } catch (\Exception $e) {
-            Log::error('Gagal memperbarui profil: ' . $e->getMessage(), [
-                'user_id' => $user->id,
-                'data' => $filteredData,
-            ]);
-            return back()->withErrors(['update' => 'Gagal memperbarui profil.']);
-        }
+        return back()->with('success', 'Profil berhasil diperbarui!');
     }
 }

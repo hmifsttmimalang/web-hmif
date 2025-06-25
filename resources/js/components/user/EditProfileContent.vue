@@ -1,24 +1,42 @@
 <script setup>
-import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
+import { useForm, usePage, Link } from "@inertiajs/vue3";
 import { route } from "ziggy-js";
 
 const user = usePage().props.currentUser || {};
 
+function extractNomor(teleponLink) {
+    if (!teleponLink) return "";
+    const match = teleponLink.match(/wa\.me\/(\d+)/);
+    if (!match) return "";
+    const nomor = match[1];
+    if (nomor.startsWith("62")) {
+        return "0" + nomor.slice(2);
+    }
+    return nomor;
+}
+
 const form = useForm({
-    nama: user.nama || "",
-    tempat_lahir: user.tempat_lahir || "",
-    tanggal_lahir: user.tanggal_lahir || "",
-    jenis_kelamin: user.jenis_kelamin || "",
-    agama: user.agama || "",
-    alamat: user.alamat || "",
-    username: user.username || "",
-    email: user.email || "",
-    telepon: user.telepon || "",
+    nama: user.nama,
+    tempat_lahir: user.member_registration.tempat_lahir,
+    tanggal_lahir: user.member_registration.tanggal_lahir,
+    jenis_kelamin: user.member_registration.jenis_kelamin,
+    agama: user.member_registration.agama,
+    alamat: user.member_registration.alamat,
+    username: user.username,
+    email: user.email,
+    telepon: extractNomor(user.telepon),
     password: "",
     password_confirmation: "",
     foto: null,
 });
+
+if (form.telepon && form.telepon.includes("wa.me/")) {
+    const extracted = form.telepon.replace(/\D/g, ""); // hanya angka
+    if (extracted.startsWith("62")) {
+        form.telepon = "0" + extracted.slice(2);
+    }
+}
 
 const fotoPreview = ref(
     user.foto ? `/storage/${user.foto}` : "/assets2/img/default.jpg"
@@ -44,9 +62,17 @@ watch(
 );
 
 function submit() {
-    form.transform((data) => ({
-        ...data,
-    })).post(route("profile.update"), {
+    form.transform((data) => {
+        const updated = { ...data }; // salin semua field
+        let nomor = updated.telepon?.replace(/\D/g, "") ?? "";
+        if (nomor.startsWith("0")) {
+            nomor = "62" + nomor.slice(1);
+        } else if (nomor.startsWith("+62")) {
+            nomor = nomor.slice(1);
+        }
+        updated.telepon = `https://wa.me/${nomor}`;
+        return updated;
+    }).post(route("profile.update"), {
         forceFormData: true,
         onSuccess: () => window.location.reload(),
     });
@@ -86,7 +112,10 @@ function submit() {
                         {{ form.errors.nama }}
                     </div>
                 </div>
-                <div class="form-group row mb-3" v-if="user.role !== 'superadmin'">
+                <div
+                    class="form-group row mb-3"
+                    v-if="user.role !== 'superadmin'"
+                >
                     <div class="col-md-6">
                         <label for="tempat_lahir">Tempat Lahir</label>
                         <input
@@ -108,7 +137,10 @@ function submit() {
                         />
                     </div>
                 </div>
-                <div class="form-group row mb-3" v-if="user.role !== 'superadmin'">
+                <div
+                    class="form-group row mb-3"
+                    v-if="user.role !== 'superadmin'"
+                >
                     <div class="col-md-6">
                         <label>Jenis Kelamin</label>
                         <div class="form-check">
