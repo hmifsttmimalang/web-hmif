@@ -1,10 +1,11 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3'
+import { Link, usePage, Head } from '@inertiajs/vue3'
 const page = usePage()
 const error = page.props.flash.error || ''
 </script>
 
 <template>
+  <Head title="Akses Ditolak" />
   <div class="unauth-wrapper">
     <div class="unauth-card">
       <h1 class="unauth-title">Akses Ditolak</h1>
