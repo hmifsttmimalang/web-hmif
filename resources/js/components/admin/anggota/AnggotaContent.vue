@@ -84,7 +84,7 @@ function cetak(anggota) {
                                 </td>
                                 <td class="text-center">{{ anggota.nim }}</td>
                                 <td>{{ anggota.nama }}</td>
-                                <td>{{ anggota.alamat }}</td>
+                                <td>{{ anggota.member_registration.alamat }}</td>
                                 <td>{{ anggota.prodi }}</td>
                                 <td class="text-center">
                                     {{ anggota.angkatan }}
