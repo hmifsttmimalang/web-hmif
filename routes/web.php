@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\PendaftaranController;
 use App\Http\Controllers\KelolaAnggotaController;
+use App\Http\Controllers\RegistrationPeriodController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -30,8 +31,8 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('l
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-Route::get('/register', [PendaftaranController::class, 'create'])->name('register');
-Route::post('/register', [PendaftaranController::class, 'store'])->name('register.store');
+Route::get('/register', [PendaftaranController::class, 'create'])->middleware('check.registration.period')->name('register');
+Route::post('/register', [PendaftaranController::class, 'store'])->middleware('check.registration.period')->name('register.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
@@ -59,4 +60,10 @@ Route::middleware(['auth', 'admin', 'superadmin'])->group(function () {
 
     // info anggota baru
     Route::get('/admin/info-user', [InfoUserController::class, 'index'])->name('admin.kelola-data.info-user');
+
+    // pengaturan waktu
+    Route::get('/admin/pendaftaran/periode', [RegistrationPeriodController::class, 'index'])->name('admin.periode.index');
+    Route::post('/pendaftaran/periode', [RegistrationPeriodController::class, 'store'])->name('admin.periode.store');
+    Route::patch('/pendaftaran/periode/{id}', [RegistrationPeriodController::class, 'update'])->name('admin.periode.update');
+    Route::delete('/pendaftaran/periode/{id}', [RegistrationPeriodController::class, 'destroy'])->name('admin.periode.destroy');
 });

@@ -56,6 +56,16 @@ function logout() {
         <li class="nav-item">
             <Link
                 class="nav-link"
+                :class="{ active: isActive('/admin/pendaftaran/periode') }"
+                href="/admin/pendaftaran/periode"
+            >
+                <i class="fas fa-fw fa-clock"></i>
+                <span>Kelola Waktu Pendaftaran</span>
+            </Link>
+        </li>
+        <li class="nav-item">
+            <Link
+                class="nav-link"
                 :class="{ active: isActive('/admin/kelola-data') }"
                 href="/admin/kelola-data"
             >

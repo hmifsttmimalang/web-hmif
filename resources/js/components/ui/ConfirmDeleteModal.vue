@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Konfirmasi Hapus</h5>
+                    <h5 class="modal-title text-white">Konfirmasi Hapus</h5>
                     <button type="button" class="btn-close btn-close-white" @click="$emit('close')"></button>
                 </div>
                 <div class="modal-body">

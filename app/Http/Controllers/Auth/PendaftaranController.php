@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\RegistrationPeriod;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -23,6 +24,10 @@ class PendaftaranController extends Controller
 
     public function store(Request $request)
     {
+        if (!RegistrationPeriod::isOpen()) {
+            abort(403, 'Pendaftaran sudah ditutup');
+        }
+
         $validated = $request->validate([
             // tabel users
             'nama' => 'required|string|max:255',

@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'superadmin' => \App\Http\Middleware\checkRole::class,
             'admin' => \App\Http\Middleware\checkRole::class,
+            'check.registration.period' => \App\Http\Middleware\CheckRegistrationPeriod::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
