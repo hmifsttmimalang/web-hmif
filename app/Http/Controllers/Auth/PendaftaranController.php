@@ -25,7 +25,7 @@ class PendaftaranController extends Controller
     public function store(Request $request)
     {
         if (!RegistrationPeriod::isOpen()) {
-            abort(403, 'Pendaftaran sudah ditutup');
+            abort(403, 'Tidak dapat mengakses');
         }
 
         $validated = $request->validate([

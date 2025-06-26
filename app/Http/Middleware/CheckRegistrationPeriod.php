@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\RegistrationPeriod;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,8 +19,18 @@ class CheckRegistrationPeriod
     {
         $period = RegistrationPeriod::where('is_active', true)->latest('start_at')->first();
 
-        if (!$period || now()->lt($period->start_at) || now()->gt($period->end_at)) {
-            return redirect()->route('login')->withErrors(['closed' => 'Pendaftaran belum dibuka atau ditutup']);
+        $now = Carbon::now();
+
+        if (!$period) {
+            return redirect()->route('register.belum-dibuka');
+        }
+
+        if ($now->lt($period->start_at)) {
+            return redirect()->route('register.belum-dibuka');
+        }
+
+        if ($now->gt($period->end_at)) {
+            return redirect()->route('register.ditutup');
         }
 
         return $next($request);

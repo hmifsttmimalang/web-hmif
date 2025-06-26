@@ -27,6 +27,14 @@ Route::get('/unauthorized', function () {
     return Inertia::render('Unauthorized');
 })->name('unauthorized');
 
+Route::get('/register/belum-dibuka', function () {
+    return Inertia::render('Auth/PendaftaranBelumDibuka');
+})->name('register.belum-dibuka');
+
+Route::get('/register/ditutup', function () {
+    return Inertia::render('Auth/PendaftaranDitutup');
+})->name('register.ditutup');
+
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
