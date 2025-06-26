@@ -1,7 +1,7 @@
 <script setup>
 import { Link, usePage, Head } from '@inertiajs/vue3'
 const page = usePage()
-const error = page.props.flash.error || ''
+const error = page.props.error || ''
 </script>
 
 <template>
