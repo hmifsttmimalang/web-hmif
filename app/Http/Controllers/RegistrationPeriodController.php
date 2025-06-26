@@ -29,7 +29,7 @@ class RegistrationPeriodController extends Controller
             'is_active' => true,
         ]);
 
-        return redirect()->back()->with('success', 'Periode pendaftaran ditambahkan.');
+        return redirect()->route('admin.periode.index')->with('success', 'Periode pendaftaran ditambahkan.');
     }
 
     public function update(Request $request, $id)
