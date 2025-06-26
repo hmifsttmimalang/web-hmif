@@ -10,9 +10,18 @@ class RegistrationPeriod extends Model
 
     public static function isOpen(): bool
     {
-        return self::where('is_active', true)
-            ->where('start_at', '<=', now())
-            ->where('end_at', '>=', now())
-            ->exists();
+        $period = self::where('is_active', true)
+            ->orderByDesc('start_at')
+            ->first();
+
+        return $period
+            ? now()->between($period->start_at, $period->end_at)
+            : false;
     }
+
+    protected $casts = [
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
+        'is_active' => 'boolean',
+    ];
 }

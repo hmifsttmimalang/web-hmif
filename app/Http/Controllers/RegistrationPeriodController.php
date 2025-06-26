@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\RegistrationPeriod;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Inertia\Inertia;
-
 
 class RegistrationPeriodController extends Controller
 {
@@ -18,14 +18,14 @@ class RegistrationPeriodController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'start_at' => 'required|date',
             'end_at' => 'required|date|after:start_at',
         ]);
 
         RegistrationPeriod::create([
-            'start_at' => $request->start_at,
-            'end_at' => $request->end_at,
+            'start_at' => Carbon::parse($validated['start_at'], 'Asia/Jakarta')->setTimezone('UTC'),
+            'end_at' => Carbon::parse($validated['end_at'], 'Asia/Jakarta')->setTimezone('UTC'),
             'is_active' => true,
         ]);
 
@@ -34,14 +34,19 @@ class RegistrationPeriodController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'start_at' => 'required|date',
             'end_at' => 'required|date|after:start_at',
             'is_active' => 'required|boolean',
         ]);
 
         $periode = RegistrationPeriod::findOrFail($id);
-        $periode->update($request->only('start_at', 'end_at', 'is_active'));
+
+        $periode->update([
+            'start_at' => Carbon::parse($validated['start_at'], 'Asia/Jakarta')->setTimezone('UTC'),
+            'end_at' => Carbon::parse($validated['end_at'], 'Asia/Jakarta')->setTimezone('UTC'),
+            'is_active' => $validated['is_active'],
+        ]);
 
         return back()->with('success', 'Periode berhasil diperbarui.');
     }
