@@ -40,7 +40,7 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 Route::get('/register', [PendaftaranController::class, 'create'])->middleware('check.registration.period')->name('register');
-Route::post('/register', [PendaftaranController::class, 'store'])->middleware('check.registration.period')->name('register.store');
+Route::post('/register', [PendaftaranController::class, 'store'])->name('register.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
