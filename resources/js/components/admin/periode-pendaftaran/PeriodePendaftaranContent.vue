@@ -6,7 +6,7 @@ import UpdatePeriodeModal from '@/components/ui/UpdatePeriodeModal.vue';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal.vue';
 
 const page = usePage();
-const periods = page.props.periods ?? [];
+const periods = computed(() => page.props.periods ?? []);
 
 const showDeleteModal = ref(false);
 const selectedId = ref(null);
@@ -29,7 +29,6 @@ const confirmDelete = () => {
         onSuccess: () => {
             showDeleteModal.value = false;
             selectedId.value = null;
-            router.visit(route("admin.periode.index"), { preserveScroll: true });
         }
     });
 };
