@@ -12,7 +12,7 @@ const toISOStringLocal = (dateString) => {
     const date = new Date(dateString);
     const offset = date.getTimezoneOffset();
     const localDate = new Date(date.getTime() - offset * 60000);
-    return localDate.toISOString().slice(0, 16); // Format: YYYY-MM-DDTHH:mm
+    return localDate.toISOString().slice(0, 16);
 };
 
 function formatWIB(datetime) {
@@ -25,7 +25,7 @@ function formatWIB(datetime) {
         hour: '2-digit',
         minute: '2-digit',
         hour12: false,
-    }).format(new Date(datetime)).replace('.', ':');
+    }).format(new Date(datetime)).replace(':', '.');
 }
 
 const showDeleteModal = ref(false);
