@@ -24,8 +24,8 @@ class RegistrationPeriodController extends Controller
         ]);
 
         RegistrationPeriod::create([
-            'start_at' => Carbon::parse($validated['start_at'], 'Asia/Jakarta')->setTimezone('UTC'),
-            'end_at' => Carbon::parse($validated['end_at'], 'Asia/Jakarta')->setTimezone('UTC'),
+            'start_at' => Carbon::createFromFormat('Y-m-d\TH:i', $validated['start_at'], 'Asia/Jakarta'),
+            'end_at' => Carbon::createFromFormat('Y-m-d\TH:i', $validated['end_at'], 'Asia/Jakarta'),
             'is_active' => true,
         ]);
 
@@ -43,8 +43,8 @@ class RegistrationPeriodController extends Controller
         $periode = RegistrationPeriod::findOrFail($id);
 
         $periode->update([
-            'start_at' => Carbon::parse($validated['start_at'], 'Asia/Jakarta')->setTimezone('UTC'),
-            'end_at' => Carbon::parse($validated['end_at'], 'Asia/Jakarta')->setTimezone('UTC'),
+            'start_at' => Carbon::createFromFormat('Y-m-d\TH:i', $validated['start_at'], 'Asia/Jakarta'),
+            'end_at' => Carbon::createFromFormat('Y-m-d\TH:i', $validated['end_at'], 'Asia/Jakarta'),
             'is_active' => $validated['is_active'],
         ]);
 

@@ -8,6 +8,26 @@ import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal.vue';
 const page = usePage();
 const periods = computed(() => page.props.periods ?? []);
 
+const toISOStringLocal = (dateString) => {
+    const date = new Date(dateString);
+    const offset = date.getTimezoneOffset();
+    const localDate = new Date(date.getTime() - offset * 60000);
+    return localDate.toISOString().slice(0, 16); // Format: YYYY-MM-DDTHH:mm
+};
+
+function formatWIB(datetime) {
+    return new Intl.DateTimeFormat('id-ID', {
+        timeZone: 'Asia/Jakarta',
+        weekday: 'long',
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    }).format(new Date(datetime)).replace('.', ':');
+}
+
 const showDeleteModal = ref(false);
 const selectedId = ref(null);
 
@@ -40,6 +60,9 @@ const form = useForm({
 });
 
 const submit = () => {
+    form.start_at = toISOStringLocal(form.start_at);
+    form.end_at = toISOStringLocal(form.end_at);
+
     form.post(route('admin.periode.store'), {
         onSuccess: () => form.reset(),
     });
@@ -48,17 +71,17 @@ const submit = () => {
 
 <template>
     <div class="container mt-4">
-        <h2 class="mb-4 fw-bold">Atur Periode Pendaftaran</h2>
+        <h3 class="h3 mb-4 text-gray-800">Atur Periode Pendaftaran</h3>
 
         <!-- Form Tambah Periode -->
         <form @submit.prevent="submit" class="card p-4 shadow-sm mb-4">
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label for="start_at" class="form-label">Mulai Pendaftaran</label>
+                    <label for="start_at" class="form-label">Tanggal Buka</label>
                     <input type="datetime-local" id="start_at" v-model="form.start_at" class="form-control" required />
                 </div>
                 <div class="col-md-6">
-                    <label for="end_at" class="form-label">Selesai Pendaftaran</label>
+                    <label for="end_at" class="form-label">Tanggal Tutup</label>
                     <input type="datetime-local" id="end_at" v-model="form.end_at" class="form-control" required />
                 </div>
             </div>
@@ -81,17 +104,17 @@ const submit = () => {
             <div class="table-responsive">
                 <table class="table table-bordered table-hover align-middle">
                     <thead class="table-light">
-                        <tr>
-                            <th>Mulai</th>
-                            <th>Selesai</th>
+                        <tr class="text-center">
+                            <th>Buka Pendaftaran</th>
+                            <th>Tutup Pendaftaran</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="p in periods" :key="p.id">
-                            <td>{{ new Date(p.start_at).toLocaleString() }}</td>
-                            <td>{{ new Date(p.end_at).toLocaleString() }}</td>
+                        <tr v-for="p in periods" :key="p.id" class="text-center">
+                            <td>{{ formatWIB(p.start_at) }}</td>
+                            <td>{{ formatWIB(p.end_at) }}</td>
                             <td>
                                 <span class="badge" :class="p.is_active ? 'bg-success' : 'bg-secondary'">
                                     {{ p.is_active ? 'Aktif' : 'Nonaktif' }}

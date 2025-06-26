@@ -31,15 +31,25 @@ watch(
     (val) => {
         if (val) {
             form.id = val.id ?? '';
-            form.start_at = val.start_at?.slice(0, 16) ?? '';
-            form.end_at = val.end_at?.slice(0, 16) ?? '';
+            form.start_at = formatDateForInput(val.start_at);
+            form.end_at = formatDateForInput(val.end_at);
             form.is_active = Boolean(val.is_active);
         }
     },
     { immediate: true }
 );
 
+function toISOStringLocal(dateString) {
+    const date = new Date(dateString);
+    const offset = date.getTimezoneOffset();
+    const localDate = new Date(date.getTime() - offset * 60000);
+    return localDate.toISOString().slice(0, 16);
+}
+
 function submit() {
+    form.start_at = toISOStringLocal(form.start_at);
+    form.end_at = toISOStringLocal(form.end_at);
+
     router.patch(route('admin.periode.update', { id: form.id }), form, {
         onSuccess: () => {
             emit('close');
@@ -61,11 +71,11 @@ function submit() {
                 <form @submit.prevent="submit">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Tanggal Mulai</label>
+                            <label class="form-label">Tanggal Buka</label>
                             <input type="datetime-local" v-model="form.start_at" class="form-control" required />
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Tanggal Selesai</label>
+                            <label class="form-label">Tanggal Tutup</label>
                             <input type="datetime-local" v-model="form.end_at" class="form-control" required />
                         </div>
                         <div class="form-check">
