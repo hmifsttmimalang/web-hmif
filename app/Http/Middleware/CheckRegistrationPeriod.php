@@ -16,7 +16,7 @@ class CheckRegistrationPeriod
     {
         $period = RegistrationPeriod::where('is_active', true)->latest('start_at')->first();
 
-        $now = now('Asia/Jakarta');
+        $now = now();
 
         if (!$period || $now->lt($period->start_at)) {
             return redirect()->route('register.belum-dibuka');
