@@ -48,11 +48,7 @@ function submit() {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Update Anggota</h5>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        @click="$emit('close')"
-                    ></button>
+                    <button type="button" class="btn-close" @click="$emit('close')"></button>
                 </div>
                 <form @submit.prevent="submit">
                     <div class="modal-body">
@@ -60,24 +56,12 @@ function submit() {
 
                         <div class="mb-3">
                             <label class="form-label">Nama Lengkap</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                v-model="form.nama"
-                                disabled
-                            />
+                            <input type="text" class="form-control" v-model="form.nama" disabled />
                         </div>
 
-                        <div
-                            class="mb-3"
-                            v-if="currentUser.role === 'superadmin'"
-                        >
+                        <div class="mb-3" v-if="currentUser.role === 'superadmin'">
                             <label class="form-label">Akses</label>
-                            <select
-                                class="form-select"
-                                v-model="form.role"
-                                required
-                            >
+                            <select class="form-select" v-model="form.role" required>
                                 <option value="" disabled>Pilih Akses</option>
                                 <option value="admin">Admin</option>
                                 <option value="user">Anggota</option>
@@ -86,28 +70,24 @@ function submit() {
 
                         <div class="mb-3">
                             <label class="form-label">Jabatan</label>
-                            <select
-                                class="form-select"
-                                v-model="form.jabatan"
-                                required
-                            >
+                            <select class="form-select" v-model="form.jabatan" required>
                                 <option value="" disabled>Pilih Jabatan</option>
                                 <option value="Ketua umum">Ketua Umum</option>
-                                <option value="Wakil ketua umum">
-                                    Wakil Ketua Umum
-                                </option>
+                                <option value="Wakil ketua umum">Wakil Ketua Umum</option>
                                 <option value="Sekretaris">Sekretaris</option>
                                 <option value="Bendahara">Bendahara</option>
+                                <option value="Divisi Humas">Divisi Humas</option>
+                                <option value="Divisi Ristek">Divisi Ristek</option>
+                                <option value="Divisi Medkom">Divisi Medkom</option>
+                                <option value="Divisi Tata Usaha">Divisi Tata Usaha</option>
+                                <option value="Divisi Minat dan Bakat">Divisi Minat dan Bakat</option>
+                                <option value="Koordinator Angkatan">Koordinator Angkatan</option>
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Status</label>
-                            <select
-                                class="form-select"
-                                v-model="form.status"
-                                required
-                            >
+                            <select class="form-select" v-model="form.status" required>
                                 <option value="Baru">Pilih Status</option>
                                 <option value="Aktif">Aktif</option>
                                 <option value="Demisioner">Demisioner</option>
@@ -117,11 +97,7 @@ function submit() {
                     </div>
 
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                            @click="$emit('close')"
-                        >
+                        <button type="button" class="btn btn-secondary" @click="$emit('close')">
                             Batal
                         </button>
                         <button type="submit" class="btn btn-primary">

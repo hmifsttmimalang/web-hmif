@@ -13,6 +13,7 @@ class AdminAnggotaController extends Controller
         $anggota = User::with('memberRegistration')
             ->orderBy('nama')
             ->where('role', '!=', 'superadmin')
+            ->where('status', 'Aktif')
             ->get([
                 'id',
                 'nim',
