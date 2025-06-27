@@ -6,6 +6,8 @@ defineProps({
 </script>
 
 <template>
+    <p class="text-center">Tunjukkan kemampuan terbaikmu!! <br /> Kamu bisa isi dengan skill yang kamu kuasai, atau lampirkan karya seperti desain, video, coding, tulisan atau lainnya. <br /> Belum punya portofolio? Nggak apa-apa! Cukup tulis skill yang kamu miliki saat ini</p>
+    <hr />
     <div class="form-group">
         <label for="ket_portofolio"
             >Apakah kamu memiliki portofolio atau karya yang ingin dibagikan
