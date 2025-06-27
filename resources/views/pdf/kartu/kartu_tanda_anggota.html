@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kartu Tanda Anggota HMIF STTMI</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    .kta-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .kta {
+      width: 8.6cm;
+      height: 5.4cm;
+      border: 2px solid #000;
+      border-radius: 10px;
+      overflow: hidden;
+      background: linear-gradient(to right, #d4f0e2, #b5d8f0);
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .kta-header {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .kta-subtitle {
+      text-align: center;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .kta-photo {
+      float: left;
+      width: 20%;
+      height: 75px;
+      margin-right: 30px;
+      border: 2px solid #000;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .kta-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .kta-info {
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .kta-info td {
+      padding: 2px 5px;
+    }
+
+    .kta-back-text {
+      font-size: 11px;
+      text-align: justify;
+      padding: 5px;
+    }
+
+    .logo {
+      width: 30px;
+      height: 30px;
+      float: left;
+      margin-right: 10px;
+    }
+
+    .page-break {
+      page-break-after: always;
+    }
+  </style>
+</head>
+<body>
+
+    <div class="kta-container" st>
+    <!-- Kartu Depan -->
+    <div class="kta" style="background-image: url(assets/kta_depan_2_fix.png); background-size: cover; background-repeat: no-repeat;">
+      <!-- <div class="kta-header">HMIF STTMI MALANG</div>
+      <div class="kta-subtitle">Kartu Tanda Anggota</div> -->
+      <div class="kta-photo" style="margin-top: 70px;">
+        <img src="assets/dontol.png" alt="Foto Anggota">
+      </div>
+      <table class="kta-info" style="margin-top: 65px;">
+        <tr>
+          <td><strong>NIM</strong></td>
+          <td>: 423001</td>
+        </tr>
+        <tr>
+          <td><strong>Nama</strong></td>
+          <td>: Faratskelia</td>
+        </tr>
+        <tr>
+          <td><strong>Prodi</strong></td>
+          <td>: Manajemen Bisnis</td>
+        </tr>
+        <tr>
+          <td><strong>Angkatan</strong></td>
+          <td>: 2023</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Kartu Belakang -->
+    <div class="kta" style="background-image: url(assets/kta_belakang_fix.png); background-size: cover; background-repeat: no-repeat;">
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
