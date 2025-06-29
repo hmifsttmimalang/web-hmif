@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RegistrationPeriod;
 use App\Models\User;
-use Carbon\Carbon;
 use Inertia\Inertia;
 
 class AdminDashboardController extends Controller
@@ -16,11 +16,23 @@ class AdminDashboardController extends Controller
             ->latest()
             ->paginate(10, ['id', 'nama', 'nim', 'prodi', 'angkatan', 'status']);
 
+        $activePeriod = RegistrationPeriod::where('is_active', true)
+            ->orderByDesc('start_at')
+            ->first();
+
         $totalPendaftar = User::where('role', 'user')
-            ->whereBetween('created_at', [
-                Carbon::parse('2025-07-07 00:00:00'),
-                Carbon::parse('2025-09-02 23:59:59'),
-            ])
+            ->where('status', 'Baru')
+            ->when($activePeriod, function ($query) use ($activePeriod) {
+                $query->whereBetween('created_at', [
+                    $activePeriod->start_at,
+                    $activePeriod->end_at,
+                ]);
+            })
+            ->count();
+
+        $pendaftar24Jam = User::where('role', 'user')
+            ->where('status', 'Baru')
+            ->where('created_at', '>=', now()->subDay())
             ->count();
 
         $totalAnggota = User::where('role', '!=', 'superadmin')->count();
@@ -29,6 +41,13 @@ class AdminDashboardController extends Controller
             'pendaftarBaru' => $pendaftarBaru,
             'totalPendaftar' => $totalPendaftar,
             'totalAnggota' => $totalAnggota,
+            'pendaftar24Jam' => $pendaftar24Jam,
+            'periodeAktif' => $activePeriod
+                ? [
+                    'start_at' => $activePeriod->start_at->toIso8601String(),
+                    'end_at' => $activePeriod->end_at->toIso8601String(),
+                ]
+                : null,
         ]);
     }
 }
