@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Inertia\Inertia;
 
-/**
- * @see \Maatwebsite\Excel\Facades\Excel
- */
 class KelolaAnggotaController extends Controller
 {
     public function index()
@@ -35,7 +32,6 @@ class KelolaAnggotaController extends Controller
         ]);
     }
 
-
     public function import(Request $request)
     {
         $request->validate([
@@ -50,7 +46,6 @@ class KelolaAnggotaController extends Controller
         }
     }
 
-
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -58,6 +53,10 @@ class KelolaAnggotaController extends Controller
 
         $user->jabatan = $request->jabatan;
         $user->status = $request->status;
+
+        if (in_array($request->status, ['Demisioner', 'Nonaktif'])) {
+            $user->jabatan = null;
+        }
 
         if ($loginUser->role === 'superadmin' && $request->has('role')) {
             $user->role = $request->role;
