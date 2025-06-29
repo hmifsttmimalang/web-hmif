@@ -82,6 +82,7 @@ function submit() {
                                 <option value="Divisi Tata Usaha">Divisi Tata Usaha</option>
                                 <option value="Divisi Minat dan Bakat">Divisi Minat dan Bakat</option>
                                 <option value="Koordinator Angkatan">Koordinator Angkatan</option>
+                                <option value="Anggota">Anggota</option>
                             </select>
                         </div>
 

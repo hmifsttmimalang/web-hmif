@@ -58,6 +58,10 @@ class KelolaAnggotaController extends Controller
             $user->jabatan = null;
         }
 
+        if ($request->status == 'Aktif') {
+            $user->jabatan = 'Anggota';
+        }
+
         if ($loginUser->role === 'superadmin' && $request->has('role')) {
             $user->role = $request->role;
         }
