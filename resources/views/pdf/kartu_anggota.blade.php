@@ -1,48 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <meta charset="utf-8" />
-    <title>Kartu Anggota</title>
+    <meta charset="UTF-8">
+    <title>Kartu Tanda Anggota HMIF STTMI</title>
     <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
         }
 
-        .kartu {
-            border: 1px solid #333;
-            padding: 20px;
-            width: 350px;
+        .kta-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
         }
 
-        .judul {
+        .kta {
+            width: 8.6cm;
+            height: 5.4cm;
+            border: 2px solid #000;
+            border-radius: 10px;
+            overflow: hidden;
+            background: linear-gradient(to right, #d4f0e2, #b5d8f0);
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .kta-header {
+            text-align: center;
             font-weight: bold;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .foto {
-            width: 80px;
-            height: 100px;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-
-        .field {
+            font-size: 14px;
             margin-bottom: 5px;
+        }
+
+        .kta-subtitle {
+            text-align: center;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .kta-photo {
+            float: left;
+            width: 20%;
+            height: 75px;
+            margin-right: 30px;
+            border: 2px solid #000;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .kta-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .kta-info {
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .kta-info td {
+            padding: 2px 5px;
+        }
+
+        .kta-back-text {
+            font-size: 11px;
+            text-align: justify;
+            padding: 5px;
+        }
+
+        .logo {
+            width: 30px;
+            height: 30px;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .page-break {
+            page-break-after: always;
         }
     </style>
 </head>
 
 <body>
-    <div class="kartu">
-        <div class="judul">Kartu Anggota HMIF</div>
-        <img class="foto" src="{{ public_path('storage/' . $anggota->foto) }}" alt="Foto" />
-        <div class="field">NIM: {{ $anggota->nim }}</div>
-        <div class="field">Nama: {{ $anggota->nama }}</div>
-        <div class="field">Prodi: {{ $anggota->prodi }}</div>
-        <div class="field">Angkatan: {{ $anggota->angkatan }}</div>
-        <div class="field">Status: {{ $anggota->status }}</div>
+
+    <div class="kta-container" st>
+        <!-- Kartu Depan -->
+        <div class="kta"
+            style="background-image: url({{ public_path('assets/img/cetak/kta_depan_2_fix.png') }}); background-size: cover; background-repeat: no-repeat;">
+            <!-- <div class="kta-header">HMIF STTMI MALANG</div>
+      <div class="kta-subtitle">Kartu Tanda Anggota</div> -->
+            <div class="kta-photo" style="margin-top: 70px;">
+                <img src="{{ public_path('storage/' . $anggota->foto) }}" alt="Foto Anggota">
+            </div>
+            <table class="kta-info" style="margin-top: 65px;">
+                <tr>
+                    <td><strong>NIM</strong></td>
+                    <td>: {{ $anggota->nim }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Nama</strong></td>
+                    <td>: {{ $anggota->nama }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Prodi</strong></td>
+                    <td>: {{ $anggota->prodi }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Angkatan</strong></td>
+                    <td>: {{ $anggota->angkatan }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Kartu Belakang -->
+        <div class="kta"
+            style="background-image: url({{ public_path('assets/img/cetak/kta_belakang_fix.png') }}); background-size: cover; background-repeat: no-repeat;">
+        </div>
+    </div>
     </div>
 </body>
 </html>
