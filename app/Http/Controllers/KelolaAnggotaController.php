@@ -78,6 +78,10 @@ class KelolaAnggotaController extends Controller
             abort(403, 'Tidak bisa menghapus akun sendiri!');
         }
 
+        if (in_array($anggota->email, ['hmifsttmimalang@gmail.com', 'backupadmin@hmif.com'])) {
+            abort(403, 'Tidak boleh hapus akun inti!');
+        }
+
         if (
             ($user->role === 'superadmin') ||
             ($user->role === 'admin' && $anggota->role === 'user')
@@ -85,6 +89,7 @@ class KelolaAnggotaController extends Controller
             $anggota->delete();
             return redirect()->route('admin.kelola-data')->with('success', 'Anggota dihapus');
         }
+
         abort(403, 'Akses tidak diizinkan!');
     }
 }

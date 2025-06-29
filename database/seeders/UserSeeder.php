@@ -29,9 +29,21 @@ class UserSeeder extends Seeder
             'role' => 'superadmin',
         ]);
 
-        // 13 User biasa
-        MemberRegistration::factory()
-            ->count(13)
-            ->create();
+        User::factory()->create([
+            'nama' => 'Backup Admin',
+            'nim' => null,
+            'prodi' => null,
+            'angkatan' => null,
+            'telepon' => null,
+            'instagram' => null,
+            'email' => 'backupadmin@hmif.com',
+            'email_verified_at' => now(),
+            'foto' => 'foto/default.jpg',
+            'username' => 'adminbackup',
+            'password' => Hash::make('BackupSuperSecureHmifSttmiMalang2025'),
+            'jabatan' => null,
+            'status' => 'Aktif',
+            'role' => 'superadmin',
+        ]);
     }
 }
