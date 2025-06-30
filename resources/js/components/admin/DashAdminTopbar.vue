@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import { usePage } from "@inertiajs/vue3";
-import LogoutModal from "@/Components/ui/LogoutModal.vue";
+import LogoutModal from "@/components/ui/LogoutModal.vue";
 
 const dropdownOpen = ref(false);
 const dropdownRef = ref(null);
