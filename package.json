@@ -27,6 +27,7 @@
         "imagesloaded": "^5.0.0",
         "isotope": "^1.0.0-alpha.3",
         "isotope-layout": "^3.0.6",
+        "sweetalert2": "^11.6.13",
         "swiper": "^11.2.8",
         "ziggy-js": "^2.5.3"
     }
