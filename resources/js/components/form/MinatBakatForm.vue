@@ -80,11 +80,11 @@ defineProps({
         <label for="divisi">Divisi yang paling diminati</label>
         <select v-model="form.divisi" id="divisi" class="form-control" required>
             <option value="">Pilih Divisi</option>
-            <option>Humas</option>
-            <option>Riset dan Teknologi (Ristek)</option>
-            <option>Media dan Dokumentasi (Medkom)</option>
-            <option>Tata Usaha</option>
-            <option>Minat Bakat</option>
+            <option value="Humas">Hubungan Masyarakat (Humas)</option>
+            <option value="Ristek">Riset dan Teknologi (Ristek)</option>
+            <option value="Medkom">Media dan Dokumentasi (Medkom)</option>
+            <option value="Tata Usaha">Tata Usaha</option>
+            <option value="Minat dan Bakat">Minat dan Bakat</option>
         </select>
         <div class="invalid-feedback d-block" v-if="form.errors.divisi">
             {{ form.errors.divisi }}
