@@ -4,6 +4,7 @@ import { useForm, usePage } from '@inertiajs/vue3';
 import { route } from "ziggy-js";
 import UpdatePeriodeModal from '@/components/ui/UpdatePeriodeModal.vue';
 import ConfirmDeleteModal from '@/components/ui/ConfirmDeleteModal.vue';
+import Swal from "sweetalert2";
 
 const page = usePage();
 const periods = computed(() => page.props.periods ?? []);
@@ -47,8 +48,12 @@ const openDeleteModal = (id) => {
 const confirmDelete = () => {
     form.delete(route('admin.periode.destroy', selectedId.value), {
         onSuccess: () => {
+            Swal.fire("Berhasil!", "Periode berhasil dihapus.", "success");
             showDeleteModal.value = false;
             selectedId.value = null;
+        },
+        onError: () => {
+            Swal.fire("Gagal!", "Gagal menghapus periode.", "error");
         }
     });
 };
@@ -60,11 +65,28 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.start_at = toISOStringLocal(form.start_at);
-    form.end_at = toISOStringLocal(form.end_at);
+    Swal.fire({
+        title: "Simpan Periode?",
+        text: "Yakin ingin menambahkan periode pendaftaran baru?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Ya, simpan",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.start_at = toISOStringLocal(form.start_at);
+            form.end_at = toISOStringLocal(form.end_at);
 
-    form.post(route('admin.periode.store'), {
-        onSuccess: () => form.reset(),
+            form.post(route('admin.periode.store'), {
+                onSuccess: () => {
+                    Swal.fire("Berhasil!", "Periode pendaftaran disimpan.", "success");
+                    form.reset();
+                },
+                onError: () => {
+                    Swal.fire("Gagal!", "Terjadi kesalahan saat menyimpan periode.", "error");
+                }
+            });
+        }
     });
 };
 </script>

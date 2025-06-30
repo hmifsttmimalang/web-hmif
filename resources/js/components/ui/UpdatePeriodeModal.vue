@@ -2,6 +2,7 @@
 import { reactive, watch } from 'vue';
 import { router } from '@inertiajs/vue3';
 import { route } from 'ziggy-js';
+import Swal from 'sweetalert2';
 
 const props = defineProps({
     periode: {
@@ -50,12 +51,26 @@ function submit() {
     form.start_at = toISOStringLocal(form.start_at);
     form.end_at = toISOStringLocal(form.end_at);
 
-    router.patch(route('admin.periode.update', { id: form.id }), form, {
-        onSuccess: () => {
-            emit('close');
-            router.visit(route("admin.periode.index"), { preserveScroll: true });
-        },
-        onError: () => alert('Gagal memperbarui periode.'),
+    Swal.fire({
+        title: "Simpan Perubahan?",
+        text: "Periode pendaftaran akan diperbarui.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ya, simpan",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.patch(route('admin.periode.update', { id: form.id }), form, {
+                onSuccess: () => {
+                    Swal.fire("Berhasil!", "Periode berhasil diperbarui.", "success");
+                    emit('close');
+                    router.visit(route("admin.periode.index"), { preserveScroll: true });
+                },
+                onError: () => {
+                    Swal.fire("Gagal!", "Gagal memperbarui periode.", "error");
+                },
+            });
+        }
     });
 }
 </script>

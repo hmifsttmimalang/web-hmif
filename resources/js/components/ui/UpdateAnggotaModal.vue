@@ -2,6 +2,7 @@
 import { reactive, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { route } from "ziggy-js";
+import Swal from "sweetalert2";
 
 const page = usePage();
 const currentUser = page.props.currentUser || {};
@@ -32,12 +33,31 @@ watch(
 );
 
 function submit() {
-    router.patch(route("admin.anggota.update", { id: form.id_anggota }), form, {
-        onSuccess: () => {
-            emit("close");
-            router.visit(route("admin.kelola-data"), { preserveScroll: true });
-        },
-        onError: () => alert("Gagal update data!"),
+    emit("close");
+    Swal.fire({
+        title: "Apakah kamu yakin ingin menyimpan perubahan?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Ya, simpan!",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            router.patch(route("admin.anggota.update", { id: form.id_anggota }), form, {
+                onSuccess: () => {
+                    Swal.fire({
+                        title: "Berhasil diubah",
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
+                    emit("close");
+                    router.visit(route("admin.kelola-data"), { preserveScroll: true });
+                },
+                onError: () => {
+                    Swal.fire("Gagal!", "Gagal update data!", "error");
+                },
+            });
+        }
     });
 }
 </script>
@@ -72,8 +92,8 @@ function submit() {
                             <label class="form-label">Jabatan</label>
                             <select class="form-select" v-model="form.jabatan" required>
                                 <option value="" disabled>Pilih Jabatan</option>
-                                <option value="Ketua umum">Ketua Umum</option>
-                                <option value="Wakil ketua umum">Wakil Ketua Umum</option>
+                                <option value="Ketua Umum">Ketua Umum</option>
+                                <option value="Wakil Ketua Umum">Wakil Ketua Umum</option>
                                 <option value="Sekretaris">Sekretaris</option>
                                 <option value="Bendahara">Bendahara</option>
                                 <option value="Divisi Humas">Divisi Humas</option>

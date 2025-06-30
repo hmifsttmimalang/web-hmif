@@ -2,6 +2,7 @@
 import { ref, computed, watch } from "vue";
 import { router, usePage } from "@inertiajs/vue3";
 import { route } from "ziggy-js";
+import Swal from "sweetalert2";
 
 import ImportModal from "@/components/ui/ImportModal.vue";
 import ConfirmDeleteModal from "@/components/ui/ConfirmDeleteModal.vue";
@@ -82,15 +83,16 @@ function confirmDelete(anggota) {
 }
 
 function deleteAnggota() {
-    router.delete(
-        route("admin.anggota.destroy", { anggota: anggotaToDelete.value.id }),
-        {
-            onSuccess: () => {
-                showDelete.value = false;
-                router.reload({ preserveScroll: true });
-            },
+    router.delete(route("admin.anggota.destroy", { anggota: anggotaToDelete.value.id }), {
+        onSuccess: () => {
+            Swal.fire("Dihapus!", "Anggota berhasil dihapus.", "success");
+            showDelete.value = false;
+            router.reload({ preserveScroll: true });
+        },
+        onError: () => {
+            Swal.fire("Gagal!", "Gagal menghapus anggota.", "error");
         }
-    );
+    });
 }
 
 function showUpdateModal(anggota) {
@@ -109,16 +111,40 @@ function importFile(file) {
     const formData = new FormData();
     formData.append("file", file);
 
-    router.post(route("admin.anggota.import"), formData, {
-        forceFormData: true,
-        onSuccess: () => {
-            showImport.value = false;
-            router.reload({ preserveScroll: true });
-        },
-        onError: (err) => {
-            alert("Gagal import. Pastikan format benar.");
-        },
-    });
+    showImport.value = false;
+
+    setTimeout(() => {
+        Swal.fire({
+            title: "Import Data?",
+            text: "Pastikan file sudah sesuai format yang diminta.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Import!",
+            cancelButtonText: "Batal",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const formData = new FormData();
+                formData.append("file", file);
+
+                router.post(route("admin.anggota.import"), formData, {
+                    forceFormData: true,
+                    onSuccess: () => {
+                        Swal.fire({
+                            title: "Import Berhasil!",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false,
+                        });
+
+                        router.reload({ preserveScroll: true });
+                    },
+                    onError: () => {
+                        Swal.fire("Gagal Import", "Pastikan format file benar.", "error");
+                    },
+                });
+            }
+        });
+    }, 300);
 }
 </script>
 

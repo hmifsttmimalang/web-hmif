@@ -1,13 +1,21 @@
 <script setup>
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
+import Swal from "sweetalert2";
+
 const emit = defineEmits(["close", "import"]);
 const file = ref(null);
 
 function onFileChange(e) {
     file.value = e.target.files[0];
 }
+
 function submit() {
-    if (file.value) emit("import", file.value);
+    if (!file.value) {
+        Swal.fire("Tidak ada file!", "Silakan pilih file terlebih dahulu.", "warning");
+        return;
+    }
+
+    emit("import", file.value);
     emit("close");
 }
 </script>
@@ -18,11 +26,7 @@ function submit() {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Import Data Anggota</h5>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        @click="$emit('close')"
-                    ></button>
+                    <button type="button" class="btn-close" @click="$emit('close')"></button>
                 </div>
                 <form @submit.prevent="submit">
                     <div class="modal-body">
@@ -32,28 +36,17 @@ function submit() {
                         </p>
                         <div class="mb-3">
                             <label class="form-label">Pilih File</label>
-                            <input
-                                class="form-control"
-                                type="file"
-                                accept=".xlsx,.csv"
-                                @change="onFileChange"
-                                required
-                            />
+                            <input class="form-control" type="file" accept=".xlsx,.csv" @change="onFileChange"
+                                required />
                         </div>
                         <div class="alert alert-info small">
                             Format file harus berisi kolom:
-                            <strong
-                                >Nama, Prodi, Angkatan, Email, No. HP, Jabatan
-                                dan Foto Pas 3x4</strong
-                            >.
+                            <strong>Nama, Prodi, Angkatan, Email, No. HP, Jabatan
+                                dan Foto Pas 3x4</strong>.
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="btn btn-secondary"
-                            @click="$emit('close')"
-                        >
+                        <button type="button" class="btn btn-secondary" @click="$emit('close')">
                             Batal
                         </button>
                         <button type="submit" class="btn btn-warning">
