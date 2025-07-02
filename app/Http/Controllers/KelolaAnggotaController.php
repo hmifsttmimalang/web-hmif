@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AnggotaExport;
 use App\Imports\AnggotaImport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class KelolaAnggotaController extends Controller
 {
@@ -44,6 +46,11 @@ class KelolaAnggotaController extends Controller
         } catch (\Exception $e) {
             return back()->withErrors(['import' => 'Import gagal: ' . $e->getMessage()]);
         }
+    }
+
+    public function export(): BinaryFileResponse
+    {
+        return Excel::download(new AnggotaExport, 'data_anggota.xlsx');
     }
 
     public function update(Request $request, $id)

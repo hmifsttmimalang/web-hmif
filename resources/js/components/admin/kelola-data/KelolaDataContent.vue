@@ -46,6 +46,10 @@ const filteredData = computed(() =>
     })
 );
 
+function exportData() {
+    window.open(route("admin.anggota.export"), "_blank");
+}
+
 watch([search, statusFilter, jabatanFilter], () => {
     pageNum.value = 1;
 });
@@ -83,16 +87,19 @@ function confirmDelete(anggota) {
 }
 
 function deleteAnggota() {
-    router.delete(route("admin.anggota.destroy", { anggota: anggotaToDelete.value.id }), {
-        onSuccess: () => {
-            Swal.fire("Dihapus!", "Anggota berhasil dihapus.", "success");
-            showDelete.value = false;
-            router.reload({ preserveScroll: true });
-        },
-        onError: () => {
-            Swal.fire("Gagal!", "Gagal menghapus anggota.", "error");
+    router.delete(
+        route("admin.anggota.destroy", { anggota: anggotaToDelete.value.id }),
+        {
+            onSuccess: () => {
+                Swal.fire("Dihapus!", "Anggota berhasil dihapus.", "success");
+                showDelete.value = false;
+                router.reload({ preserveScroll: true });
+            },
+            onError: () => {
+                Swal.fire("Gagal!", "Gagal menghapus anggota.", "error");
+            },
         }
-    });
+    );
 }
 
 function showUpdateModal(anggota) {
@@ -139,7 +146,11 @@ function importFile(file) {
                         router.reload({ preserveScroll: true });
                     },
                     onError: () => {
-                        Swal.fire("Gagal Import", "Pastikan format file benar.", "error");
+                        Swal.fire(
+                            "Gagal Import",
+                            "Pastikan format file benar.",
+                            "error"
+                        );
                     },
                 });
             }
@@ -157,6 +168,10 @@ function importFile(file) {
             Import Data Anggota
         </button>
         <ImportModal v-if="showImport" @close="showImport = false" @import="importFile" />
+
+        <button class="btn btn-primary btn-sm mb-4 ml-2" @click="exportData">
+            Export Data Anggota
+        </button>
 
         <div class="d-flex gap-3 mb-3 align-items-end">
             <div>
@@ -181,8 +196,12 @@ function importFile(file) {
                     <option value="Divisi Ristek">Divisi Ristek</option>
                     <option value="Divisi Medkom">Divisi Medkom</option>
                     <option value="Divisi Tata Usaha">Divisi Tata Usaha</option>
-                    <option value="Divisi Minat dan Bakat">Divisi Minat dan Bakat</option>
-                    <option value="Koordinator Angkatan">Koordinator Angkatan</option>
+                    <option value="Divisi Minat dan Bakat">
+                        Divisi Minat dan Bakat
+                    </option>
+                    <option value="Koordinator Angkatan">
+                        Koordinator Angkatan
+                    </option>
                     <option value="Anggota">Anggota</option>
                 </select>
             </div>
