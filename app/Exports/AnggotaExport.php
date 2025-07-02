@@ -55,7 +55,7 @@ class AnggotaExport implements FromCollection, WithHeadings, WithMapping, WithDr
             $drawing->setDescription('Foto Anggota');
             $drawing->setPath(storage_path('app/public/' . $anggota->foto));
             $drawing->setHeight(50);
-            $drawing->setCoordinates('G' . $baris);
+            $drawing->setCoordinates('H' . $baris);
             $drawings[] = $drawing;
 
             $baris++;
