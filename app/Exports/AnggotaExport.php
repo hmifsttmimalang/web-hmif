@@ -20,7 +20,7 @@ class AnggotaExport implements FromCollection, WithHeadings, WithMapping, WithDr
 
     public function headings(): array
     {
-        return ['NIM', 'Nama', 'Prodi', 'Angkatan', 'Jabatan', 'Status', 'Foto'];
+        return ['NIM', 'Nama', 'Prodi', 'Angkatan', 'Jabatan', 'Email', 'Status', 'Foto'];
     }
 
     public function map($anggota): array
@@ -31,6 +31,7 @@ class AnggotaExport implements FromCollection, WithHeadings, WithMapping, WithDr
             $anggota->prodi,
             $anggota->angkatan,
             $anggota->jabatan ?? '-',
+            $anggota->email,
             $anggota->status,
             '',
         ];
