@@ -21,7 +21,7 @@ Route::middleware(['auth', 'admin', 'superadmin'])->group(function () {
     Route::get('/admin/anggota', [AdminAnggotaController::class, 'index'])->name('admin.kelola-data.anggota');
     Route::get('/admin/anggota/pdf', [AdminAnggotaController::class, 'cetakPdf'])->name('anggota.cetak-pdf');
     Route::get('/admin/anggota/cetak-baru', [AdminAnggotaController::class, 'cetakAnggotaBaru'])->name('anggota.cetakBaru');
-    Route::get('/admin/anggota/{id}/kartu', [AdminAnggotaController::class, 'cetakKartu'])->name('anggota.cetak-kartu');
+    Route::get('/admin/anggota/{id}/data-diri', [AdminAnggotaController::class, 'cetakDataDiri'])->name('anggota.cetak-data-diri');
     Route::get('/admin/anggota/{id}', [AdminAnggotaController::class, 'show'])->name('admin.kelola-data.detail-anggota');
 
     // info anggota baru

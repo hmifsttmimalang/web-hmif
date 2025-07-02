@@ -41,7 +41,7 @@ function cetakAnggotaBaru() {
 }
 
 function cetak(anggota) {
-    window.open(route("anggota.cetak-kartu", { id: anggota.id }), "_blank");
+    window.open(route("anggota.cetak-data-diri", { id: anggota.id }), "_blank");
 }
 </script>
 

@@ -61,10 +61,12 @@ class AdminAnggotaController extends Controller
         return $pdf->download('anggota_baru.pdf');
     }
 
-    public function cetakKartu($id)
+    public function cetakDataDiri($id)
     {
         $anggota = User::with('memberRegistration')->findOrFail($id);
-        $pdf = PDF::loadView('pdf.kartu_anggota', compact('anggota'));
-        return $pdf->download("kartu_anggota_{$anggota->nama}.pdf");
+        $pdf = PDF::loadView('pdf.data_diri_anggota', compact('anggota'));
+        $nama = preg_replace('/[^A-Za-z0-9_]/', '', str_replace(' ', '_', $anggota->nama));
+        $tanggal = now()->format('Ymd');
+        return $pdf->download("data_diri_{$nama}_{$tanggal}.pdf");
     }
 }

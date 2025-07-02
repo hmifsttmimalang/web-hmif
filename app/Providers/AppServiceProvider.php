@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
@@ -26,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
             return Auth::user();
         });
         Vite::prefetch(concurrency: 3);
+        Carbon::setLocale('id');
     }
 }
