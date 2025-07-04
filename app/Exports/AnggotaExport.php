@@ -3,16 +3,12 @@
 namespace App\Exports;
 
 use App\Models\User;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithDrawings;
-use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class AnggotaExport implements FromCollection, WithHeadings, WithMapping, WithDrawings
+class AnggotaExport implements FromCollection, WithHeadings, WithMapping
 {
-    private $index = 2; // mulai dari baris ke-2 (karena baris 1 itu header)
-
     public function collection()
     {
         return User::where('role', '!=', 'superadmin')->get();
@@ -20,7 +16,7 @@ class AnggotaExport implements FromCollection, WithHeadings, WithMapping, WithDr
 
     public function headings(): array
     {
-        return ['NIM', 'Nama', 'Prodi', 'Angkatan', 'Jabatan', 'Email', 'Status', 'Foto'];
+        return ['NIM', 'Nama', 'Prodi', 'Angkatan', 'Jabatan', 'Email', 'Status', 'Foto (Link)'];
     }
 
     public function map($anggota): array
@@ -33,34 +29,7 @@ class AnggotaExport implements FromCollection, WithHeadings, WithMapping, WithDr
             $anggota->jabatan ?? '-',
             $anggota->email,
             $anggota->status,
-            '',
+            $anggota->foto_url ?? '-',
         ];
-    }
-
-    public function drawings()
-    {
-        $drawings = [];
-        $baris = 2;
-
-        $anggotaList = $this->collection();
-
-        foreach ($anggotaList as $anggota) {
-            if (!$anggota->foto || !file_exists(storage_path('app/public/' . $anggota->foto))) {
-                $baris++;
-                continue;
-            }
-
-            $drawing = new Drawing();
-            $drawing->setName($anggota->nama);
-            $drawing->setDescription('Foto Anggota');
-            $drawing->setPath(storage_path('app/public/' . $anggota->foto));
-            $drawing->setHeight(50);
-            $drawing->setCoordinates('H' . $baris);
-            $drawings[] = $drawing;
-
-            $baris++;
-        }
-
-        return $drawings;
     }
 }
