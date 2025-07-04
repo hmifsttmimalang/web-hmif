@@ -12,7 +12,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withSchedule(function (Schedule $schedule) {
-        $schedule->command('drive:dispatch-user-photo-jobs')
+        $schedule->command('drive:dispatch-upload-user-photos')
             ->dailyAt('01:00')
             ->appendOutputTo(storage_path('logs/drive-upload.log'));
 
@@ -21,6 +21,9 @@ return Application::configure(basePath: dirname(__DIR__))
             ->appendOutputTo(storage_path('logs/db-backup.log'));
 
         $schedule->command('queue:restart')
+            ->dailyAt('03:00');
+
+        $schedule->command('drive:dispatch-user-photo-jobs')
             ->dailyAt('03:00');
 
         $schedule->command('backup:cleanup')
