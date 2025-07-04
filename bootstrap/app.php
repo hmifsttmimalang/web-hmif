@@ -12,11 +12,25 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withSchedule(function (Schedule $schedule) {
-        $schedule->command('drive:dispatch-user-photo-jobs')->dailyAt('01:00');
-        $schedule->command('queue:work --stop-when-empty')->everyMinute();
-        $schedule->command('drive:dispatch-user-photo-jobs')->dailyAt('01:00');
-        $schedule->command('db:backup')->dailyAt('02:00');
-        $schedule->command('queue:restart')->dailyAt('03:00');
+        $schedule->command('drive:dispatch-user-photo-jobs')
+            ->dailyAt('01:00')
+            ->appendOutputTo(storage_path('logs/drive-upload.log'));
+
+        $schedule->command('db:backup')
+            ->dailyAt('02:00')
+            ->appendOutputTo(storage_path('logs/db-backup.log'));
+
+        $schedule->command('queue:restart')
+            ->dailyAt('03:00');
+
+        $schedule->command('backup:cleanup')
+            ->dailyAt('04:00')
+            ->appendOutputTo(storage_path('logs/cleanup-backup.log'));
+
+        $schedule->command('queue:work --stop-when-empty')
+            ->everyMinute()
+            ->withoutOverlapping()
+            ->appendOutputTo(storage_path('logs/queue-worker.log'));
     })
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
