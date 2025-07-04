@@ -11,9 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use League\Flysystem\Filesystem;
 use Google\Client as GoogleClient;
 use Google\Service\Drive as GoogleDriveService;
-use Illuminate\Filesystem\FilesystemAdapter;
-use Illuminate\Filesystem\FilesystemManager;
 use Masbug\Flysystem\GoogleDriveAdapter as FlysystemGoogleDriveAdapter;
+use Illuminate\Filesystem\FilesystemAdapter as LaravelFilesystemAdapter;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -46,9 +45,9 @@ class AppServiceProvider extends ServiceProvider
 
             $flysystem = new Filesystem($adapter);
 
-            return new FilesystemAdapter(
-                app(FilesystemManager::class),
+            return new LaravelFilesystemAdapter(
                 $flysystem,
+                $adapter,
                 $config
             );
         });
