@@ -23,9 +23,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('queue:restart')
             ->dailyAt('03:00');
 
-        $schedule->command('drive:dispatch-user-photo-jobs')
-            ->dailyAt('03:00');
-
         $schedule->command('backup:cleanup')
             ->dailyAt('04:00')
             ->appendOutputTo(storage_path('logs/cleanup-backup.log'));
