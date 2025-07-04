@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
+use League\Flysystem\Filesystem;
+use Google\Client as GoogleClient;
+use Google\Service\Drive as GoogleDriveService;
+use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Filesystem\FilesystemManager;
+use Masbug\Flysystem\GoogleDriveAdapter as FlysystemGoogleDriveAdapter;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +35,22 @@ class AppServiceProvider extends ServiceProvider
         });
         Vite::prefetch(concurrency: 3);
         Carbon::setLocale('id');
+        Storage::extend('google', function ($app, $config) {
+            $client = new GoogleClient();
+            $client->setClientId($config['clientId']);
+            $client->setClientSecret($config['clientSecret']);
+            $client->refreshToken($config['refreshToken']);
+
+            $service = new GoogleDriveService($client);
+            $adapter = new FlysystemGoogleDriveAdapter($service, $config['folderId'] ?? null);
+
+            $flysystem = new Filesystem($adapter);
+
+            return new FilesystemAdapter(
+                app(FilesystemManager::class),
+                $flysystem,
+                $config
+            );
+        });
     }
 }
