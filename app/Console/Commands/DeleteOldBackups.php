@@ -9,35 +9,34 @@ use Carbon\Carbon;
 class DeleteOldBackups extends Command
 {
     protected $signature = 'backup:cleanup';
-    protected $description = 'Hapus file backup database yang lebih dari 7 hari';
+    protected $description = 'Hapus file backup database yang berumur lebih dari 7 hari';
 
     public function handle()
     {
-        $backupPath = storage_path('app/backups');
+        $path = storage_path('app/backups');
 
-        if (!File::exists($backupPath)) {
-            $this->warn("Folder backup tidak ditemukan: $backupPath");
+        if (!File::exists($path)) {
+            $this->warn("⚠️ Folder backup tidak ditemukan: $path");
             return;
         }
 
-        $files = File::files($backupPath);
-        $now = Carbon::now();
-        $deleted = 0;
+        $now = now();
+        $deletedCount = 0;
 
-        foreach ($files as $file) {
-            $modified = Carbon::createFromTimestamp($file->getMTime());
+        foreach (File::files($path) as $file) {
+            $ageInDays = Carbon::createFromTimestamp($file->getMTime())->diffInDays($now);
 
-            if ($modified->diffInDays($now) > 7) {
+            if ($ageInDays > 7) {
                 File::delete($file->getRealPath());
-                $deleted++;
-                $this->info("Dihapus: " . $file->getFilename());
+                $this->info("🗑️ Dihapus: {$file->getFilename()} ($ageInDays hari)");
+                $deletedCount++;
             }
         }
 
-        if ($deleted === 0) {
-            $this->info("Tidak ada file yang dihapus.");
-        } else {
-            $this->info("Selesai. $deleted file backup lama dihapus.");
-        }
+        $this->info(
+            $deletedCount > 0
+                ? "✅ $deletedCount file backup lama berhasil dihapus."
+                : "✅ Tidak ada file yang perlu dihapus."
+        );
     }
 }
