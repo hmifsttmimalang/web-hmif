@@ -2,12 +2,14 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\BackupSuccessMail;
 use Illuminate\Console\Command;
 use Google\Client as GoogleClient;
 use Google\Service\Drive as GoogleDrive;
 use Google\Service\Drive\DriveFile;
 use Google\Service\Drive\Permission;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class BackupDatabase extends Command
 {
@@ -70,6 +72,7 @@ class BackupDatabase extends Command
 
         $this->info("✅ Backup berhasil dan diupload ke Drive:");
         $this->line($url);
+        Mail::to('hmifsttmimalang@gmail.com')->send(new BackupSuccessMail($url));
 
         unlink($localPath);
         $this->warn("🧹 File lokal dihapus: $filename");
