@@ -20,7 +20,7 @@ function formatTelepon(waLink) {
 
     let nomor = match[1];
     if (nomor.startsWith("62")) {
-        return "0" + nomor.slice(2); // ubah 62xxx jadi 08xxx
+        return "0" + nomor.slice(2);
     }
 
     return nomor;
@@ -31,15 +31,13 @@ const minatList = computed(() => {
 
     if (Array.isArray(raw)) return raw;
 
-    // Jika null atau undefined, kembalikan array kosong
     if (!raw) return [];
 
     try {
-        // Jika string JSON, parse jadi array
         const parsed = JSON.parse(raw);
         return Array.isArray(parsed) ? parsed : [];
     } catch (e) {
-        return []; // Jika parsing gagal
+        return [];
     }
 });
 
@@ -51,9 +49,7 @@ function formatTanggal(tgl) {
 
 <template>
     <div class="container-fluid" v-if="anggota">
-        <Link class="btn btn-secondary mb-3" href="/admin/kelola-data"
-            >Kembali</Link
-        >
+        <Link class="btn btn-secondary mb-3" href="/admin/kelola-data">Kembali</Link>
         <hr class="border-secondary" />
         <h1 class="h3 mb-3 text-gray-800">Detail Anggota</h1>
         <div class="d-flex justify-content-start mb-3"></div>
@@ -68,16 +64,9 @@ function formatTanggal(tgl) {
                     </div>
                     <div class="card-body mt-3">
                         <div class="col-auto text-center">
-                            <img
-                                :src="
-                                    anggota.foto
-                                        ? '/storage/' + anggota.foto
-                                        : '/assets2/img/messages-3.jpg'
-                                "
-                                alt="fotoprofil"
-                                class="img-fluid rounded-circle"
-                                style="width: 200px"
-                            />
+                            <img :src="anggota.foto ? '/storage/' + anggota.foto : '/assets2/img/messages-3.jpg'"
+                                alt="fotoprofil" class="img-fluid rounded-circle"
+                                style="width: 200px; height: 200px; object-fit: cover" />
                         </div>
                         <br />
                         <h5 class="text-center card-title">
@@ -109,9 +98,9 @@ function formatTanggal(tgl) {
                                             .jenis_kelamin === "L"
                                             ? "Pria"
                                             : anggota.member_registration
-                                                  .jenis_kelamin === "P"
-                                            ? "Perempuan"
-                                            : "-"
+                                                .jenis_kelamin === "P"
+                                                ? "Perempuan"
+                                                : "-"
                                     }}
                                 </h6>
                             </li>
@@ -179,9 +168,7 @@ function formatTanggal(tgl) {
                 </div>
             </div>
 
-            <template
-                v-if="anggota.status === 'Baru' && anggota.member_registration"
-            >
+            <template v-if="anggota.status === 'Baru' && anggota.member_registration">
                 <!-- Pertanyaan Daftar -->
                 <div class="col-md-6">
                     <div class="card shadow mb-4">
@@ -243,12 +230,10 @@ function formatTanggal(tgl) {
                                     </h6>
                                     <h6 class="mb-0">
                                         {{ minatList.join(", ") || "-" }}
-                                        <template
-                                            v-if="
-                                                anggota.member_registration
-                                                    .minat_lainnya
-                                            "
-                                        >
+                                        <template v-if="
+                                            anggota.member_registration
+                                                .minat_lainnya
+                                        ">
                                             ({{
                                                 anggota.member_registration
                                                     .minat_lainnya
@@ -282,42 +267,32 @@ function formatTanggal(tgl) {
                                 </li>
 
                                 <!-- Portofolio -->
-                                <li
-                                    class="list-group-item"
-                                    v-if="
-                                        anggota.member_registration
-                                            .ket_portofolio
-                                    "
-                                >
+                                <li class="list-group-item" v-if="
+                                    anggota.member_registration
+                                        .ket_portofolio
+                                ">
                                     <h6 class="mb-1 font-bold">
                                         Penjelasan Portofolio
                                     </h6>
                                     <h6 class="mb-0">
-                                            {{
-                                                anggota.member_registration
-                                                    .ket_portofolio
-                                            }}
+                                        {{
+                                            anggota.member_registration
+                                                .ket_portofolio
+                                        }}
                                     </h6>
                                 </li>
 
-                                <li
-                                    class="list-group-item"
-                                    v-if="
-                                        anggota.member_registration
-                                            .link_portofolio
-                                    "
-                                >
+                                <li class="list-group-item" v-if="
+                                    anggota.member_registration
+                                        .link_portofolio
+                                ">
                                     <h6 class="mb-1 font-bold">
                                         Link Portofolio
                                     </h6>
                                     <h6 class="mb-0">
-                                        <a
-                                            :href="
-                                                anggota.member_registration
-                                                    .link_portofolio
-                                            "
-                                            target="_blank"
-                                        >
+                                        <a :href="anggota.member_registration
+                                                .link_portofolio
+                                            " target="_blank">
                                             {{
                                                 anggota.member_registration
                                                     .link_portofolio
@@ -326,30 +301,21 @@ function formatTanggal(tgl) {
                                     </h6>
                                 </li>
 
-                                <li
-                                    class="list-group-item"
-                                    v-if="
-                                        anggota.member_registration
-                                            .file_portofolio
-                                    "
-                                >
+                                <li class="list-group-item" v-if="
+                                    anggota.member_registration
+                                        .file_portofolio
+                                ">
                                     <h6 class="mb-1 font-bold">
                                         File Portofolio
                                     </h6>
                                     <h6 class="mb-0">
-                                        <a
-                                            :href="`/storage/${anggota.member_registration.file_portofolio}`"
-                                            download
-                                        >
+                                        <a :href="`/storage/${anggota.member_registration.file_portofolio}`" download>
                                             Unduh File
                                         </a>
                                     </h6>
                                 </li>
 
-                                <li
-                                    class="list-group-item"
-                                    v-if="anggota.member_registration.skill"
-                                >
+                                <li class="list-group-item" v-if="anggota.member_registration.skill">
                                     <h6 class="mb-1 font-bold">
                                         Skill Tambahan
                                     </h6>
@@ -391,9 +357,7 @@ function formatTanggal(tgl) {
     </div>
     <div v-else>
         <div class="d-flex ms-3 mb-3">
-            <Link class="btn btn-secondary" href="/admin/kelola-data"
-                >Kembali</Link
-            >
+            <Link class="btn btn-secondary" href="/admin/kelola-data">Kembali</Link>
         </div>
         <div class="alert alert-warning text-center mt-5">
             Data anggota tidak ditemukan.
