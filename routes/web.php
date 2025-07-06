@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
-
 Route::get('/', function () {
     return Inertia::render('Home', [
         'currentUser' => Auth::user(),
@@ -32,7 +31,10 @@ Route::get('/register/ditutup', function () {
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+});
 
 Route::get('/register', [PendaftaranController::class, 'create'])->middleware('check.registration.period')->name('register');
 Route::post('/register', [PendaftaranController::class, 'store'])->name('register.store');

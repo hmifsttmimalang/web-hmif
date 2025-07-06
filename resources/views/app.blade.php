@@ -6,6 +6,8 @@
   <meta name="description"
     content="Himpunan Mahasiswa Informatika SMI Malang - organisasi pengembangan teknologi, inovasi, dan komunitas mahasiswa." />
   <meta name="keywords" content="HMIF, SMI Malang, mahasiswa informatika, organisasi, teknologi, komunitas" />
+  
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Favicons -->
   <link href="/assets/img/logo_hmif.jpg" rel="icon" />

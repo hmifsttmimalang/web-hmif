@@ -5,10 +5,19 @@ const props = defineProps({ show: Boolean });
 const emit = defineEmits(["close"]);
 
 function close() {
-    emit("close");
+  emit("close");
 }
+
 function logout() {
-    router.post("/logout");
+  router.post('/logout', {}, {
+    preserveScroll: true,
+    onSuccess: () => {
+      router.visit('/login')
+    },
+    onError: (err) => {
+      console.error('Logout gagal:', err);
+    },
+  });
 }
 </script>
 
