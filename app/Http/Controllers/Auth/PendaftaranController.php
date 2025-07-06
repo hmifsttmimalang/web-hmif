@@ -39,7 +39,7 @@ class PendaftaranController extends Controller
             'telepon' => 'required|string|max:20',
             'instagram' => 'nullable|string|max:100|unique:users,instagram',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'foto' => 'required|image|max:7168|mimes:jpeg,jpg',
+            'foto' => 'required|image|max:7168|mimes:jpeg,jpg,png',
             'terms' => 'accepted',
 
             // tabel member_registrations
