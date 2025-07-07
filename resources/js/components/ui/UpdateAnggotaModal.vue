@@ -34,6 +34,10 @@ watch(
 
 function submit() {
     emit("close");
+    if (form.role === 'admin' && form.jabatan === 'Anggota') {
+        Swal.fire('Tidak valid', 'Jabatan "Anggota" tidak bisa dijadikan admin.', 'warning');
+        return;
+    }
     Swal.fire({
         title: "Apakah kamu yakin ingin menyimpan perubahan?",
         icon: "question",
@@ -41,6 +45,13 @@ function submit() {
         confirmButtonText: "Ya, simpan!",
         cancelButtonText: "Batal",
     }).then((result) => {
+        Swal.fire({
+            title: 'Menyimpan...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
         if (result.isConfirmed) {
             router.patch(route("admin.anggota.update", { id: form.id_anggota }), form, {
                 onSuccess: () => {
@@ -83,9 +94,14 @@ function submit() {
                             <label class="form-label">Akses</label>
                             <select class="form-select" v-model="form.role" required>
                                 <option value="" disabled>Pilih Akses</option>
-                                <option value="admin">Admin</option>
+                                <option value="admin" :disabled="form.jabatan === 'Anggota'">
+                                    Admin (butuh jabatan tinggi)
+                                </option>
                                 <option value="user">Anggota</option>
                             </select>
+                            <small v-if="form.jabatan === 'Anggota'" class="text-danger">
+                                Jabatan harus lebih dari "Anggota" untuk bisa menjadi admin.
+                            </small>
                         </div>
 
                         <div class="mb-3">

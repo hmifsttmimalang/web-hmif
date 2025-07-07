@@ -57,34 +57,56 @@ class KelolaAnggotaController extends Controller
     {
         $user = User::findOrFail($id);
         $loginUser = Auth::user();
-
         $previousStatus = $user->status;
-        $user->status = $request->status;
+        $newStatus = $request->status;
+
+        $user->status = $newStatus;
 
         if (
             $previousStatus === 'Baru' &&
-            $request->status === 'Aktif' &&
+            $newStatus === 'Aktif' &&
             empty($request->jabatan)
         ) {
             $user->jabatan = 'Anggota';
         }
 
-        if (in_array($loginUser->role, ['admin', 'superadmin']) && $request->has('jabatan')) {
+        if (
+            in_array($loginUser->role, ['admin', 'superadmin']) &&
+            $request->filled('jabatan')
+        ) {
             $user->jabatan = $request->jabatan;
         }
 
-        if (in_array($request->status, ['Demisioner', 'Nonaktif'])) {
+        if (in_array($newStatus, ['Demisioner', 'Nonaktif'])) {
             $user->jabatan = null;
-            $user->role = 'user';
+
+            if ($user->role !== 'superadmin') {
+                $user->role = 'user';
+            }
         }
 
-        if ($loginUser->role === 'superadmin' && $request->has('role')) {
-            $user->role = $request->role;
+        if (
+            $loginUser->role === 'superadmin' &&
+            $request->filled('role')
+        ) {
+            $requestedRole = $request->role;
+
+            if (
+                $requestedRole === 'admin' &&
+                $user->status === 'Aktif' &&
+                $user->jabatan === 'Anggota'
+            ) {
+                return back()->with('error', 'Tidak bisa menjadikan anggota biasa sebagai admin. Ubah jabatannya terlebih dahulu.');
+            }
+
+            $user->role = $requestedRole;
         }
 
         $user->save();
 
-        return redirect()->route('admin.kelola-data')->with('success', 'Data anggota diupdate!');
+        return redirect()
+            ->route('admin.kelola-data')
+            ->with('success', 'Data anggota diupdate!');
     }
 
     public function destroy(User $anggota)
