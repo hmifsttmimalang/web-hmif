@@ -75,6 +75,7 @@ class KelolaAnggotaController extends Controller
 
         if (in_array($request->status, ['Demisioner', 'Nonaktif'])) {
             $user->jabatan = null;
+            $user->role = 'user';
         }
 
         if ($loginUser->role === 'superadmin' && $request->has('role')) {
