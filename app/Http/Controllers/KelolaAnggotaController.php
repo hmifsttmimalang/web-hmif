@@ -58,15 +58,23 @@ class KelolaAnggotaController extends Controller
         $user = User::findOrFail($id);
         $loginUser = Auth::user();
 
-        $user->jabatan = $request->jabatan;
+        $previousStatus = $user->status;
         $user->status = $request->status;
+
+        if (
+            $previousStatus === 'Baru' &&
+            $request->status === 'Aktif' &&
+            empty($request->jabatan)
+        ) {
+            $user->jabatan = 'Anggota';
+        }
+
+        if (in_array($loginUser->role, ['admin', 'superadmin']) && $request->has('jabatan')) {
+            $user->jabatan = $request->jabatan;
+        }
 
         if (in_array($request->status, ['Demisioner', 'Nonaktif'])) {
             $user->jabatan = null;
-        }
-
-        if ($request->status == 'Aktif') {
-            $user->jabatan = 'Anggota';
         }
 
         if ($loginUser->role === 'superadmin' && $request->has('role')) {
