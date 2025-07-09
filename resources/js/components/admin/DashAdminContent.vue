@@ -106,56 +106,57 @@ function formatWIBWithDay(datetime) {
         <h2 class="text-gray-800">Data Pendaftar Baru</h2>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-bordered table-hover">
-                    <thead class="text-center align-middle">
-                        <tr>
-                            <th>No</th>
-                            <th>NIM</th>
-                            <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>Prodi</th>
-                            <th>Angkatan</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(p, i) in pendaftarBaru.data || []" :key="p.nim">
-                            <td class="text-center">
-                                {{
-                                    i +
-                                    1 +
-                                    (pendaftarBaru.current_page - 1) *
-                                    pendaftarBaru.per_page
-                                }}
-                            </td>
-                            <td class="text-center">{{ p.nim }}</td>
-                            <td>{{ p.nama }}</td>
-                            <td>{{ p.member_registration.alamat }}</td>
-                            <td>{{ p.prodi }}</td>
-                            <td class="text-center">{{ p.angkatan }}</td>
-                            <td class="text-center">
-                                <span class="badge badge-info">{{
-                                    p.status
-                                    }}</span>
-                            </td>
-                        </tr>
-                        <tr v-if="
-                            !pendaftarBaru.data ||
-                            pendaftarBaru.data.length === 0
-                        ">
-                            <td colspan="7" class="text-center">
-                                Tidak ada data
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="text-center align-middle">
+                            <tr>
+                                <th>No</th>
+                                <th>NIM</th>
+                                <th>Nama</th>
+                                <th>Alamat</th>
+                                <th>Prodi</th>
+                                <th>Angkatan</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(p, i) in pendaftarBaru.data || []" :key="p.nim">
+                                <td class="text-center">
+                                    {{
+                                        i +
+                                        1 +
+                                        (pendaftarBaru.current_page - 1) *
+                                        pendaftarBaru.per_page
+                                    }}
+                                </td>
+                                <td class="text-center">{{ p.nim }}</td>
+                                <td>{{ p.nama }}</td>
+                                <td>{{ p.member_registration.alamat }}</td>
+                                <td>{{ p.prodi }}</td>
+                                <td class="text-center">{{ p.angkatan }}</td>
+                                <td class="text-center">
+                                    <span class="badge badge-info">{{
+                                        p.status
+                                        }}</span>
+                                </td>
+                            </tr>
+                            <tr v-if="
+                                !pendaftarBaru.data ||
+                                pendaftarBaru.data.length === 0
+                            ">
+                                <td colspan="7" class="text-center">
+                                    Tidak ada data
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="text-muted mt-3" v-if="periodeAktif">
                     Periode aktif:
                     <strong>{{ formatWIBWithDay(periodeAktif.start_at) }}</strong>
                     s.d.
                     <strong>{{ formatWIBWithDay(periodeAktif.end_at) }}</strong>
                 </div>
-
             </div>
             <nav v-if="pendaftarBaru.last_page > 1">
                 <ul class="pagination">
