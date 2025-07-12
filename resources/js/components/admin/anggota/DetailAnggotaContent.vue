@@ -12,18 +12,45 @@ const anggota = page.props.anggota;
 dayjs.extend(localizedFormat);
 dayjs.locale("id");
 
+function generateWaLink(input) {
+    if (!input) return '#';
+
+    if (input.startsWith('https://wa.me/')) {
+        return input;
+    }
+
+    if (input.startsWith('62')) {
+        return `https://wa.me/${input}`;
+    }
+
+    if (input.startsWith('08')) {
+        return `https://wa.me/62${input.slice(1)}`;
+    }
+
+    return '#';
+}
+
 function formatTelepon(waLink) {
     if (!waLink) return "-";
 
-    const match = waLink.match(/^https:\/\/wa\.me\/(\d+)/);
-    if (!match) return waLink;
+    let nomor = "";
 
-    let nomor = match[1];
+    if (waLink.startsWith("https://wa.me/")) {
+        const match = waLink.match(/^https:\/\/wa\.me\/(\d+)/);
+        if (match) {
+            nomor = match[1];
+        }
+    } else if (waLink.startsWith("62")) {
+        nomor = waLink;
+    } else if (waLink.startsWith("08")) {
+        nomor = "62" + waLink.slice(1);
+    }
+
     if (nomor.startsWith("62")) {
         return "0" + nomor.slice(2);
     }
 
-    return nomor;
+    return "-";
 }
 
 const minatList = computed(() => {
@@ -132,7 +159,7 @@ function formatTanggal(tgl) {
                             </li>
                             <li class="list-group-item">
                                 <h6 class="mb-1 font-bold">Link Nomor WhatsApp</h6>
-                                <a :href="anggota.telepon" target="_blank">
+                                <a :href="generateWaLink(anggota.telepon)" target="_blank">
                                     {{ formatTelepon(anggota.telepon) }}
                                 </a>
                             </li>
@@ -291,7 +318,7 @@ function formatTanggal(tgl) {
                                     </h6>
                                     <h6 class="mb-0">
                                         <a :href="anggota.member_registration
-                                                .link_portofolio
+                                            .link_portofolio
                                             " target="_blank">
                                             {{
                                                 anggota.member_registration
