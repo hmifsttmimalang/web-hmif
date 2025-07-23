@@ -180,7 +180,7 @@ function formatTanggal(tgl) {
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <h6 class="mb-1 font-bold">NIM</h6>
-                                <h6 class="mb-0">{{ anggota.nim }}</h6>
+                                <h6 class="mb-0">{{ anggota.nim ?? "-" }}</h6>
                             </li>
                             <li class="list-group-item">
                                 <h6 class="mb-1 font-bold">Prodi</h6>

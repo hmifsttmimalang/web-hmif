@@ -157,7 +157,7 @@
                     <tr>
                         <td style="text-align: center;">{{ $index + 1 }}</td>
                         <td>{{ $a->nama }}</td>
-                        <td style="text-align: center;">{{ $a->nim }}</td>
+                        <td style="text-align: center;">{{ $a->nim ?? '-' }}</td>
                         <td>{{ $a->memberRegistration->alamat }}</td>
                         <td>{{ $a->prodi }}</td>
                         <td style="text-align: center;">{{ $a->angkatan }}</td>

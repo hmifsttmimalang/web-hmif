@@ -159,7 +159,7 @@
                 @foreach ($anggota as $i => $a)
                     <tr>
                         <td style="text-align: center;">{{ $i + 1 }}</td>
-                        <td style="text-align: center;">{{ $a->nim }}</td>
+                        <td style="text-align: center;">{{ $a->nim ?? '-' }}</td>
                         <td>{{ $a->nama }}</td>
                         <td>{{ $a->memberRegistration->alamat ?? '-' }}</td>
                         <td>{{ $a->prodi }}</td>
