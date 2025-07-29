@@ -33,7 +33,7 @@ class PendaftaranController extends Controller
             'nama' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'username' => 'nullable|string|max:255|unique:users,username',
-            'nim' => 'required|string|max:20|unique:users,nim',
+            'nim' => 'nullable|string|max:20|unique:users,nim',
             'prodi' => 'required|string|max:100',
             'angkatan' => 'required|string|max:10',
             'telepon' => 'required|string|max:20',
